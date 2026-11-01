@@ -78,7 +78,7 @@ namespace BootScene {
     void loadStaticDataArchives() {
         fn_800061B8(16);
         fn_80006204();
-        void* game_usaData = LMDvdFileOpen("/Game/game_usa.szp", dvdFileOpenCallback, 0, 0);
+        void* game_usaData = LMDvdFile::openFile("/Game/game_usa.szp", dvdFileOpenCallback, 0, 0);
         lbl_804D8014->becomeCurrentHeap();
         fn_800061B8(3);
         u8* data = (u8*)sStaticDataArchive->getResource("/res_titl.szp");

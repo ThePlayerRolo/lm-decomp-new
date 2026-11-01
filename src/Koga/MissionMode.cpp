@@ -1,3 +1,7 @@
+#include <JSystem/JKernel/JKRFileFinder.hpp>
+#include <JSystem/JKernel/JKRArchive.hpp>
+#include <stdio.h>
+
 #include "Koga/MissionMode.hpp"
 #include "Koga/MapCol.hpp"
 #include "Koga/EnTypesManager.hpp"
@@ -10,9 +14,6 @@
 #include "Koga/ToolData.hpp"
 
 #include "System/LMDvdFile.hpp"
-#include <JSystem/JKernel/JKRFileFinder.hpp>
-#include <JSystem/JKernel/JKRArchive.hpp>
-#include <stdio.h>
 
 dummy_float_data()
 
@@ -74,7 +75,7 @@ namespace Koga {
         char mapName[128];
 
         sprintf(mapName, "%s%d.szp", "/Map/map", sCurMapNo);
-        mMapArchive = (JKRArchive*)fn_80006930(mapName, nullptr);
+        mMapArchive = reinterpret_cast<JKRArchive*>(LMDvdFile::openCompressedArchive(mapName, nullptr));
 
         mEnMgr->loadCharacterInfo(mMapArchive);
         s32 jmpFileCount = mMapArchive->countFile("/jmp") - 2;

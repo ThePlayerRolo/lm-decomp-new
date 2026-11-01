@@ -35,7 +35,7 @@ namespace LMDvdThreading {
             if (info->mFileBuffer == nullptr) {
                 u8 groupId = fn_800061B8(info->mHeapGroupID);
 
-                info->mFileBuffer = fn_80006258(info->mAlignedFileSize, LMDvdFile::getCurUnk4() * 32);
+                info->mFileBuffer = reinterpret_cast<u8*>(LMDvdFile::alloc(info->mAlignedFileSize, LMDvdFile::getAllocDirection() * 32));
 
                 //Have no idea what was meant to be for since the block of code for it is optimized out sooooooo
                 if (info->mFileBuffer == nullptr) { info = info; }
@@ -57,9 +57,9 @@ namespace LMDvdThreading {
                     info->mPostLoadFunc(info->mFileBuffer, info);
                 }
 
-                if (lbl_804D8028 == FALSE) {
-                    if (info->mCallBack != nullptr) {
-                        info->mCallBack(nullptr, info);
+                if (sFileDataError == 0) {
+                    if (info->mCallback != nullptr) {
+                        info->mCallback(nullptr, info);
                     }
 
                     fn_800061B8(groupId);
@@ -74,7 +74,7 @@ namespace LMDvdThreading {
     // https://decomp.me/scratch/1I8kx
     void initDvdThread(LMDvdThread* thread) {
         OSInitMessageQueue(&thread->_310, thread->_330, ARRAY_COUNT(thread->_330));
-        thread->mFileInfoArray = LMDvdFile::getFileInfoArray();
+        thread->mFileInfoArray = LMDvdFile::getFileInfoRing();
         u8* stackTop = &sDvdThreadStack[sizeof(sDvdThreadStack)];
         OSCreateThread(thread, createDvdThreadCallback, nullptr, stackTop, sizeof(sDvdThreadStack), 10, OS_THREAD_ATTR_DETACH);
         OSResumeThread(thread);
