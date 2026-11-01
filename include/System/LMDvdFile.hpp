@@ -18,7 +18,7 @@ typedef void (*LMDvdFileInfoCallback)(void* param_1, LMDvdFileInfo* param_2);
 
 class LMDvdFileInfo : public DVDFileInfo {
 public:
-    s32 getUnk70();
+    void* getCallbackArg();
     u8* getFileBuffer();
     u32 getLength();
     JKRMemArchive* getArchive();
@@ -30,7 +30,7 @@ public:
     /* 0x64 */ u8* mFileBuffer;
     /* 0x68 */ u8* mDecompBuffer;
     /* 0x6C */ JKRMemArchive* mArchive;
-    /* 0x70 */ s32 _70;
+    /* 0x70 */ void* mCallbackArg;
     /* 0x74 */ LMDvdFileInfoCallback mCallback;
     /* 0x78 */ LMDvdFileInfoCallback mPostLoadFunc;
     /* 0x7C */ LMDvdFileInfo* _7C;
@@ -44,11 +44,11 @@ namespace LMDvdFile {
     LMDvdFileInfo* getFileInfoRing();
     void init();
     u8* openFile(const char*, u8*);
-    u8* openFile(const char*, LMDvdFileInfoCallback, u8*, s32);
-    u8* openCompressedArchive(const char*, LMDvdFileInfoCallback, u8*, s32);
+    u8* openFile(const char*, LMDvdFileInfoCallback, u8*, void*);
+    u8* openCompressedArchive(const char*, LMDvdFileInfoCallback, u8*, void*);
     u8* openCompressedArchive(const char*, u8*);
     JKRMemArchive* openMemArchive(const char*, void*);
-    u8* openArchive(const char*, LMDvdFileInfoCallback, u8*, s32);
+    u8* openArchive(const char*, LMDvdFileInfoCallback, u8*, void*);
 
     s32 checkCurUnk0();
     s32 getAllocDirection();

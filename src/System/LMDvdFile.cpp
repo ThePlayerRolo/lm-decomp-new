@@ -4,12 +4,13 @@
 #include "System/UnknownSystemCalls.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "Unsorted/80005EB8.hpp"
+#include "types.h"
 
 struct LMDvdFileQueue {
     void updateDvdDriveStatus();
     void getNextSlot();
     bool openFile(const char*, u8*);
-    void* openFileAsync(const char*, LMDvdFileInfoCallback, u8*, s32);
+    void* openFileAsync(const char*, LMDvdFileInfoCallback, u8*, void*);
   
     static LMDvdFileInfo sFileInfoRing[MAX_FILE_INFO_ARR];
     static LMDvdFileQueue sCurDvdFile;
@@ -122,11 +123,11 @@ bool LMDvdFileQueue::openFile(const char* pFileName, u8* pBuffer) {
 }
 
 // https://decomp.me/scratch/Ro97O
-void* LMDvdFileQueue::openFileAsync(const char* pFileName, LMDvdFileInfoCallback param_2, u8* param_3, s32 param_4) {
+void* LMDvdFileQueue::openFileAsync(const char* pFileName, LMDvdFileInfoCallback pCallback, u8* pBuffer, void* pCallbackArg) {
     // TODO Remove this
     FORCE_DONT_INLINE
-    mCurrFileInfo->mCallback = param_2;
-    mCurrFileInfo->_70 = param_4;
+    mCurrFileInfo->mCallback = pCallback;
+    mCurrFileInfo->mCallbackArg = pCallbackArg;
 
     LMDvdFileInfo* info = mCurrFileInfo;
 
@@ -139,7 +140,7 @@ void* LMDvdFileQueue::openFileAsync(const char* pFileName, LMDvdFileInfoCallback
     DVDOpen(const_cast<char*>(pFileName), info);
     mCurrFileInfo->mAlignedFileSize = ALIGN_NEXT(info->length, 32);
     mCurrFileInfo->mBufferBreakFlag = MBF_0;
-    mCurrFileInfo->mFileBuffer = param_3;
+    mCurrFileInfo->mFileBuffer = pBuffer;
 
     LMDvdThreading::sendDvdRequest(mCurrFileInfo);
     _0++;
@@ -169,7 +170,7 @@ namespace LMDvdFile {
     u8* openFile(const char* pFileName, u8* pBuffer) {
         LMDvdFileQueue::sCurDvdFile.getNextSlot();
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallback = nullptr;
-        LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_70 = 0;
+        LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallbackArg = nullptr;
 
         if (LMDvdFileQueue::sCurDvdFile.openFile(pFileName, pBuffer)) {
             LMDvdFileQueue::sCurDvdFile._0++;
@@ -183,7 +184,7 @@ namespace LMDvdFile {
     }
 
     //https://decomp.me/scratch/YKS45
-    u8* openFile(const char* pFileName, LMDvdFileInfoCallback pCallback, u8* pBuffer, s32 param_4) {
+    u8* openFile(const char* pFileName, LMDvdFileInfoCallback pCallback, u8* pBuffer, void* pCallbackArg) {
         u8* ret;
 
         // Seems like inlined init, though based on LMDvdFileOpen it could not be?
@@ -204,7 +205,7 @@ namespace LMDvdFile {
         OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, nullptr, OS_MESSAGE_NOBLOCK);
 
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallback = pCallback;
-        LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_70 = param_4;
+        LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallbackArg = pCallbackArg;
 
         if (LMDvdFileQueue::sCurDvdFile.openFile(pFileName, pBuffer)) {
             LMDvdFileQueue::sCurDvdFile._0++;
@@ -215,7 +216,7 @@ namespace LMDvdFile {
     }
 
     //https://decomp.me/scratch/KlViD
-    u8* openCompressedArchive(const char* pFileName, LMDvdFileInfoCallback pCallback, u8* pArchiveBuffer, s32 param_4) {
+    u8* openCompressedArchive(const char* pFileName, LMDvdFileInfoCallback pCallback, u8* pArchiveBuffer, void* pCallbackArg) {
         // Loads a Yay0-compressed archive and attempts to unpack it before mounting it.
         LMDvdFileQueue::sCurDvdFile.mAllocDirection = ALLOC_DIR_TAIL;
         // Seems like inlined init, though based on LMDvdFileOpen it could not be?
@@ -234,7 +235,7 @@ namespace LMDvdFile {
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallback = nullptr;
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mHeapGroupID = getCurHeapGroupId();
 
-        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, nullptr, 0);
+        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, nullptr, OS_MESSAGE_NOBLOCK);
 
         if (pArchiveBuffer != 0) {
             LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mBufferBreakFlag = MBF_0;
@@ -246,7 +247,7 @@ namespace LMDvdFile {
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mArchive = reinterpret_cast<JKRMemArchive*>(ret);
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mPostLoadFunc = decompressAndMountArchive;
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallback = pCallback;
-        LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_70 = param_4;
+        LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallbackArg = pCallbackArg;
 
         if (LMDvdFileQueue::sCurDvdFile.openFile(pFileName, nullptr)) {
             LMDvdFileQueue::sCurDvdFile._0++;
@@ -260,7 +261,7 @@ namespace LMDvdFile {
     }
 
     u8* openCompressedArchive(const char* pFileName, u8* pBuffer) {
-        u8* data = openCompressedArchive(pFileName, nullptr, pBuffer, 0);
+        u8* data = openCompressedArchive(pFileName, nullptr, pBuffer, nullptr);
         u32 msg;
         OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, &msg, OS_MESSAGE_BLOCK);
         return data;
@@ -283,7 +284,7 @@ namespace LMDvdFile {
         return archive;
     }
 
-    u8* openArchive(const char* pFileName, LMDvdFileInfoCallback pCallback, u8* pBuffer, s32 param_4) {
+    u8* openArchive(const char* pFileName, LMDvdFileInfoCallback pCallback, u8* pBuffer, void* pCallbackArg) {
         // Loads an uncompressed RARC archive and mounts it directly.
         LMDvdFileQueue::sCurDvdFile.mAllocDirection = ALLOC_DIR_HEAD;
         // Seems like inlined init, though based on LMDvdFileOpen it could not be?
@@ -313,7 +314,7 @@ namespace LMDvdFile {
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mArchive = reinterpret_cast<JKRMemArchive*>(ret);
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mPostLoadFunc = mountFileFromArchive;
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallback = pCallback;
-        LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_70 = param_4;
+        LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallbackArg = pCallbackArg;
 
         if (LMDvdFileQueue::sCurDvdFile.openFile(pFileName, pBuffer)) {
             LMDvdFileQueue::sCurDvdFile._0++;
@@ -323,8 +324,8 @@ namespace LMDvdFile {
     }
 }
 
-s32 LMDvdFileInfo::getUnk70() {
-    return _70;
+void* LMDvdFileInfo::getCallbackArg() {
+    return mCallbackArg;
 }
 
 u8* LMDvdFileInfo::getFileBuffer() {
