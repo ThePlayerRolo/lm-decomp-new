@@ -45,12 +45,11 @@ namespace LMBackgroundTask {
         }
     }
 
-    // https://decomp.me/scratch/7rzMO
     void initBackgroundTaskInternal(BackgroundTask* thread) {
         OSInitMessageQueue(&thread->mMsgSendQueue, &thread->_330, 1);
         OSInitMessageQueue(&thread->mMsgRecvQueue, &thread->_354, 1);
-        u8* stackTop = &BackgroundTask::sBackgroundTaskStack[sizeof(BackgroundTask::sBackgroundTaskStack)];
-        OSCreateThread(thread, createThreadCallback, nullptr, stackTop, sizeof(BackgroundTask::sBackgroundTaskStack), 17, OS_THREAD_ATTR_DETACH);
+        u32 size = sizeof(BackgroundTask::sBackgroundTaskStack);
+        OSCreateThread(thread, createThreadCallback, nullptr, &BackgroundTask::sBackgroundTaskStack[size], size, 17, OS_THREAD_ATTR_DETACH);
         OSResumeThread(thread);
     }
 }

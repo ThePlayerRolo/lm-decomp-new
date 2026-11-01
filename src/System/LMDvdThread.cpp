@@ -71,12 +71,11 @@ namespace LMDvdThreading {
         }
     }
 
-    // https://decomp.me/scratch/1I8kx
     void initDvdThread(LMDvdThread* thread) {
         OSInitMessageQueue(&thread->_310, thread->_330, ARRAY_COUNT(thread->_330));
         thread->mFileInfoArray = LMDvdFile::getFileInfoRing();
-        u8* stackTop = &sDvdThreadStack[sizeof(sDvdThreadStack)];
-        OSCreateThread(thread, createDvdThreadCallback, nullptr, stackTop, sizeof(sDvdThreadStack), 10, OS_THREAD_ATTR_DETACH);
+        u32 size = sizeof(sDvdThreadStack);
+        OSCreateThread(thread, createDvdThreadCallback, nullptr, &sDvdThreadStack[size], size, 10, OS_THREAD_ATTR_DETACH);
         OSResumeThread(thread);
     }
 }
