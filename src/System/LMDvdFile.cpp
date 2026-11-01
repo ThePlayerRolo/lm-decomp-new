@@ -349,7 +349,7 @@ namespace LMDvdFile {
         return LMDvdFileQueue::sCurDvdFile.mAllocDirection;
     }
 
-    void checkCurDVDStatus() {
+    void setDVDStatus() {
         LMDvdFileQueue::sCurDvdFile.updateDvdDriveStatus();
     }
 

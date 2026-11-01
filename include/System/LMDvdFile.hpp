@@ -52,7 +52,7 @@ namespace LMDvdFile {
 
     s32 checkCurUnk0();
     s32 getAllocDirection();
-    void checkDVDStatus();
+    void setDVDStatus();
     void closeFile(void*, LMDvdFileInfo*);
 };
 
