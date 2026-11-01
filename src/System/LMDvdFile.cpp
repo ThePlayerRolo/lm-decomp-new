@@ -99,7 +99,7 @@ void LMDvdFileQueue::getNextSlot() {
     mCurrFileInfo->mPostLoadFunc = nullptr;
     mCurrFileInfo->mCallback = nullptr;
     mCurrFileInfo->mHeapGroupID = getCurHeapGroupId();
-    OSReceiveMessage(&mCurrFileInfo->_3C, nullptr, OS_MESSAGE_NOBLOCK);
+    OSReceiveMessage(&mCurrFileInfo->mMsgQueue, nullptr, OS_MESSAGE_NOBLOCK);
 }
 
 bool LMDvdFileQueue::openFile(const char* pFileName, u8* pBuffer) {
@@ -160,7 +160,7 @@ namespace LMDvdFile {
 
         for (s32 i = 0; i < MAX_FILE_INFO_ARR; i++) {
             curIndex->_7C = &LMDvdFileQueue::sFileInfoRing[i + 1];
-            OSInitMessageQueue(&curIndex->_3C, &curIndex->_5C, 1);
+            OSInitMessageQueue(&curIndex->mMsgQueue, &curIndex->_5C, 1);
             curIndex++;
         }
 
@@ -178,7 +178,7 @@ namespace LMDvdFile {
 
         u32 msg;
 
-        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, &msg, OS_MESSAGE_BLOCK);
+        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mMsgQueue, &msg, OS_MESSAGE_BLOCK);
 
         return LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mFileBuffer;
     }
@@ -202,7 +202,7 @@ namespace LMDvdFile {
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallback = nullptr;
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mHeapGroupID = getCurHeapGroupId();
 
-        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, nullptr, OS_MESSAGE_NOBLOCK);
+        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mMsgQueue, nullptr, OS_MESSAGE_NOBLOCK);
 
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallback = pCallback;
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallbackArg = pCallbackArg;
@@ -235,7 +235,7 @@ namespace LMDvdFile {
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallback = nullptr;
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mHeapGroupID = getCurHeapGroupId();
 
-        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, nullptr, OS_MESSAGE_NOBLOCK);
+        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mMsgQueue, nullptr, OS_MESSAGE_NOBLOCK);
 
         if (pArchiveBuffer != 0) {
             LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mBufferBreakFlag = MBF_0;
@@ -263,7 +263,7 @@ namespace LMDvdFile {
     u8* openCompressedArchive(const char* pFileName, u8* pBuffer) {
         u8* data = openCompressedArchive(pFileName, nullptr, pBuffer, nullptr);
         u32 msg;
-        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, &msg, OS_MESSAGE_BLOCK);
+        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mMsgQueue, &msg, OS_MESSAGE_BLOCK);
         return data;
     }
 
@@ -276,7 +276,7 @@ namespace LMDvdFile {
         LMDvdFileQueue::sCurDvdFile.getNextSlot();
         LMDvdFileQueue::sCurDvdFile.openFileAsync(pFileName, nullptr, pBuffer, nullptr);
 
-        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, &msg, OS_MESSAGE_BLOCK);
+        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mMsgQueue, &msg, OS_MESSAGE_BLOCK);
         buffer = LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mFileBuffer;
 
         archive = new JKRMemArchive();
@@ -303,7 +303,7 @@ namespace LMDvdFile {
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mCallback = nullptr;
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mHeapGroupID = getCurHeapGroupId();
 
-        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->_3C, nullptr, OS_MESSAGE_NOBLOCK);
+        OSReceiveMessage(&LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mMsgQueue, nullptr, OS_MESSAGE_NOBLOCK);
 
         LMDvdFileQueue::sCurDvdFile.mCurrFileInfo->mDecompBuffer = nullptr;
 
@@ -372,7 +372,7 @@ namespace LMDvdFile {
                 pInfo->mCallback = nullptr;
                 return;
         }
-        OSSendMessage(&pInfo->_3C, msg, OS_MESSAGE_NOBLOCK);
+        OSSendMessage(&pInfo->mMsgQueue, msg, OS_MESSAGE_NOBLOCK);
     }
 }
 

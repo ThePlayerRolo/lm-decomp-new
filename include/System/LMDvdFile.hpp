@@ -24,7 +24,7 @@ public:
     JKRMemArchive* getArchive();
 
 public:
-    /* 0x3C */ OSMessageQueue _3C;
+    /* 0x3C */ OSMessageQueue mMsgQueue;
     /* 0x5C */ s32 _5C;
     /* 0x60 */ s32 mAlignedFileSize;
     /* 0x64 */ u8* mFileBuffer;
