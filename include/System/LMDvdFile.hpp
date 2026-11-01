@@ -7,6 +7,11 @@
 class JKRMemArchive;
 class LMDvdFileInfo;
 
+enum AllocDirection {
+    ALLOC_DIR_TAIL = -1,
+    ALLOC_DIR_HEAD = 1,
+};
+
 typedef void (*LMDvdFileInfoCallback)(void* param_1, LMDvdFileInfo* param_2);
 
 #define MAX_FILE_INFO_ARR 64
@@ -26,46 +31,34 @@ public:
     /* 0x68 */ u8* mDecompBuffer;
     /* 0x6C */ JKRMemArchive* mArchive;
     /* 0x70 */ s32 _70;
-    /* 0x74 */ LMDvdFileInfoCallback mCallBack;
+    /* 0x74 */ LMDvdFileInfoCallback mCallback;
     /* 0x78 */ LMDvdFileInfoCallback mPostLoadFunc;
     /* 0x7C */ LMDvdFileInfo* _7C;
     /* 0x80 */ u8 mHeapGroupID;
     /* 0x84 */ JKRMemBreakFlag mBufferBreakFlag;
 };
 
-class LMDvdFile {
-public:
+
+namespace LMDvdFile {
+    void* alloc(u32, s32);
+    LMDvdFileInfo* getFileInfoRing();
     void init();
-    bool open(const char*, u8*);
-    void* open(const char*, LMDvdFileInfoCallback, u8*, s32);
+    u8* openFile(const char*, u8*);
+    u8* openFile(const char*, LMDvdFileInfoCallback, u8*, s32);
+    u8* openCompressedArchive(const char*, LMDvdFileInfoCallback, u8*, s32);
+    u8* openCompressedArchive(const char*, u8*);
+    JKRMemArchive* openMemArchive(const char*, void*);
+    u8* openArchive(const char*, LMDvdFileInfoCallback, u8*, s32);
+
+    s32 checkCurUnk0();
+    s32 getAllocDirection();
     void checkDVDStatus();
-
-    static LMDvdFileInfo* getFileInfoArray();
-    static BOOL checkCurUnk0();
-    static s32 getCurUnk4();
-    static void checkCurDVDStatus();
-    static void closeFile(void*, LMDvdFileInfo*);
-
-    //TODO review these later to see if these can not be static?
-    static void decompressFile(void*, LMDvdFileInfo*);
-    static void mountFileFromArchive(void*, LMDvdFileInfo*);
-    static void decompressAndMountArchive(void*, LMDvdFileInfo*);
-
-    static LMDvdFileInfo sFileInfoArray[MAX_FILE_INFO_ARR];
-    static LMDvdFile sCurDvdFile;
-public:
-    /* 0x00 */ s32 _0;
-    /* 0x04 */ s32 _4;
-    /* 0x08 */ LMDvdFileInfo* _8;
-    /* 0x10 */ u8 _10[0x2C - 0x10];
+    void closeFile(void*, LMDvdFileInfo*);
 };
 
-void* LMDvdFileOpen(const char*, u8*);
-void* LMDvdFileOpen(const char*, LMDvdFileInfoCallback, u8*, s32);
-void* fn_80006930(const char*, u8*);
-JKRMemArchive* LMOpenMemArchive(const char*, void*);
-u8* fn_80006258(u32, int);
-
-extern BOOL lbl_804D8028;
+extern s32 sFileDataError;
+extern void decompressFile(void*, LMDvdFileInfo*);
+extern void mountFileFromArchive(void*, LMDvdFileInfo*);
+extern void decompressAndMountArchive(void*, LMDvdFileInfo*);
 
 #endif
