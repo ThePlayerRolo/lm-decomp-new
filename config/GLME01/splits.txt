@@ -27,7 +27,7 @@ System/LMDvdThread.cpp:
 	.text       start:0x80006DF0 end:0x80007018
 	.bss        start:0x8039CE60 end:0x8039F2A0
 
-Unsorted/80007018.cpp:
+System/LMBackgroundTask.cpp:
 	.text       start:0x80007018 end:0x800071C0
 	.bss        start:0x8039F2A0 end:0x803A3600
 

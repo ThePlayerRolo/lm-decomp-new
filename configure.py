@@ -794,13 +794,13 @@ config.libs = [
         # System
         Object(NonMatching, "System/LMDvdFile.cpp"),
         Object(NonMatching, "System/LMDvdThread.cpp"),
+        Object(NonMatching, "System/LMBackgroundTask.cpp"),
         Object(NonMatching, "System/Yay0.cpp"),
 
         # Unsorted
         Object(NonMatching, "Unsorted/bootScene.cpp"),
         Object(NonMatching, "Unsorted/TitleScene.cpp"),
         Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
-        Object(NonMatching, "Unsorted/80007018.cpp"),
         Object(NonMatching, "Unsorted/80005EB8.cpp"),
         Object(NonMatching, "Unsorted/MoveObj.cpp"),
         Object(NonMatching, "Unsorted/Character.cpp"),

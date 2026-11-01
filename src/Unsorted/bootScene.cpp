@@ -5,7 +5,7 @@
 #include <JSystem/J2D/J2DOrthoGraph.hpp>
 
 #include "Unsorted/bootScene.hpp"
-#include "Unsorted/80007018.hpp"
+#include "System/LMBackgroundTask.hpp"
 #include "Unsorted/LMDisplayUtil.hpp"
 #include "Unsorted/staticDataAramData.h"
 #include "Unsorted/80005EB8.hpp"
@@ -158,12 +158,12 @@ namespace BootScene {
         u32 ret;
         switch (sCurBootSceneState) {
         case STATE_0:
-            fn_80007040(loadStaticData);
+            LMBackgroundTask::start(loadStaticData);
             fn_80007F28();
             sCurBootSceneState = STATE_1;
             return 0;
         case STATE_1:
-            if (fn_80007090() == 0) {
+            if (LMBackgroundTask::pollDone() == 0) {
                 return 0;
             }
             lbl_804D8110 = 1;
