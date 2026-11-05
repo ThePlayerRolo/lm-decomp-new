@@ -41,7 +41,7 @@ u8* openDiscFile(const char*, u8*);
 u8* openDiscFileAsync(const char*, DiscFileCallback, u8*, void*);
 u8* openCompressedArchiveAsync(const char*, DiscFileCallback, u8*, void*);
 u8* openCompressedArchive(const char*, u8*);
-JKRMemArchive* openMemArchive(const char*, void*);
+JKRMemArchive* openMemArchive(const char*, u8*);
 u8* openArchiveAsync(const char*, DiscFileCallback, u8*, void*);
 
 void* getDiscFileCallbackArg(DiscFileInfo*);

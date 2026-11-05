@@ -3,12 +3,12 @@
 
 #include <types.h>
 
-class DiscFileInfo;
+struct DiscFileInfo;
 struct DiscThread;
 
 void initDiscThread();
 void sendDiscRequest(DiscFileInfo*);
-void createDvdThreadCallback(DiscThread*);
+void* createDvdThreadCallback(void*);
 void initDvdThread(DiscThread*);
 
 #endif

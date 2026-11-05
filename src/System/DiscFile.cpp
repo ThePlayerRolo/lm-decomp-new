@@ -92,7 +92,7 @@ void getNextSlot(DiscFileQueue* pQueue) {
     OSReceiveMessage(&pQueue->mCurrFileInfo->mMsgQueue, nullptr, OS_MESSAGE_NOBLOCK);
 }
 
-bool openFile(DiscFileQueue* pQueue, const char* pFileName, u8* pBuffer) {
+bool openDiscFileFromQueue(DiscFileQueue* pQueue, const char* pFileName, u8* pBuffer) {
     // TODO Remove this
     FORCE_DONT_INLINE
     DiscFileInfo* info = pQueue->mCurrFileInfo;
@@ -113,7 +113,7 @@ bool openFile(DiscFileQueue* pQueue, const char* pFileName, u8* pBuffer) {
 }
 
 // https://decomp.me/scratch/Ro97O
-void* openFileAsync(DiscFileQueue* pQueue, const char* pFileName, DiscFileCallback pCallback, u8* pBuffer, void* pCallbackArg) {
+void* openDiscFileFromQueueAsync(DiscFileQueue* pQueue, const char* pFileName, DiscFileCallback pCallback, u8* pBuffer, void* pCallbackArg) {
     // TODO Remove this
     FORCE_DONT_INLINE
     pQueue->mCurrFileInfo->mCallback = pCallback;
@@ -157,12 +157,12 @@ void initDiscFiles() {
     sFileInfoRing[MAX_FILE_INFO_ARR - 1]._7C = getDiscFileInfoRing();
 }
 
-u8* openFile(const char* pFileName, u8* pBuffer) {
+u8* openDiscFile(const char* pFileName, u8* pBuffer) {
     getNextSlot(&sDiscFileQueue);
     sDiscFileQueue.mCurrFileInfo->mCallback = nullptr;
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = nullptr;
 
-    if (openFile(&sDiscFileQueue, pFileName, pBuffer)) {
+    if (openDiscFileFromQueue(&sDiscFileQueue, pFileName, pBuffer)) {
         sDiscFileQueue._0++;
     }
 
@@ -174,7 +174,7 @@ u8* openFile(const char* pFileName, u8* pBuffer) {
 }
 
 //https://decomp.me/scratch/YKS45
-u8* openFile(const char* pFileName, DiscFileCallback pCallback, u8* pBuffer, void* pCallbackArg) {
+u8* openDiscFileAsync(const char* pFileName, DiscFileCallback pCallback, u8* pBuffer, void* pCallbackArg) {
     u8* ret;
 
     // Seems like inlined init, though based on LMDvdFileOpen it could not be?
@@ -197,7 +197,7 @@ u8* openFile(const char* pFileName, DiscFileCallback pCallback, u8* pBuffer, voi
     sDiscFileQueue.mCurrFileInfo->mCallback = pCallback;
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = pCallbackArg;
 
-    if (openFile(&sDiscFileQueue, pFileName, pBuffer)) {
+    if (openDiscFileFromQueue(&sDiscFileQueue, pFileName, pBuffer)) {
         sDiscFileQueue._0++;
         ret = sDiscFileQueue.mCurrFileInfo->mFileBuffer;
     }
@@ -206,7 +206,7 @@ u8* openFile(const char* pFileName, DiscFileCallback pCallback, u8* pBuffer, voi
 }
 
 //https://decomp.me/scratch/KlViD
-u8* openCompressedArchive(const char* pFileName, DiscFileCallback pCallback, u8* pArchiveBuffer, void* pCallbackArg) {
+u8* openCompressedArchiveAsync(const char* pFileName, DiscFileCallback pCallback, u8* pArchiveBuffer, void* pCallbackArg) {
     // Loads a Yay0-compressed archive and attempts to unpack it before mounting it.
     sDiscFileQueue.mAllocDirection = ALLOC_DIR_TAIL;
     // Seems like inlined init, though based on LMDvdFileOpen it could not be?
@@ -239,7 +239,7 @@ u8* openCompressedArchive(const char* pFileName, DiscFileCallback pCallback, u8*
     sDiscFileQueue.mCurrFileInfo->mCallback = pCallback;
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = pCallbackArg;
 
-    if (openFile(&sDiscFileQueue, pFileName, nullptr)) {
+    if (openDiscFileFromQueue(&sDiscFileQueue, pFileName, nullptr)) {
         sDiscFileQueue._0++;
     }
     sDiscFileQueue.mAllocDirection = ALLOC_DIR_HEAD;
@@ -251,7 +251,7 @@ u8* openCompressedArchive(const char* pFileName, DiscFileCallback pCallback, u8*
 }
 
 u8* openCompressedArchive(const char* pFileName, u8* pBuffer) {
-    u8* data = openCompressedArchive(pFileName, nullptr, pBuffer, nullptr);
+    u8* data = openCompressedArchiveAsync(pFileName, nullptr, pBuffer, nullptr);
     u32 msg;
     OSReceiveMessage(&sDiscFileQueue.mCurrFileInfo->mMsgQueue, &msg, OS_MESSAGE_BLOCK);
     return data;
@@ -264,7 +264,7 @@ JKRMemArchive* openMemArchive(const char* pFileName, u8* pBuffer) {
     u32 msg[8];
 
     getNextSlot(&sDiscFileQueue);
-    openFileAsync(&sDiscFileQueue, pFileName, nullptr, pBuffer, nullptr);
+    openDiscFileFromQueueAsync(&sDiscFileQueue, pFileName, nullptr, pBuffer, nullptr);
 
     OSReceiveMessage(&sDiscFileQueue.mCurrFileInfo->mMsgQueue, &msg, OS_MESSAGE_BLOCK);
     buffer = sDiscFileQueue.mCurrFileInfo->mFileBuffer;
@@ -274,7 +274,7 @@ JKRMemArchive* openMemArchive(const char* pFileName, u8* pBuffer) {
     return archive;
 }
 
-u8* openArchive(const char* pFileName, DiscFileCallback pCallback, u8* pBuffer, void* pCallbackArg) {
+u8* openArchiveAsync(const char* pFileName, DiscFileCallback pCallback, u8* pBuffer, void* pCallbackArg) {
     // Loads an uncompressed RARC archive and mounts it directly.
     sDiscFileQueue.mAllocDirection = ALLOC_DIR_HEAD;
     // Seems like inlined init, though based on LMDvdFileOpen it could not be?
@@ -306,7 +306,7 @@ u8* openArchive(const char* pFileName, DiscFileCallback pCallback, u8* pBuffer, 
     sDiscFileQueue.mCurrFileInfo->mCallback = pCallback;
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = pCallbackArg;
 
-    if (openFile(&sDiscFileQueue, pFileName, pBuffer)) {
+    if (openDiscFileFromQueue(&sDiscFileQueue, pFileName, pBuffer)) {
         sDiscFileQueue._0++;
     }
 
