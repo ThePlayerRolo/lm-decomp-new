@@ -1,3 +1,5 @@
+#include <dolphin/os/OSMessage.h>
+
 #include "System/DiscFile.hpp"
 #include "System/Yay0.hpp"
 #include "System/DiscThread.hpp"
@@ -5,11 +7,17 @@
 #include "Unsorted/GamePad.hpp"
 #include "Unsorted/80005EB8.hpp"
 
+struct DiscUnk {
+    /* 0x00 */ u8 _0[0x14];
+    /* 0x14 */ OSMessage mMsg;
+    /* 0x18 */ u32 _18;
+};
+
 struct DiscFileQueue {
     /* 0x00 */ s32 _0;
     /* 0x04 */ AllocDirection mAllocDirection;
     /* 0x08 */ DiscFileInfo* mCurrFileInfo;
-    /* 0x10 */ u8 _10[0x2C - 0x10];
+    /* 0x0C */ DiscUnk _C;
 };
 
 static DiscFileInfo sFileInfoRing[MAX_FILE_INFO_ARR];
@@ -261,12 +269,12 @@ u8* openCompressedArchive(const char* pFileName, u8* pBuffer) {
 JKRMemArchive* openMemArchive(const char* pFileName, u8* pBuffer) {
     void* buffer;
     JKRMemArchive* archive;
-    u32 msg[8];
+    DiscUnk unk;
 
     getNextSlot(&sDiscFileQueue);
     queueOpenDiscFileAsync(&sDiscFileQueue, pFileName, nullptr, pBuffer, nullptr);
 
-    OSReceiveMessage(&sDiscFileQueue.mCurrFileInfo->mMsgQueue, &msg, OS_MESSAGE_BLOCK);
+    OSReceiveMessage(&sDiscFileQueue.mCurrFileInfo->mMsgQueue, &unk.mMsg, OS_MESSAGE_BLOCK);
     buffer = sDiscFileQueue.mCurrFileInfo->mFileBuffer;
 
     archive = new JKRMemArchive();
