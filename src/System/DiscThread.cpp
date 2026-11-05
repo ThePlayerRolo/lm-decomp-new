@@ -12,7 +12,7 @@ struct DiscThread : public OSThread {
     /* 0x430 */ DiscFileInfo* mCurrFileInfo;
 };
 
-static u8 sDvdThreadStack[0x2000];
+static u8 sDvdThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
 static DiscThread sDvdThread;
 
 void initDiscThread() {

@@ -7,7 +7,7 @@ Sections:
 	.dtors      type:rodata align:16
 	.rodata     type:rodata align:32
 	.data       type:data align:16
-	.bss        type:bss align:16
+	.bss        type:bss align:32
 	.sdata      type:data align:8
 	.sbss       type:bss align:16
 	.sdata2     type:rodata align:32

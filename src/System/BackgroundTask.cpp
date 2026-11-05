@@ -12,7 +12,7 @@ struct BackgroundTask : public OSThread {
     /* 0x358 */ BackgroundTaskFunc mCallback;
 };
 
-static u8 sBackgroundTaskStack[0x4000];
+static u8 sBackgroundTaskStack[0x4000] ATTRIBUTE_ALIGN(32);
 static BackgroundTask sBackgroundTask;
 
 void initBackgroundTask() {
