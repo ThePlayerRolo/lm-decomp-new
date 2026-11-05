@@ -6,8 +6,8 @@
 #include "System/DiscFile.hpp"
 
 struct DiscThread : public OSThread {
-    /* 0x310 */ OSMessageQueue _310;
-    /* 0x330 */ void* _330[64];
+    /* 0x310 */ OSMessageQueue mMsgQueue;
+    /* 0x330 */ void* mMsgs[64];
     /* 0x430 */ DiscFileInfo* mFileInfoArray;
 };
 
@@ -19,7 +19,7 @@ void initDiscThread() {
 }
 
 void sendDiscRequest(DiscFileInfo* pInfo) {
-    OSSendMessage(&sDvdThread._310, pInfo, OS_MESSAGE_BLOCK);
+    OSSendMessage(&sDvdThread.mMsgQueue, pInfo, OS_MESSAGE_BLOCK);
 }
 
 void* createDvdThreadCallback(void* pPtr) {
@@ -27,7 +27,7 @@ void* createDvdThreadCallback(void* pPtr) {
 
     while (true) {
         void* msg;
-        OSReceiveMessage(&sDvdThread._310, &msg, OS_MESSAGE_BLOCK);
+        OSReceiveMessage(&sDvdThread.mMsgQueue, &msg, OS_MESSAGE_BLOCK);
 
         DiscFileInfo* info = (DiscFileInfo*)msg;
 
@@ -71,7 +71,7 @@ void* createDvdThreadCallback(void* pPtr) {
 }
 
 void initDvdThread(DiscThread* thread) {
-    OSInitMessageQueue(&thread->_310, thread->_330, ARRAY_COUNT(thread->_330));
+    OSInitMessageQueue(&thread->mMsgQueue, thread->mMsgs, ARRAY_COUNT(thread->mMsgs));
     thread->mFileInfoArray = getDiscFileInfoRing();
     u32 size = sizeof(sDvdThreadStack);
     OSCreateThread(thread, createDvdThreadCallback, nullptr, &sDvdThreadStack[size], size, 10, OS_THREAD_ATTR_DETACH);
