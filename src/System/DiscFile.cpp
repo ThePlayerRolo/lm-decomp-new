@@ -7,6 +7,7 @@
 #include "Unsorted/GamePad.hpp"
 #include "Unsorted/80005EB8.hpp"
 
+// Possibly Fabricated.
 struct DiscUnk {
     /* 0x00 */ u8 _0[0x14];
     /* 0x14 */ OSMessage mMsg;
