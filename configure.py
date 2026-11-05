@@ -794,7 +794,7 @@ config.libs = [
         # System
         Object(NonMatching, "System/LMDvdFile.cpp"),
         Object(NonMatching, "System/LMDvdThread.cpp"),
-        Object(NonMatching, "System/LMBackgroundTask.cpp"),
+        Object(NonMatching, "System/BackgroundTask.cpp"),
         Object(NonMatching, "System/Yay0.cpp"),
 
         # Unsorted
