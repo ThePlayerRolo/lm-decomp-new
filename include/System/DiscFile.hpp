@@ -1,6 +1,7 @@
 #ifndef DISC_FILE_HPP
 #define DISC_FILE_HPP
 
+#include "dolphin/os/OSMessage.h"
 #include <JSystem/JKernel/JKRMemArchive.hpp>
 #include <dolphin.h>
 
@@ -19,7 +20,7 @@ typedef void (*DiscFileCallback)(void* param_1, DiscFileInfo* param_2);
 
 struct DiscFileInfo : public DVDFileInfo {
     /* 0x3C */ OSMessageQueue mMsgQueue;
-    /* 0x5C */ s32 _5C;
+    /* 0x5C */ OSMessage mMsg;
     /* 0x60 */ s32 mAlignedFileSize;
     /* 0x64 */ u8* mFileBuffer;
     /* 0x68 */ u8* mDecompBuffer;

@@ -150,7 +150,7 @@ void initDiscFiles() {
 
     for (s32 i = 0; i < MAX_FILE_INFO_ARR; i++) {
         curIndex->mNext = &sFileInfoRing[i + 1];
-        OSInitMessageQueue(&curIndex->mMsgQueue, &curIndex->_5C, 1);
+        OSInitMessageQueue(&curIndex->mMsgQueue, &curIndex->mMsg, 1);
         curIndex++;
     }
 
