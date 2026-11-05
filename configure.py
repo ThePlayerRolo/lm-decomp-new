@@ -793,7 +793,7 @@ config.libs = [
 
         # System
         Object(NonMatching, "System/DiscFile.cpp"),
-        Object(Matching, "System/DiscThread.cpp"),
+        Object(NonMatching, "System/DiscThread.cpp"),
         Object(Matching, "System/BackgroundTask.cpp"),
         Object(NonMatching, "System/Yay0.cpp"),
 
