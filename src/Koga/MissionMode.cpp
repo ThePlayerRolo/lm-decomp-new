@@ -13,7 +13,7 @@
 #include "Koga/SimpleModeler.hpp"
 #include "Koga/ToolData.hpp"
 
-#include "System/LMDvdFile.hpp"
+#include "System/DiscFile.hpp"
 
 dummy_float_data()
 
@@ -75,7 +75,7 @@ namespace Koga {
         char mapName[128];
 
         sprintf(mapName, "%s%d.szp", "/Map/map", sCurMapNo);
-        mMapArchive = reinterpret_cast<JKRArchive*>(LMDvdFile::openCompressedArchive(mapName, nullptr));
+        mMapArchive = reinterpret_cast<JKRArchive*>(openCompressedArchive(mapName, nullptr));
 
         mEnMgr->loadCharacterInfo(mMapArchive);
         s32 jmpFileCount = mMapArchive->countFile("/jmp") - 2;
