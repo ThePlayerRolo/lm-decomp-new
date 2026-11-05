@@ -1,5 +1,6 @@
 #include <JSystem/JKernel/JKRArchive.hpp>
 #include <dolphin/os/OSFastCast.h>
+#include <dolphin/os/OSMessage.h>
 
 #include "System/DiscThread.hpp"
 #include "Unsorted/80005EB8.hpp"
@@ -7,22 +8,22 @@
 
 struct DiscThread : public OSThread {
     /* 0x310 */ OSMessageQueue mMsgQueue;
-    /* 0x330 */ void* mMsgs[64];
-    /* 0x430 */ DiscFileInfo* mFileInfoArray;
+    /* 0x330 */ OSMessage mMsgs[MAX_FILE_INFO_ARR];
+    /* 0x430 */ DiscFileInfo* mCurrFileInfo;
 };
 
 static u8 sDvdThreadStack[0x2000];
 static DiscThread sDvdThread;
 
 void initDiscThread() {
-    initDvdThread(&sDvdThread);
+    initDiscThread(&sDvdThread);
 }
 
 void sendDiscRequest(DiscFileInfo* pInfo) {
     OSSendMessage(&sDvdThread.mMsgQueue, pInfo, OS_MESSAGE_BLOCK);
 }
 
-void* createDvdThreadCallback(void* pPtr) {
+void* createDiscThreadCallback(void* pPtr) {
     OSInitFastCast();
 
     while (true) {
@@ -63,17 +64,17 @@ void* createDvdThreadCallback(void* pPtr) {
 
                 fn_800061B8(groupId);
 
-                sDvdThread.mFileInfoArray = sDvdThread.mFileInfoArray->_7C;
+                sDvdThread.mCurrFileInfo = sDvdThread.mCurrFileInfo->mNext;
             }
             break;
         }
     }
 }
 
-void initDvdThread(DiscThread* thread) {
+void initDiscThread(DiscThread* thread) {
     OSInitMessageQueue(&thread->mMsgQueue, thread->mMsgs, ARRAY_COUNT(thread->mMsgs));
-    thread->mFileInfoArray = getDiscFileInfoRing();
+    thread->mCurrFileInfo = getDiscFileInfoRing();
     u32 size = sizeof(sDvdThreadStack);
-    OSCreateThread(thread, createDvdThreadCallback, nullptr, &sDvdThreadStack[size], size, 10, OS_THREAD_ATTR_DETACH);
+    OSCreateThread(thread, createDiscThreadCallback, nullptr, &sDvdThreadStack[size], size, 10, OS_THREAD_ATTR_DETACH);
     OSResumeThread(thread);
 }

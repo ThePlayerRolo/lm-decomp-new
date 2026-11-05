@@ -2,12 +2,13 @@
 #include <dolphin/os/OSFastCast.h>
 
 #include "System/BackgroundTask.hpp"
+#include "dolphin/os/OSMessage.h"
 
 struct BackgroundTask : public OSThread {
     /* 0x310 */ OSMessageQueue mMsgSendQueue;
-    /* 0x330 */ s32 _330;
+    /* 0x330 */ OSMessage mSendMsg;
     /* 0x334 */ OSMessageQueue mMsgRecvQueue;
-    /* 0x354 */ s32 _354;
+    /* 0x354 */ OSMessageQueue mRecvMsg;
     /* 0x358 */ BackgroundTaskFunc mCallback;
 };
 
@@ -43,8 +44,8 @@ void* createBackgroundTaskThreadCallback(void*) {
 }
 
 void initBackgroundTaskInternal(BackgroundTask* thread) {
-    OSInitMessageQueue(&thread->mMsgSendQueue, &thread->_330, 1);
-    OSInitMessageQueue(&thread->mMsgRecvQueue, &thread->_354, 1);
+    OSInitMessageQueue(&thread->mMsgSendQueue, &thread->mSendMsg, 1);
+    OSInitMessageQueue(&thread->mMsgRecvQueue, &thread->mRecvMsg, 1);
     u32 size = sizeof(sBackgroundTaskStack);
     OSCreateThread(thread, createBackgroundTaskThreadCallback, nullptr, &sBackgroundTaskStack[size], size, 17, OS_THREAD_ATTR_DETACH);
     OSResumeThread(thread);

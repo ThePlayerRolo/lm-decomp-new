@@ -27,7 +27,7 @@ struct DiscFileInfo : public DVDFileInfo {
     /* 0x70 */ void* mCallbackArg;
     /* 0x74 */ DiscFileCallback mCallback;
     /* 0x78 */ DiscFileCallback mPostLoadFunc;
-    /* 0x7C */ DiscFileInfo* _7C;
+    /* 0x7C */ DiscFileInfo* mNext;
     /* 0x80 */ u8 mHeapGroupID;
     /* 0x84 */ JKRMemBreakFlag mBufferBreakFlag;
 };
@@ -55,7 +55,7 @@ void setDVDStatus();
 void closeDiscFile(void*, DiscFileInfo*);
 
 void decompressDiscFile(void*, DiscFileInfo*);
-void mountDiscFileFromArchive(void*, DiscFileInfo*);
+void mountDiscArchive(void*, DiscFileInfo*);
 void decompressAndMountDiscArchive(void*, DiscFileInfo*);
 
 extern s32 sFileDataError;

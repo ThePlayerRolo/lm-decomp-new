@@ -8,7 +8,7 @@ struct DiscThread;
 
 void initDiscThread();
 void sendDiscRequest(DiscFileInfo*);
-void* createDvdThreadCallback(void*);
-void initDvdThread(DiscThread*);
+void* createDiscThreadCallback(void*);
+void initDiscThread(DiscThread*);
 
 #endif
