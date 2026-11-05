@@ -3,16 +3,14 @@
 
 #include <types.h>
 
-namespace LMYay0 {
-    struct Yay0Header {
-        /* 0x00 */ u32 mMagic;
-        /* 0x04 */ u32 mSize;
-        /* 0x08 */ u32 mLinkOffset;
-        /* 0x0C */ u32 mDataOffset;
-    };
+struct Yay0Header {
+    /* 0x00 */ u32 mMagic;
+    /* 0x04 */ u32 mSize;
+    /* 0x08 */ u32 mLinkOffset;
+    /* 0x0C */ u32 mDataOffset;
+};
     
-    s32 getArcSize(const u8*);
-    void decompress(const u8*, u8*);
-}
+s32 getYay0ArcSize(const u8*);
+void decompressYay0(const u8*, u8*);
 
 #endif
