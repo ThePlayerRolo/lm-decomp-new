@@ -7,24 +7,17 @@
 #include "Unsorted/GamePad.hpp"
 #include "Unsorted/80005EB8.hpp"
 
-// Possibly Fabricated.
-struct DiscUnk {
-    /* 0x00 */ u8 _0[0x14];
-    /* 0x14 */ OSMessage mMsg;
-    /* 0x18 */ u32 _18;
-};
-
-struct DiscFileQueue {
-    /* 0x00 */ s32 _0;
-    /* 0x04 */ AllocDirection mAllocDirection;
-    /* 0x08 */ DiscFileInfo* mCurrFileInfo;
-    /* 0x0C */ DiscUnk _C;
-};
+static void updateDiscDriveStatus(DiscFileQueue*);
+static void getNextSlot(DiscFileQueue*);
+static bool queueOpenDiscFile(DiscFileQueue*, const char*, u8*);
+static void* queueOpenDiscFileAsync(DiscFileQueue*, const char*, DiscFileCallback, u8*, void*);
+static void decompressDiscFile(void*, DiscFileInfo*);
+static void mountDiscArchive(void*, DiscFileInfo*);
+static void decompressAndMountDiscArchive(void*, DiscFileInfo*);
 
 static DiscFileInfo sFileInfoRing[MAX_FILE_INFO_ARR];
 static DiscFileQueue sDiscFileQueue;
 s32 sFileDataError;
-
 
 void* allocDiscFile(u32 size, s32 align) {
     return fn_80006080(size, align);
@@ -142,7 +135,7 @@ void* queueOpenDiscFileAsync(DiscFileQueue* pQueue, const char* pFileName, DiscF
     pQueue->mCurrFileInfo->mFileBuffer = pBuffer;
 
     sendDiscRequest(pQueue->mCurrFileInfo);
-    pQueue->_0++;
+    pQueue->mNumPendingFiles++;
 
     return pQueue->mCurrFileInfo->mFileBuffer;
 }
@@ -154,7 +147,7 @@ void initDiscFiles() {
     DiscFileInfo* curIndex = getDiscFileInfoRing();
 
     sDiscFileQueue.mAllocDirection = ALLOC_DIR_HEAD;
-    sDiscFileQueue._0 = 0;
+    sDiscFileQueue.mNumPendingFiles = 0;
     sDiscFileQueue.mCurrFileInfo = getDiscFileInfoRing();
 
     for (s32 i = 0; i < MAX_FILE_INFO_ARR; i++) {
@@ -172,7 +165,7 @@ u8* openDiscFile(const char* pFileName, u8* pBuffer) {
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = nullptr;
 
     if (queueOpenDiscFile(&sDiscFileQueue, pFileName, pBuffer)) {
-        sDiscFileQueue._0++;
+        sDiscFileQueue.mNumPendingFiles++;
     }
 
     u32 msg;
@@ -207,7 +200,7 @@ u8* openDiscFileAsync(const char* pFileName, DiscFileCallback pCallback, u8* pBu
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = pCallbackArg;
 
     if (queueOpenDiscFile(&sDiscFileQueue, pFileName, pBuffer)) {
-        sDiscFileQueue._0++;
+        sDiscFileQueue.mNumPendingFiles++;
         ret = sDiscFileQueue.mCurrFileInfo->mFileBuffer;
     }
 
@@ -249,7 +242,7 @@ u8* openCompressedArchiveAsync(const char* pFileName, DiscFileCallback pCallback
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = pCallbackArg;
 
     if (queueOpenDiscFile(&sDiscFileQueue, pFileName, nullptr)) {
-        sDiscFileQueue._0++;
+        sDiscFileQueue.mNumPendingFiles++;
     }
     sDiscFileQueue.mAllocDirection = ALLOC_DIR_HEAD;
 
@@ -316,7 +309,7 @@ u8* openArchiveAsync(const char* pFileName, DiscFileCallback pCallback, u8* pBuf
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = pCallbackArg;
 
     if (queueOpenDiscFile(&sDiscFileQueue, pFileName, pBuffer)) {
-        sDiscFileQueue._0++;
+        sDiscFileQueue.mNumPendingFiles++;
     }
 
     return reinterpret_cast<u8*>(ret);
@@ -339,7 +332,7 @@ JKRMemArchive* getDiscFileArchiveBuffer(DiscFileInfo* pInfo) {
 }
 
 s32 checkDiscFileCurUnk0() {
-    return sDiscFileQueue._0 != 0;
+    return sDiscFileQueue.mNumPendingFiles != 0;
 }
 
 s32 getDiscFileAllocDirection() {
@@ -350,21 +343,19 @@ void setDVDStatus() {
     updateDiscDriveStatus(&sDiscFileQueue);
 }
 
-void closeDiscFile(void *pMsg, DiscFileInfo* pInfo) {
-    sDiscFileQueue._0--;
+void closeDiscFile(OSMessage pMsg, DiscFileInfo* pInfo) {
+    sDiscFileQueue.mNumPendingFiles--;
     DVDClose(pInfo);
-
-    //Required to fix regalloc
-    void* msg = pMsg;
+    OSMessage msg = pMsg;
 
     switch (DVDGetCommandBlockStatus(&pInfo->cb)) {
-        case 0:
+        case DVD_RESULT_GOOD:
             break;
-        case 10:
+        case DVD_STATE_CANCELED:
             pInfo->mPostLoadFunc = nullptr;
             pInfo->mCallback = nullptr;
             return;
-        case -1:
+        case DVD_RESULT_FATAL_ERROR:
             pInfo->mPostLoadFunc = nullptr;
             pInfo->mCallback = nullptr;
             return;

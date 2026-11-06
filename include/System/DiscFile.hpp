@@ -1,13 +1,12 @@
 #ifndef DISC_FILE_HPP
 #define DISC_FILE_HPP
 
-#include "dolphin/os/OSMessage.h"
-#include <JSystem/JKernel/JKRMemArchive.hpp>
-#include <dolphin.h>
+#include <dolphin/dvd.h>
+#include <dolphin/os/OSMessage.h>
 
-class JKRMemArchive;
-class DiscFileInfo;
-struct DiscFileQueue;
+#include <JSystem/JKernel/JKRMemArchive.hpp>
+
+struct DiscFileInfo;
 
 enum AllocDirection {
     ALLOC_DIR_TAIL = -1,
@@ -33,10 +32,21 @@ struct DiscFileInfo : public DVDFileInfo {
     /* 0x84 */ JKRMemBreakFlag mBufferBreakFlag;
 };
 
+// Possibly Fabricated.
+struct DiscUnk {
+    /* 0x00 */ u8 _0[0x14];
+    /* 0x14 */ OSMessage mMsg;
+    /* 0x18 */ u32 _18;
+};
+
+struct DiscFileQueue {
+    /* 0x00 */ s32 mNumPendingFiles;
+    /* 0x04 */ AllocDirection mAllocDirection;
+    /* 0x08 */ DiscFileInfo* mCurrFileInfo;
+};
+
 void* allocDiscFile(u32, s32);
 DiscFileInfo* getDiscFileInfoRing();
-void updateDiscDriveStatus(DiscFileQueue*);
-void getNextSlot(DiscFileQueue*);
 void initDiscFiles();
 u8* openDiscFile(const char*, u8*);
 u8* openDiscFileAsync(const char*, DiscFileCallback, u8*, void*);
@@ -53,11 +63,7 @@ JKRMemArchive* getDiscFileArchiveBuffer(DiscFileInfo*);
 s32 checkDiscFileCurUnk0();
 s32 getDiscFileAllocDirection();
 void setDVDStatus();
-void closeDiscFile(void*, DiscFileInfo*);
-
-void decompressDiscFile(void*, DiscFileInfo*);
-void mountDiscArchive(void*, DiscFileInfo*);
-void decompressAndMountDiscArchive(void*, DiscFileInfo*);
+void closeDiscFile(OSMessage, DiscFileInfo*);
 
 extern s32 sFileDataError;
 
