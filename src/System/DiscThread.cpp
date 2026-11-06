@@ -1,22 +1,18 @@
 #include <JSystem/JKernel/JKRArchive.hpp>
 #include <dolphin/os/OSFastCast.h>
-#include <dolphin/os/OSMessage.h>
 
 #include "System/DiscThread.hpp"
 #include "Unsorted/80005EB8.hpp"
 #include "System/DiscFile.hpp"
 
-struct DiscThread : public OSThread {
-    /* 0x310 */ OSMessageQueue mMsgQueue;
-    /* 0x330 */ OSMessage mMsgs[MAX_FILE_INFO_ARR];
-    /* 0x430 */ DiscFileInfo* mCurrFileInfo;
-};
+static void* createDiscThreadCallback(void*);
+static void initDiscThreadInternal(DiscThread*);
 
 static u8 sDvdThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
 static DiscThread sDvdThread;
 
 void initDiscThread() {
-    initDiscThread(&sDvdThread);
+    initDiscThreadInternal(&sDvdThread);
 }
 
 void sendDiscRequest(DiscFileInfo* pInfo) {
@@ -47,9 +43,8 @@ void* createDiscThreadCallback(void* pPtr) {
         s32 readResult = DVDReadPrio(info, info->mFileBuffer, info->mAlignedFileSize, 0, 2);
         switch (readResult) {
             case DVD_RESULT_FATAL_ERROR:
-            case -3:
+            case DVD_RESULT_CANCELED:
                 break;
-            case DVD_RESULT_IGNORED:
             default:
             closeDiscFile(nullptr, info);
             u8 groupId = fn_800061B8(info->mHeapGroupID);
@@ -71,7 +66,7 @@ void* createDiscThreadCallback(void* pPtr) {
     }
 }
 
-void initDiscThread(DiscThread* thread) {
+void initDiscThreadInternal(DiscThread* thread) {
     OSInitMessageQueue(&thread->mMsgQueue, thread->mMsgs, ARRAY_COUNT(thread->mMsgs));
     thread->mCurrFileInfo = getDiscFileInfoRing();
     u32 size = sizeof(sDvdThreadStack);
