@@ -7,6 +7,19 @@
 #include "Unsorted/GamePad.hpp"
 #include "Unsorted/80005EB8.hpp"
 
+// Possibly Fabricated.
+struct DiscUnk {
+    /* 0x00 */ u8 _0[0x14];
+    /* 0x14 */ OSMessage mMsg;
+    /* 0x18 */ u32 _18;
+};
+
+struct DiscFileQueue {
+    /* 0x00 */ s32 mNumPendingFiles;
+    /* 0x04 */ AllocDirection mAllocDirection;
+    /* 0x08 */ DiscFileInfo* mCurrFileInfo;
+};
+
 static void updateDiscDriveStatus(DiscFileQueue*);
 static void getNextSlot(DiscFileQueue*);
 static bool queueOpenDiscFile(DiscFileQueue*, const char*, u8*);

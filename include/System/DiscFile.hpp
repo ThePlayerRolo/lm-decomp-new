@@ -32,19 +32,6 @@ struct DiscFileInfo : public DVDFileInfo {
     /* 0x84 */ JKRMemBreakFlag mBufferBreakFlag;
 };
 
-// Possibly Fabricated.
-struct DiscUnk {
-    /* 0x00 */ u8 _0[0x14];
-    /* 0x14 */ OSMessage mMsg;
-    /* 0x18 */ u32 _18;
-};
-
-struct DiscFileQueue {
-    /* 0x00 */ s32 mNumPendingFiles;
-    /* 0x04 */ AllocDirection mAllocDirection;
-    /* 0x08 */ DiscFileInfo* mCurrFileInfo;
-};
-
 void* allocDiscFile(u32, s32);
 DiscFileInfo* getDiscFileInfoRing();
 void initDiscFiles();
