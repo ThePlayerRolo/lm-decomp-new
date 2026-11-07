@@ -5,6 +5,12 @@
 #include "Unsorted/80005EB8.hpp"
 #include "System/DiscFile.hpp"
 
+struct DiscThread : public OSThread {
+    /* 0x310 */ OSMessageQueue mMsgQueue;
+    /* 0x330 */ OSMessage mMsgs[MAX_FILE_INFO_ARR];
+    /* 0x430 */ DiscFileInfo* mCurrFileInfo;
+};
+
 static void* createDiscThreadCallback(void*);
 static void initDiscThreadInternal(DiscThread*);
 

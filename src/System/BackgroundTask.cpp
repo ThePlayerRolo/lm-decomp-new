@@ -1,6 +1,15 @@
 #include <dolphin/os/OSFastCast.h>
+#include <dolphin/os/OSMessage.h>
 
 #include "System/BackgroundTask.hpp"
+
+struct BackgroundTask : public OSThread {
+    /* 0x310 */ OSMessageQueue mMsgSendQueue;
+    /* 0x330 */ OSMessage mSendMsg;
+    /* 0x334 */ OSMessageQueue mMsgRecvQueue;
+    /* 0x354 */ OSMessage mRecvMsg;
+    /* 0x358 */ BackgroundTaskFunc mCallback;
+};
 
 static void* createBackgroundTaskThreadCallback(void*);
 static void initBackgroundTaskInternal(BackgroundTask*);
