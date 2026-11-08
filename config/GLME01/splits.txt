@@ -7,7 +7,7 @@ Sections:
 	.dtors      type:rodata align:16
 	.rodata     type:rodata align:32
 	.data       type:data align:16
-	.bss        type:bss align:16
+	.bss        type:bss align:32
 	.sdata      type:data align:8
 	.sbss       type:bss align:16
 	.sdata2     type:rodata align:32
@@ -17,21 +17,21 @@ Unsorted/80005EB8.cpp:
 	.sdata      start:0x804CFF68 end:0x804CFF70
 	.sbss       start:0x804D8010 end:0x804D8028
 
-Unsorted/LMDvdFile.cpp:
+System/DiscFile.cpp:
 	.text       start:0x80006258 end:0x80006DF0
 	.data       start:0x80218180 end:0x802181B4
 	.bss        start:0x8039AC38 end:0x8039CE60
 	.sbss       start:0x804D8028 end:0x804D8030
 
-Unsorted/80006DF0.cpp:
+System/DiscThread.cpp:
 	.text       start:0x80006DF0 end:0x80007018
 	.bss        start:0x8039CE60 end:0x8039F2A0
 
-Unsorted/80007018.cpp:
+System/BackgroundTask.cpp:
 	.text       start:0x80007018 end:0x800071C0
 	.bss        start:0x8039F2A0 end:0x803A3600
 
-Unsorted/LMDvdFileBlock.cpp:
+System/Yay0.cpp:
 	.text       start:0x800071C0 end:0x80007398
 
 Unsorted/LMDisplayUtil.cpp:
