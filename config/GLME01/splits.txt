@@ -561,6 +561,13 @@ Ajioka/Generators/AGeSimple2.cpp:
 	.sdata      start:0x804D4F10 end:0x804D4F68
 	.sdata2     start:0x804DC010 end:0x804DC028
 
+Ajioka/Generators/AGeMinigame1.cpp:
+	.text       start:0x80111D10 end:0x801125B8
+	.ctors      start:0x8020BCA8 end:0x8020BCAC
+	.data       start:0x8036D320 end:0x8036D538
+	.sdata      start:0x804D4F68 end:0x804D4FB0
+	.sdata2     start:0x804DC028 end:0x804DC030
+
 Sato/SaEnGenUtility.cpp:
 	.text       start:0x80142F88 end:0x801443E8
 	.data       start:0x8037A1D0 end:0x8037A2B0

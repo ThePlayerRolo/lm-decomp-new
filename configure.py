@@ -782,6 +782,7 @@ config.libs = [
         Object(NonMatching, "Ajioka/AEnItems.cpp"),
         Object(NonMatching, "Ajioka/Generators/AGeSimple1.cpp"),
         Object(NonMatching, "Ajioka/Generators/AGeSimple2.cpp"),
+        Object(NonMatching, "Ajioka/Generators/AGeMinigame1.cpp"),
 
         # Koga
         Object(Matching, "Koga/GameModeUtil.cpp"),
