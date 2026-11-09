@@ -12,7 +12,7 @@ public:
     virtual void doBehaviorInit();
 
     // From SaEnGenUtility
-    virtual void SaEnGenUtility_vt08();
+    virtual void receiveMessage(GeneratorEvent* msg);
 
     // ptmf
     bool state_0_Init();

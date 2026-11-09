@@ -1,4 +1,4 @@
-#include "Ajioka/AGeSimple1.hpp"
+#include "Ajioka/Generators/AGeSimple1.hpp"
 #include "macros.h"
 
 dummy_float_data()
@@ -54,7 +54,7 @@ void AGeSimple1::doBehaviorInit() {
         (this->*state->mBehaviorInitFunc)();
     }
 }
-void AGeSimple1::SaEnGenUtility_vt08() {}
+void AGeSimple1::receiveMessage(GeneratorEvent* msg) {}
 bool AGeSimple1::state_0_Init() { return true; }
 bool AGeSimple1::state_0_Behavior() { return true; }
 bool AGeSimple1::state_0x106_Init() { return true; }

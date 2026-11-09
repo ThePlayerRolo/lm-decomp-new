@@ -547,12 +547,19 @@ Ajioka/AEnItems.cpp:
 	.sdata      start:0x804D4DF0 end:0x804D4E88
 	.sdata2     start:0x804DBFC8 end:0x804DBFF8
 
-Ajioka/AGeSimple1.cpp:
+Ajioka/Generators/AGeSimple1.cpp:
 	.text       start:0x80110E54 end:0x801115DC
 	.ctors      start:0x8020BCA0 end:0x8020BCA4
 	.data       start:0x8036CE48 end:0x8036D0F0
 	.sdata      start:0x804D4E88 end:0x804D4F10
 	.sdata2     start:0x804DBFF8 end:0x804DC010
+
+Ajioka/Generators/AGeSimple2.cpp:
+	.text       start:0x801115DC end:0x80111D10
+	.ctors      start:0x8020BCA4 end:0x8020BCA8
+	.data       start:0x8036D0F0 end:0x8036D320
+	.sdata      start:0x804D4F10 end:0x804D4F68
+	.sdata2     start:0x804DC010 end:0x804DC028
 
 Sato/SaEnGenUtility.cpp:
 	.text       start:0x80142F88 end:0x801443E8

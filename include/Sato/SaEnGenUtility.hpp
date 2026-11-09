@@ -13,7 +13,7 @@ public:
     SaEnGenUtility();
     virtual ~SaEnGenUtility();
 
-    virtual void SaEnGenUtility_vt08() = 0;
+    virtual void receiveMessage(GeneratorEvent* msg) = 0;
 };
 
 class SaEnZakoUtility {
