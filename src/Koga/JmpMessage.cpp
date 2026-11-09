@@ -26,7 +26,7 @@ BOOL JmpMessageSender::add(Koga::ToolData* pData) {
 
     if (pData == nullptr) return FALSE;
 
-    _CBC.add(&pData);
+    _CBC.addMember(&pData);
     return true;
 }
 
@@ -39,7 +39,7 @@ BOOL JmpMessageSender::remove(Koga::ToolData* pData) {
     if (pIter == _CBC.getLastMember()) {
         removed = false;
     } else {
-        _CBC.remove(pIter);
+        _CBC.eraseMember(pIter);
         removed = true;
     }
 
@@ -188,9 +188,5 @@ void JmpMessageSender::fn_800EB634(Koga::ToolData* pData, s32 param_2, bool para
         //s32
     }
 }
-
-unkJmpMessageSender1Arr::unkJmpMessageSender1Arr() : _C80(0) { }
-
-unkJmpMessageSender1Arr::~unkJmpMessageSender1Arr() { }
 
 unkJmpMessageSender1::unkJmpMessageSender1() : _0(0) { }

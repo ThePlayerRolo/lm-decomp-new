@@ -1,4 +1,5 @@
 #include <string.h>
+#include <dolphin/macros.h>
 
 #include "Koga/EnemyGenManager.hpp"
 #include "Koga/EnManager.hpp"
@@ -8,6 +9,9 @@
 #include "Koga/ToolData.hpp"
 #include "Sato/EnemyStrategy.hpp"
 #include "Sato/EnZako.hpp"
+#include "macros.h"
+
+dummy_float_data()
 
 EnemyGenerator::EnemyGenerator() {
     fn_800C2500();
@@ -68,7 +72,7 @@ EnZako* EnemyGenerator::fn_800C25F0(s32 param_1, s32 param_2) {
     EnThought* enChar = _810->fn_800E5A80(sVal);
     EnZako* eZako = dynamic_cast<EnZako*>(enChar);
     eZako->set810(this);
-    _820.add(&eZako);
+    _820.addMember(&eZako);
     _860++;
     return eZako;
 }
@@ -235,12 +239,4 @@ namespace Koga {
 
 EnemyStrategy* EnemyGenerator::getGenStrategy() {
     return getStrategy();
-}
-
-void unkEnemyGen1::add(EnZako** pNew) {
-    addMember(pNew);
-}
-
-EnZako** unkEnemyGen1::remove(EnZako** pOld) {
-    return eraseMember(pOld);
 }

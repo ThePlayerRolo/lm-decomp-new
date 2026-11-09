@@ -2,21 +2,14 @@
 #define MR_ARRAY_HPP
 
 // Based on some eerily similar findings from SMG: https://github.com/SMGCommunity/Petari/blob/master/include/Game/Util/Array.hpp
-
-#include "dolphin/macros.h"
 #include <types.h>
 
 namespace MR {
     template <typename T, s32 S>
     class AssignableArray {
     public:
-        AssignableArray() {
-            FORCE_DONT_INLINE 
-            mArraySize = 0; 
-        }
-        ~AssignableArray() {
-            FORCE_DONT_INLINE
-        }
+        AssignableArray();
+        ~AssignableArray();
 
         s32 getSize() const { return mArraySize; }
         void resetSize() { mArraySize = 0; }
@@ -36,28 +29,46 @@ namespace MR {
             mArraySize = num;
         }
 
-        void addMember(T* member) {
-            FORCE_DONT_INLINE
-            mArr[mArraySize++] = *member;
-        }
-
-        T* eraseMember(T* pIter) {
-            FORCE_DONT_INLINE
-            if (getLastMember() - pIter - 1 > 0) {
-                for (T* curr = pIter; (curr + 1) != getLastMember(); curr++) {
-                    *curr = *(curr + 1);
-                } 
-            }
-            
-            mArraySize--;
-            return pIter;
-        }
+        void addMember(T*);
+        T* eraseMember(T*);
 
     private:
         /* 0x00 */ T mArr[S];
         /* (0x4 * S) + 4 */ s32 mArraySize;
     };
 
+    template<typename T, s32 S>
+    AssignableArray<T, S>::AssignableArray() {
+        mArraySize = 0; 
+    }
+
+    template<typename T, s32 S>
+    AssignableArray<T, S>::~AssignableArray() {}
+
+    template<typename T, s32 S>
+    void AssignableArray<T, S>::addMember(T* member) {
+        mArr[mArraySize++] = *member;
+    }
+
+    template<typename T, s32 S>
+    T* AssignableArray<T, S>::eraseMember(T* pIter) {
+        if (getLastMember() - pIter - 1 > 0) {
+            for (T* curr = pIter; (curr + 1) != getLastMember(); curr++) {
+                *curr = *(curr + 1);
+            } 
+        }
+            
+        mArraySize--;
+        return pIter;
+    }
+
+    template<typename T, s32 S>
+    class ArrayHolder : public AssignableArray<T, S> {
+        public:
+            ArrayHolder() {};
+            ~ArrayHolder() {};
+    };
+    
     template<typename T, s32 N>
     class FixedArray {
         public:

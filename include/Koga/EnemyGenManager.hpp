@@ -19,15 +19,6 @@ namespace Koga {
 class EnemyStrategy;
 class EnZako;
 
-class unkEnemyGen1 : public MR::AssignableArray<EnZako*, 0xF> {
-public:
-    unkEnemyGen1() {}
-    ~unkEnemyGen1() {}
-
-    void add(EnZako**);
-    EnZako** remove(EnZako**);
-};
-
 class EnemyGenerator : public JORReflexible, public IncludeStrategy {
 public:
     EnemyGenerator();
@@ -62,7 +53,7 @@ public:
     /* 0x810 */ Koga::EnManager* _810;
     /* 0x814 */ s32 _814; // Generator type? See vt_C
     /* 0x818 */ Koga::ToolData mGenPath;
-    /* 0x820 */ unkEnemyGen1 _820;
+    /* 0x820 */ MR::ArrayHolder<EnZako*, 0xF> _820;
     /* 0x860 */ s32 _860;
     /* 0x864 */ JGeometry::TVec3f mPos;
     /* 0x870 */ u16 _870;

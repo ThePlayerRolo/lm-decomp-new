@@ -1,5 +1,4 @@
 #include "Koga/Message.hpp"
-#include "dolphin/types.h"
 
 dummy_float_data()
 
@@ -19,7 +18,7 @@ MessageSender::~MessageSender() { }
 
 bool MessageSender::addReceiver(MessageReceiver* receiver) {
     if (_4.getSize() < 12) {
-        _4.add(&receiver);
+        _4.addMember(&receiver);
         return true;
     }
 

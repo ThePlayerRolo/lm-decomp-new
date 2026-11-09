@@ -299,7 +299,7 @@ namespace Koga {
             }
 
             if (found != nullptr) {
-                it = _804.remove(it);
+                it = _804.eraseMember(it);
             }
         }
     }
@@ -357,16 +357,4 @@ unkEnManager1::unkEnManager1() {
     _0 = 0;
     mState = DEFAULT_CHARSTATE;
     _8 = 0;
-}
-
-unkEnManager3::unkEnManager3() {}
-
-unkEnManager3::~unkEnManager3() {}
-
-void unkEnManager3::add(unkEnManager2* param_1) {
-    addMember(param_1);
-}
-
-unkEnManager2* unkEnManager3::remove(unkEnManager2* pStartElm) {
-    return eraseMember(pStartElm);
 }
