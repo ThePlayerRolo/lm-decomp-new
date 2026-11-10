@@ -574,6 +574,60 @@ Ajioka/Generators/AGeHideSeek.cpp:
 	.data       start:0x8036D538 end:0x8036D920
 	.sdata      start:0x804D4FB0 end:0x804D5078
 
+Ajioka/80113680.cpp:
+	.text       start:0x80113680 end:0x8011496C
+	.ctors      start:0x8020BCB0 end:0x8020BCB4
+	.data       start:0x8036D920 end:0x8036DA78
+	.sdata2     start:0x804DC030 end:0x804DC048
+
+Ajioka/8011496C.cpp:
+	.text       start:0x8011496C end:0x801156FC
+	.sdata      start:0x804D5078 end:0x804D50A0
+	.sdata2     start:0x804DC048 end:0x804DC060
+
+Ajioka/801156FC.cpp:
+	.text       start:0x801156FC end:0x80117370
+	.data       start:0x8036DA78 end:0x8036DB10
+	.sdata2     start:0x804DC060 end:0x804DC0B8
+
+Ajioka/80117370.cpp:
+	.text       start:0x80117370 end:0x80117C50
+	.data       start:0x8036DB10 end:0x8036DC58
+	.sdata      start:0x804D50A0 end:0x804D50D8
+	.sdata2     start:0x804DC0B8 end:0x804DC0C0
+
+Ajioka/80117C50.cpp:
+	.text       start:0x80117C50 end:0x801196B4
+	.data       start:0x8036DC58 end:0x8036DD80
+	.sdata      start:0x804D50D8 end:0x804D50E8
+	.sdata2     start:0x804DC0C0 end:0x804DC0E0
+
+Ajioka/801196B4.cpp:
+	.text       start:0x801196B4 end:0x801216D0
+	.data       start:0x8036DD80 end:0x8036E448
+	.sdata      start:0x804D50E8 end:0x804D5160
+	.sdata2     start:0x804DC0E0 end:0x804DC1A0
+
+Ajioka/801216D0.cpp:
+	.text       start:0x801216D0 end:0x80121C38
+	.data       start:0x8036E448 end:0x8036E4E8
+	.sdata      start:0x804D5160 end:0x804D5168
+	.sdata2     start:0x804DC1A0 end:0x804DC1B0
+
+Ajioka/80121C38.cpp:
+	.text       start:0x80121C38 end:0x80124918
+	.data       start:0x8036E4E8 end:0x8036F358
+	.sdata      start:0x804D5168 end:0x804D5190
+	.sdata2     start:0x804DC1B0 end:0x804DC1D0
+
+Ajioka/ATestData.cpp:
+	.text       start:0x80124918 end:0x80124BE4
+	.data       start:0x8036F358 end:0x8036F468
+
+Ajioka/8036F468.cpp:
+	.data       start:0x8036F468 end:0x803741F8
+	.sdata      start:0x804D5190 end:0x804D5750
+
 Sato/SaEnGenUtility.cpp:
 	.text       start:0x80142F88 end:0x801443E8
 	.data       start:0x8037A1D0 end:0x8037A2B0
