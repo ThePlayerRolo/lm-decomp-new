@@ -72,27 +72,10 @@ static EnemyStrategyState enemiesStates[11] = {
     },
 };
 
-inline EnemyStrategyState* findState(u16 index) {
-    for (   
-        EnemyStrategyState* state = &enemiesStates[0]; 
-        state != &enemiesStates[ARRAY_COUNT(enemiesStates)];
-        state++) {
-
-        if (state->mStateIndex == index) {
-            return state;
-        }
-    }
-
-    return nullptr;
-}
-
-
 AEnTwins::AEnTwins() {}
 
-
-
 void AEnTwins::doBehavior() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorFunc)();
@@ -100,7 +83,7 @@ void AEnTwins::doBehavior() {
 }
 
 void AEnTwins::doBehaviorInit() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorInitFunc)();

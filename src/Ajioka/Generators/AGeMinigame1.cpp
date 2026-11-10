@@ -37,31 +37,17 @@ static EnemyStrategyState enemiesStates[5] = {
     },
 };
 
-inline EnemyStrategyState* findState(u16 index) {
-    for (   
-        EnemyStrategyState* state = &enemiesStates[0]; 
-        state != &enemiesStates[ARRAY_COUNT(enemiesStates)];
-        state++) {
-
-        if (state->mStateIndex == index) {
-            return state;
-        }
-    }
-
-    return nullptr;
-}
-
 AGeMinigame1::AGeMinigame1() {}
 AGeMinigame1::~AGeMinigame1() {}
 void AGeMinigame1::doBehavior() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorFunc)();
     }
 }
 void AGeMinigame1::doBehaviorInit() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorInitFunc)();

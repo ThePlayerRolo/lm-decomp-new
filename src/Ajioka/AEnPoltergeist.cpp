@@ -42,26 +42,12 @@ static EnemyStrategyState enemiesStates[6] = {
     }
 };
 
-inline EnemyStrategyState* findState(u16 index) {
-    for (   
-        EnemyStrategyState* state = &enemiesStates[0]; 
-        state != &enemiesStates[ARRAY_COUNT(enemiesStates)];
-        state++) {
-
-        if (state->mStateIndex == index) {
-            return state;
-        }
-    }
-
-    return nullptr;
-}
-
 AEnPoltergeist::AEnPoltergeist() {}
 AEnPoltergeist::~AEnPoltergeist() {}
 
 
 void AEnPoltergeist::doBehavior() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorFunc)();
@@ -69,7 +55,7 @@ void AEnPoltergeist::doBehavior() {
 }
 
 void AEnPoltergeist::doBehaviorInit() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorInitFunc)();

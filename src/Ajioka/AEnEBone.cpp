@@ -30,20 +30,6 @@ static EnemyStrategyState enemiesStates[3] = {
     },
 };
 
-inline EnemyStrategyState* findState(u16 index) {
-    for (   
-        EnemyStrategyState* state = &enemiesStates[0]; 
-        state != &enemiesStates[ARRAY_COUNT(enemiesStates)];
-        state++) {
-
-        if (state->mStateIndex == index) {
-            return state;
-        }
-    }
-
-    return nullptr;
-}
-
 static s32 flyFramesDuration = 61;
 static f32 lbl_804D4AFC = 2.0f;
 static f32 flyGravity = 0.8f;
@@ -51,7 +37,7 @@ static f32 flyGravity = 0.8f;
 static Vec pos = { -3300, 100, -2800 };
 
 void AEnEBone::doBehavior() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorFunc)();
@@ -59,7 +45,7 @@ void AEnEBone::doBehavior() {
 }
 
 void AEnEBone::doBehaviorInit() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorInitFunc)();

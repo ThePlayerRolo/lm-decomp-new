@@ -1,4 +1,5 @@
 #include "Ajioka/Generators/AGeSimple1.hpp"
+#include "Sato/EnemyStrategy.hpp"
 #include "macros.h"
 
 dummy_float_data()
@@ -24,36 +25,25 @@ static EnemyStrategyState enemiesStates[3] = {
     },
 };
 
-inline EnemyStrategyState* findState(u16 index) {
-    for (   
-        EnemyStrategyState* state = &enemiesStates[0]; 
-        state != &enemiesStates[ARRAY_COUNT(enemiesStates)];
-        state++) {
-
-        if (state->mStateIndex == index) {
-            return state;
-        }
-    }
-
-    return nullptr;
-}
-
 AGeSimple1::AGeSimple1() {}
 AGeSimple1::~AGeSimple1() {}
+
 void AGeSimple1::doBehavior() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorFunc)();
     }
 }
+
 void AGeSimple1::doBehaviorInit() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorInitFunc)();
     }
 }
+
 void AGeSimple1::receiveMessage(GeneratorEvent* msg) {}
 bool AGeSimple1::state_0_Init() { return true; }
 bool AGeSimple1::state_0_Behavior() { return true; }

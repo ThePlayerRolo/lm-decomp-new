@@ -47,10 +47,19 @@ static char lbl_804D426C[] = "FLYT";
 static char lbl_804D4274[] = "NORMAL";
 
 void AEnBeam1::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void AEnBeam1::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
+
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }    
 }
 
 bool AEnBeam1::vt_14() {

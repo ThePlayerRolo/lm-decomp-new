@@ -36,11 +36,19 @@ static EnemyStrategyState enemiesStates[5] = {
 };
 
 void AEnBeam2::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void AEnBeam2::doBehaviorInit() {
-    
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
+
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }    
 }
 
 // PTMF EnemyStrategy

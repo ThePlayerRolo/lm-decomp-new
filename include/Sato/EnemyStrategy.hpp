@@ -68,4 +68,14 @@ private:
     /* 0x18 */ u16 _18;
 };
 
+// Same body in every TU (in doBehavior)
+inline EnemyStrategyState* findStrategyState(EnemyStrategyState* states, int count, u16 index) {
+    for (EnemyStrategyState* state = &states[0]; state != &states[count]; state++) {
+        if (state->mStateIndex == index) {
+            return state;
+        }
+    }
+    return nullptr;
+}
+
 #endif
