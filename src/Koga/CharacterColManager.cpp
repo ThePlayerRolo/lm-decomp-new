@@ -1,79 +1,63 @@
 #include "Koga/CharacterColManager.hpp"
-#include <types.h>
-#include "Unsorted/ActorDataList.hpp"
+#include "Unsorted/ActorData.hpp"
 
-static const unkCharactColStruct lbl_8020C7B8 = {};
+static const unkCharactColStruct2 sUnkCharactColStruct = {
+    {-1, 50.0, 0.0, 50.0, 0.0},
+    {4.0, 100.0, 0.0, -50.0,0.0},
+    {100.0, 100.0, 100.0, 0.0, 0.0, 0.0}
+};
 
-CharacterColElement::CharacterColElement() : mGlobalActorField0(0), _18(0) {
-    _1C.init(&lbl_8020C7B8);
-    _4 = &_1C;
-    _0 = _1C._9C;
-    _8 = 1;
-    _C = &_1C._A4;
-    _10 = &_1C._B8;
-    _1C._A4 = lbl_8020C7B8._14;
-    _1C._B8 = lbl_8020C7B8._28;
+// Fake Match for now, will need to not const_cast, probably
+CharacterColElement::CharacterColElement() : mGroupID(0), _18(1) {
+    _1C.addMember(const_cast<unkCharactColStruct1*>(&sUnkCharactColStruct._0));
+    _0._4 = _1C.getArray();
+    _0._0 = _1C.getSize();
+    _0._8 = 1;
+    _0._C = &_C0;
+    _0._10 = &_D4;
+    _C0 = sUnkCharactColStruct._14;
+    _D4 = sUnkCharactColStruct._28;
 }
 
-void CharacterColElement::init(int actorIndex) {
-    u32 someOffset;
+void CharacterColElement::init(s32 param_1) {
+    _1C.resetSize();
+    mGroupID = ActorData::getGroupID(param_1);
 
-    _1C._9C = 0;
-    mGlobalActorField0 = ActorData::fn_8006A354(actorIndex);
-    ActorData* actData = &lbl_8038E118[actorIndex];
-    if (actData != nullptr) {
-        someOffset = ActorData::fn_8006A354(actorIndex);
-        actData = &lbl_8038DD00[someOffset];
-    }
+    unkCharactColStruct5* unk = unkCharactColStruct5::lbl_8038E118[param_1] != nullptr ? 
+        unkCharactColStruct5::lbl_8038E118[param_1] : unkCharactColStruct5::lbl_8038DD00[ActorData::getGroupID(param_1)];
 
-    someOffset = 0;
     _18 = 0;
-    for (int index = 0; index < actData->_0; index++) {
-        _1C.init(reinterpret_cast<const unkCharactColStruct*>(actData->_4 + someOffset));
-        someOffset += 20;
+    for (int i = 0; i < unk->_0; i++) {
+        unkCharactColStruct1* unk2 = &unk->_4[i];
+        _1C.addMember(unk2);
     }
 
-    _4 = &_1C;
-    _0 = _1C._9C;
-    _8 = actData->_8;
-    _C = &_1C._A4;
-    _10 = &_1C._B8;
+    _0._4 = _1C.getArray();
+    _0._0 = _1C.getSize();
+    _0._8 = unk->_8;
+    _0._C = &_C0;
+    _0._10 = &_D4;
 
-    unkActorData1* someSrcData = actData->_C;
-    if (someSrcData != nullptr) {
-        _1C._A4 = *someSrcData;
+    if (unk->_C != nullptr) {
+        _C0 = *unk->_C;
     }
 
-    unkActorData1* otherSrcData = actData->_10;
-    if (someSrcData != nullptr) {
-        _1C._B8 = *otherSrcData;
+    if (unk->_10 != nullptr) {
+        _D4 = *unk->_10;
     }
-    return;
 }
 
 CharacterColManager::CharacterColManager() {
-    mCharColElements = new CharacterColElement[381];
+    _4 = nullptr;
+    _4 = new CharacterColElement[381];
 
-    for (u32 i = 0; i < sizeof(CharacterColElement); i++) {
-        CharacterColElement* charElm = &mCharColElements[i];
-        charElm->init(i);
+    for (CharacterColElement* currElm = begin(); currElm != end(); currElm++) {
+        currElm->init(currElm - begin()); // Some sort of index management here, idk its gross
     }
 }
 
 CharacterColElement::~CharacterColElement() {}
 
 CharacterColManager::~CharacterColManager() {
-    delete [] mCharColElements;
-}
-
-
-unkCharacterElementClass::unkCharacterElementClass() {
-    _A4._0 = nullptr;
-}
-
-unkCharacterElementClass::~unkCharacterElementClass() {}
-
-void unkCharacterElementClass::init(const unkCharactColStruct* param_1) {
-    _A4._0 += 1;
-    _0[_A4._0] = _A4;
+    delete [] _4;
 }

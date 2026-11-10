@@ -808,14 +808,16 @@ config.libs = [
         Object(NonMatching, "Koga/EnChase.cpp"),
         Object(NonMatching, "Koga/EnemyGenManager.cpp"),
 
+        # System
+        Object(NonMatching, "System/DiscFile.cpp"),
+        Object(Matching, "System/DiscThread.cpp"),
+        Object(Matching, "System/BackgroundTask.cpp"),
+        Object(NonMatching, "System/Yay0.cpp"),
+
         # Unsorted
         Object(NonMatching, "Unsorted/bootScene.cpp"),
         Object(NonMatching, "Unsorted/TitleScene.cpp"),
-        Object(NonMatching, "Unsorted/LMDvdFile.cpp"),
         Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
-        Object(NonMatching, "Unsorted/80006DF0.cpp"),
-        Object(NonMatching, "Unsorted/80007018.cpp"),
-        Object(NonMatching, "Unsorted/LMDvdFileBlock.cpp"),
         Object(NonMatching, "Unsorted/80005EB8.cpp"),
         Object(NonMatching, "Unsorted/MoveObj.cpp"),
         Object(NonMatching, "Unsorted/Character.cpp"),
@@ -824,6 +826,7 @@ config.libs = [
         Object(NonMatching, "Unsorted/LMDisplayUtil.cpp"),
         Object(NonMatching, "Unsorted/MathUtils.cpp", extra_cflags=["-fp_contract off"]),
         Object(NonMatching, "Unsorted/s3dmodel.cpp"),
+        Object(NonMatching, "Unsorted/ActorData.cpp"),
     ]),
 ]
 

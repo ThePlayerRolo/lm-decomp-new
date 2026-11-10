@@ -4,13 +4,16 @@
 #include "Sato/EnemyStrategy.hpp"
 #include "Sato/IncludeStrategy.hpp"
 #include "Koga/UnkUtil.hpp"
+#include "macros.h"
+
+dummy_float_data()
+enemies_float_data()
 
 static s32 lbl_804D2D5C = 0xff;
 static s32 lbl_804D2D6C = 0xff;
 static s32 lbl_804D2D70 = 0x0;
 static float lbl_804DB698 = 0.f;
 static s32 lbl_804D2D58 = 0x0;
-
 
 IncludeStrategy::IncludeStrategy() {
     destroyStrategy();

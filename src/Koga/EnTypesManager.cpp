@@ -4,7 +4,7 @@
 #include "Koga/EnManager.hpp"
 #include "Koga/ParamInst.hpp"
 #include "Koga/UnkUtil.hpp"
-#include "Unsorted/ActorDataList.hpp"
+#include "Unsorted/ActorData.hpp"
 #include "Unsorted/AssortedEnManager.hpp"
 #include "macros.h"
 
@@ -12,6 +12,7 @@ dummy_float_data()
 enemies_float_data()
 
 // TODO figure this out and stick this in the appropriate class/place
+// _0 is probably GroupID here
 SomeIntStruct intStruct[4] = {{5, 72}, {32, 222}, {130, 11}, {318, 177}};
 inline s32 forLine(u32 val) {
     for (s32 i = 0; i < 4; i++) {
@@ -104,13 +105,13 @@ namespace Koga {
     }
 
     s32 EnTypesManager::fn_800DAC84(s32 idx) {
-        u32 temp = fn_80187920(ActorData::fn_8006A354(idx));
-        return forLine(temp);
+        u32 groupID = fn_80187920(ActorData::getGroupID(idx));
+        return forLine(groupID);
     }
 
     s32 EnTypesManager::fn_800DAD00(s32 idx) {
-        u32 temp = fn_80187920(ActorData::fn_8006A354(idx));
-        return intStruct[forLine(temp)]._0;
+        u32 groupID = fn_80187920(ActorData::getGroupID(idx));
+        return intStruct[forLine(groupID)]._0;
     }
 
     s32 EnTypesManager::getEnemyLife(int enemyIdx) {

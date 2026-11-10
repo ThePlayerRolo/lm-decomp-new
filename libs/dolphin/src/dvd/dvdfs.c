@@ -1,7 +1,9 @@
-#include <dolphin.h>
+#include <dolphin/os.h>
 #include <dolphin/dvd.h>
-
 #include <dolphin/internal/__dvd.h>
+#include "macros.h"
+
+#include <ctype.h>
 
 struct FSTEntry {
     /* 0x00 */ u32 isDirAndStringOff;
@@ -364,13 +366,13 @@ long DVDReadPrio(struct DVDFileInfo * fileInfo, void * addr, long length, long o
 
     while(1) {
         state = ((volatile DVDCommandBlock*)block)->state;
-        if (state == 0) {
+        if (state == DVD_RESULT_GOOD) {
             retVal = (s32)block->transferredSize;
             break;
-        } else if (state == -1) {
-            retVal = -1;
+        } else if (state == DVD_RESULT_FATAL_ERROR) {
+            retVal = DVD_RESULT_FATAL_ERROR;
             break;
-        } else if (state == 10) {
+        } else if (state == DVD_STATE_CANCELED) {
             retVal = -3;
             break;
         }
@@ -599,7 +601,7 @@ s32 DVDPrepareStream(DVDFileInfo* fileInfo, u32 length, u32 offset) {
             break;
         }
         if (state == DVD_STATE_CANCELED) {
-            retVal = DVD_RESULT_CANCELED;
+            retVal = DVD_RESULT_SEEK_CANCELED;
             break;
         }
         

@@ -4,7 +4,7 @@
 #include "Koga/GameModeUtil.hpp"
 #include "Koga/ToolData.hpp"
 #include "Sato/EnThought.hpp"
-#include "Unsorted/ActorDataList.hpp"
+#include "Unsorted/ActorData.hpp"
 #include "dolphin/macros.h"
 #include "types.h"
 #include "Koga/800E82D8.hpp"
@@ -137,7 +137,7 @@ void fn_800E87B0(u8* param_1, s32 param_2) {
                 continue;
             }
 
-            *param_1 = ActorData::fn_8006A354(temp);
+            *param_1 = ActorData::getGroupID(temp);
         }
     }
 }
@@ -201,7 +201,7 @@ void fn_800E8E0C(ToolDataRef* pRef, bool* param_2) {
         return;
     }
 
-    param_2[ActorData::fn_8006A354(temp)] = 1;
+    param_2[ActorData::getGroupID(temp)] = 1;
 }
 
 s32 fn_800E8E78(ToolDataRef* param_1) {
