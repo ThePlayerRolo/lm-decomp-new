@@ -37,10 +37,10 @@ void AEnZakoBase::doBehavior() {
 }
 
 void AEnZakoBase::doBehaviorInit() {
-    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);  \
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
-    if (state != nullptr) {                                                                     \
-        (this->*state->mBehaviorInitFunc)();                                                    \
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
     }  
 }
 
