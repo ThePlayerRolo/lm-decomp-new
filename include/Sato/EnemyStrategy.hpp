@@ -52,8 +52,6 @@ enum STRATEGY_STATE {
     UNK_STRAT_STATE_105 = 0x105,
     UNK_STRAT_STATE_106 = 0x106,
     UNK_STRAT_STATE_107 = 0x107,
-
-    
 };
 
 // Each EnemyStrategy implementation has a static array of these structures.
