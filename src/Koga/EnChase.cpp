@@ -9,18 +9,26 @@ enemies_float_data()
 // I'm assuming its CircleMove for now since the function is labelled before EnChase first functions
 static EnemyStrategyState enemiesStatesCircleMove[1] = {
     {
-        0, 
+        UNK_STRAT_STATE_0, 
         (EnemyStrategyStateFn)&EnCircleMove::state_0_Init, 
         (EnemyStrategyStateFn)&EnCircleMove::state_0_Behavior
     },
 };
 
 void EnCircleMove::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStatesCircleMove, ARRAY_COUNT(enemiesStatesCircleMove), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void EnCircleMove::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStatesCircleMove, ARRAY_COUNT(enemiesStatesCircleMove), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool EnCircleMove::state_0_Init() {
@@ -42,30 +50,38 @@ EnCircleMove::~EnCircleMove() {
 // EnChase
 static EnemyStrategyState enemiesStatesChase[3] = {
     {
-        0, 
+        UNK_STRAT_STATE_0, 
         (EnemyStrategyStateFn)&EnChase::state_0_Init, 
         (EnemyStrategyStateFn)&EnChase::state_0_Behavior
     },
 
     {
-        1, 
+        UNK_STRAT_STATE_1, 
         (EnemyStrategyStateFn)&EnChase::state_1_Init, 
         (EnemyStrategyStateFn)&EnChase::state_1_Behavior
     },
 
     {
-        2, 
+        UNK_STRAT_STATE_2, 
         (EnemyStrategyStateFn)&EnChase::state_2_Init, 
         (EnemyStrategyStateFn)&EnChase::state_2_Behavior
     },
 };
 
 void EnChase::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStatesChase, ARRAY_COUNT(enemiesStatesChase), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void EnChase::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStatesChase, ARRAY_COUNT(enemiesStatesChase), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool EnChase::state_0_Init() {

@@ -6,128 +6,128 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[0x14] = {
     {
-        0, 
+        UNK_STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnDog::state_0_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_0_Behavior
     },
 
     {
-        1, 
+        UNK_STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnDog::state_1_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_1_Behavior
     },
 
     {
-        2, 
+        UNK_STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnDog::state_2_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_2_Behavior
     },
 
     {
-        3, 
+        UNK_STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnDog::state_3_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_3_Behavior
     },
 
     {
-        4, 
+        UNK_STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnDog::state_4_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_4_Behavior
     },
 
     {
-        5, 
+        UNK_STRAT_STATE_5, 
         (EnemyStrategyStateFn)&AEnDog::state_5_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_5_Behavior
     },
 
     {
-        6, 
+        UNK_STRAT_STATE_6, 
         (EnemyStrategyStateFn)&AEnDog::state_6_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_6_Behavior
     },
 
     {
-        7, 
+        UNK_STRAT_STATE_7, 
         (EnemyStrategyStateFn)&AEnDog::state_7_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_7_Behavior
     },
 
     {
-        8, 
+        UNK_STRAT_STATE_8, 
         (EnemyStrategyStateFn)&AEnDog::state_8_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_8_Behavior
     },
 
     {
-        9, 
+        UNK_STRAT_STATE_9, 
         (EnemyStrategyStateFn)&AEnDog::state_9_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_9_Behavior
     },
 
     {
-        0xA, 
+        UNK_STRAT_STATE_A, 
         (EnemyStrategyStateFn)&AEnDog::state_A_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_A_Behavior
     },
     
 
     {
-        0xB, 
+        UNK_STRAT_STATE_B, 
         (EnemyStrategyStateFn)&AEnDog::state_B_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_B_Behavior
     },
     
 
     {
-        0xC, 
+        UNK_STRAT_STATE_C, 
         (EnemyStrategyStateFn)&AEnDog::state_C_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_C_Behavior
     },
     
 
     {
-        0xD, 
+        UNK_STRAT_STATE_D, 
         (EnemyStrategyStateFn)&AEnDog::state_D_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_D_Behavior
     },
     
 
     {
-        0xE, 
+        UNK_STRAT_STATE_E, 
         (EnemyStrategyStateFn)&AEnDog::state_E_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_E_Behavior
     },
     
 
     {
-        0xF, 
+        UNK_STRAT_STATE_F, 
         (EnemyStrategyStateFn)&AEnDog::state_F_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_F_Behavior
     },
     
 
     {
-        0x10, 
+        UNK_STRAT_STATE_10, 
         (EnemyStrategyStateFn)&AEnDog::state_0x10_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_0x10_Behavior
     },
     
 
     {
-        0x11, 
+        UNK_STRAT_STATE_11, 
         (EnemyStrategyStateFn)&AEnDog::state_0x11_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_0x11_Behavior
     },
 
     {
-        0x12, 
+        UNK_STRAT_STATE_12, 
         (EnemyStrategyStateFn)&AEnDog::state_0x12_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_0x12_Behavior
     },
 
     {
-        0x13, 
+        UNK_STRAT_STATE_13, 
         (EnemyStrategyStateFn)&AEnDog::state_0x13_Init, 
         (EnemyStrategyStateFn)&AEnDog::state_0x13_Behavior
     },

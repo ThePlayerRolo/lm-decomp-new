@@ -10,6 +10,52 @@ class EnZako;
 typedef void* (EnemyStrategyInitFn)(void* buffer, u32 bufferSize);
 typedef bool (EnemyStrategy::*EnemyStrategyStateFn)();
 
+enum STRATEGY_STATE {
+    UNK_STRAT_STATE_0   = 0x0,
+    UNK_STRAT_STATE_1   = 0x1,
+    UNK_STRAT_STATE_2   = 0x2,
+    UNK_STRAT_STATE_3   = 0x3,
+    UNK_STRAT_STATE_4   = 0x4,
+    UNK_STRAT_STATE_5   = 0x5,
+    UNK_STRAT_STATE_6   = 0x6,
+    UNK_STRAT_STATE_7   = 0x7,
+    UNK_STRAT_STATE_8   = 0x8,
+    UNK_STRAT_STATE_9   = 0x9,
+    UNK_STRAT_STATE_A   = 0xA,
+    UNK_STRAT_STATE_B   = 0xB,
+    UNK_STRAT_STATE_C   = 0xC,
+    UNK_STRAT_STATE_D   = 0xD,
+    UNK_STRAT_STATE_E   = 0xE,
+    UNK_STRAT_STATE_F   = 0xF,
+    UNK_STRAT_STATE_10  = 0x10,
+    UNK_STRAT_STATE_11  = 0x11,
+    UNK_STRAT_STATE_12  = 0x12,
+    UNK_STRAT_STATE_13  = 0x13,
+    UNK_STRAT_STATE_14  = 0x14,
+    UNK_STRAT_STATE_15  = 0x15,
+    UNK_STRAT_STATE_16  = 0x16,
+    UNK_STRAT_STATE_17  = 0x17,
+    UNK_STRAT_STATE_18  = 0x18,
+    UNK_STRAT_STATE_19  = 0x19,
+    UNK_STRAT_STATE_1A  = 0x1A,
+    UNK_STRAT_STATE_1B  = 0x1B,
+    
+    // 0x100+ 
+    // Seems to be used in attacks classes
+    UNK_STRAT_STATE_100 = 0x100,
+    UNK_STRAT_STATE_101 = 0x101,
+    UNK_STRAT_STATE_102 = 0x102,
+
+    // Seems to be used in generators classes
+    UNK_STRAT_STATE_103 = 0x103,
+    UNK_STRAT_STATE_104 = 0x104,
+    UNK_STRAT_STATE_105 = 0x105,
+    UNK_STRAT_STATE_106 = 0x106,
+    UNK_STRAT_STATE_107 = 0x107,
+
+    
+};
+
 // Each EnemyStrategy implementation has a static array of these structures.
 // In their doBehavior and doBehaviorInit functions, they search for an entry
 // with a stateIndex that matches their mCurrentState.

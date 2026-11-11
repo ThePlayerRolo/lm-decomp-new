@@ -8,52 +8,35 @@ enemies_float_data()
 // EnemyStrategy in EnItem ?
 static EnemyStrategyState entityStruct[4] = {
     {
-        0, 
+        UNK_STRAT_STATE_0, 
         (EnemyStrategyStateFn)&EnItem::state_0_Init, 
         (EnemyStrategyStateFn)&EnItem::state_0_Behavior
     },
 
     {
-        1, 
+        UNK_STRAT_STATE_1, 
         (EnemyStrategyStateFn)&EnItem::state_1_Init, 
         (EnemyStrategyStateFn)&EnItem::state_1_Behavior
     },
 
     {
-        2, 
+        UNK_STRAT_STATE_2, 
         (EnemyStrategyStateFn)&EnItem::state_2_Init, 
         (EnemyStrategyStateFn)&EnItem::state_2_Behavior
     },
 
     {
-        3, 
+        UNK_STRAT_STATE_3, 
         (EnemyStrategyStateFn)&EnItem::state_3_Init, 
         (EnemyStrategyStateFn)&EnItem::state_3_Behavior
     }
 };
 
-inline EnemyStrategyState* findState(u16 index) {
-    for (   
-        EnemyStrategyState* state = &entityStruct[0]; 
-        state != &entityStruct[ARRAY_COUNT(entityStruct)];
-        state++) {
-
-        if (state->mStateIndex == index) {
-            return state;
-        }
-    }
-
-    return nullptr;
-}
-
 EnItem::EnItem() {}
 EnItem::~EnItem() {}
 
-
-
-
 void EnItem::doBehavior() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(entityStruct, ARRAY_COUNT(entityStruct), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorFunc)();
@@ -61,7 +44,7 @@ void EnItem::doBehavior() {
 }
 
 void EnItem::doBehaviorInit() {
-    EnemyStrategyState* state = findState(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(entityStruct, ARRAY_COUNT(entityStruct), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorInitFunc)();

@@ -6,37 +6,37 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStatesMask[6] = {
     {
-        0, 
+        UNK_STRAT_STATE_0, 
         (EnemyStrategyStateFn)&EnHeyMask::state_0_Init, 
         (EnemyStrategyStateFn)&EnHeyMask::state_0_Behavior
     },
 
     {
-        1, 
+        UNK_STRAT_STATE_1, 
         (EnemyStrategyStateFn)&EnHeyMask::state_1_Init, 
         (EnemyStrategyStateFn)&EnHeyMask::state_1_Behavior
     },
 
     {
-        2, 
+        UNK_STRAT_STATE_2, 
         (EnemyStrategyStateFn)&EnHeyMask::state_2_Init, 
         (EnemyStrategyStateFn)&EnHeyMask::state_2_Behavior
     }, 
 
     {
-        3, 
+        UNK_STRAT_STATE_3, 
         (EnemyStrategyStateFn)&EnHeyMask::state_3_Init, 
         (EnemyStrategyStateFn)&EnHeyMask::state_3_Behavior
     },
 
     {
-        4, 
+        UNK_STRAT_STATE_4, 
         (EnemyStrategyStateFn)&EnHeyMask::state_4_Init, 
         (EnemyStrategyStateFn)&EnHeyMask::state_4_Behavior
     },
 
     {
-        5, 
+        UNK_STRAT_STATE_5, 
         (EnemyStrategyStateFn)&EnHeyMask::state_5_Init, 
         (EnemyStrategyStateFn)&EnHeyMask::state_5_Behavior
     },
@@ -45,35 +45,21 @@ static EnemyStrategyState enemiesStatesMask[6] = {
 
 static EnemyStrategyState enemiesStatesZenmai[2] = {
     {
-        0, 
+        UNK_STRAT_STATE_0, 
         (EnemyStrategyStateFn)&EnZenmai::state_0_Init, 
         (EnemyStrategyStateFn)&EnZenmai::state_0_Behavior
     },
 
     {
-        4, 
+        UNK_STRAT_STATE_4, 
         (EnemyStrategyStateFn)&EnZenmai::state_4_Init, 
         (EnemyStrategyStateFn)&EnZenmai::state_4_Behavior
     },
 };
 
-inline EnemyStrategyState* findStateMask(u16 index) {
-    for (   
-        EnemyStrategyState* state = &enemiesStatesMask[0]; 
-        state != &enemiesStatesMask[ARRAY_COUNT(enemiesStatesMask)];
-        state++) {
-
-        if (state->mStateIndex == index) {
-            return state;
-        }
-    }
-
-    return nullptr;
-}
-
 
 void EnHeyMask::doBehavior() {
-    EnemyStrategyState* state = findStateMask(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStatesMask, ARRAY_COUNT(enemiesStatesMask), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorFunc)();
@@ -81,7 +67,7 @@ void EnHeyMask::doBehavior() {
 }
 
 void EnHeyMask::doBehaviorInit() {
-    EnemyStrategyState* state = findStateMask(mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStatesMask, ARRAY_COUNT(enemiesStatesMask), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorInitFunc)();
@@ -150,11 +136,19 @@ void EnHeyMask::EnHeyMask_fn_800C62DC() {
 }
 
 void EnZenmai::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStatesZenmai, ARRAY_COUNT(enemiesStatesZenmai), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void EnZenmai::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStatesZenmai, ARRAY_COUNT(enemiesStatesZenmai), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 

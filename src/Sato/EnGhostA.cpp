@@ -7,73 +7,73 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[0xC] = {
     {
-        0, 
+        UNK_STRAT_STATE_0, 
         (EnemyStrategyStateFn)&EnGhostA::state_0_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_0_Behavior
     },
 
     {
-        0xB, 
+        UNK_STRAT_STATE_B, 
         (EnemyStrategyStateFn)&EnGhostA::state_B_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_B_Behavior
     },
 
     {
-        1, 
+        UNK_STRAT_STATE_1, 
         (EnemyStrategyStateFn)&EnGhostA::state_1_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_1_Behavior
     },
 
     {
-        2, 
+        UNK_STRAT_STATE_2, 
         (EnemyStrategyStateFn)&EnGhostA::state_2_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_2_Behavior
     },
 
     {
-        3, 
+        UNK_STRAT_STATE_3, 
         (EnemyStrategyStateFn)&EnGhostA::state_3_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_3_Behavior
     },
 
     {
-        4, 
+        UNK_STRAT_STATE_4, 
         (EnemyStrategyStateFn)&EnGhostA::state_4_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_4_Behavior
     },
 
     {
-        5, 
+        UNK_STRAT_STATE_5, 
         (EnemyStrategyStateFn)&EnGhostA::state_5_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_5_Behavior
     },
 
     {
-        6, 
+        UNK_STRAT_STATE_6, 
         (EnemyStrategyStateFn)&EnGhostA::state_6_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_6_Behavior
     },
 
     {
-        7, 
+        UNK_STRAT_STATE_7, 
         (EnemyStrategyStateFn)&EnGhostA::state_7_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_7_Behavior
     },
 
     {
-        8, 
+        UNK_STRAT_STATE_8, 
         (EnemyStrategyStateFn)&EnGhostA::state_8_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_8_Behavior
     },
 
     {
-        9, 
+        UNK_STRAT_STATE_9, 
         (EnemyStrategyStateFn)&EnGhostA::state_9_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_9_Behavior
     },
 
     {
-        0xA, 
+        UNK_STRAT_STATE_A, 
         (EnemyStrategyStateFn)&EnGhostA::state_A_Init, 
         (EnemyStrategyStateFn)&EnGhostA::state_A_Behavior
     },
@@ -95,11 +95,19 @@ EnRotationNear::~EnRotationNear() {
 
 
 void EnGhostA::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void EnGhostA::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool EnGhostA::vt_14() {

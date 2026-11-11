@@ -6,32 +6,32 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[5] = {
     {
-        0, 
+        UNK_STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0_Init, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0_Behavior
     },
     
     {
-        0x104, 
+        UNK_STRAT_STATE_104, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0x104_Init, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0x104_Behavior
     },
 
     {
-        0x103, 
+        UNK_STRAT_STATE_103, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0x103_Init, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0x103_Behavior
     },
 
 
     {
-        0x106, 
+        UNK_STRAT_STATE_106, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0x106_Init, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0x106_Behavior
     },
 
     {
-        0x107, 
+        UNK_STRAT_STATE_107, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0x107_Init, 
         (EnemyStrategyStateFn)&AGeMinigame1::state_0x107_Behavior
     },
