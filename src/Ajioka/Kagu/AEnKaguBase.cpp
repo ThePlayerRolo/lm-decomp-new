@@ -14,27 +14,27 @@ static char lbl_804D412C[] = "CLOSE";
 
 static EnemyStrategyState enemiesStates[4] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_0_Init, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_1_Init, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_1_Behavior
     },
 
     
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_2_Init, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_2_Behavior
     },
 
     
     {
-        UNK_STRAT_STATE_3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_3_Init, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_3_Behavior
     },

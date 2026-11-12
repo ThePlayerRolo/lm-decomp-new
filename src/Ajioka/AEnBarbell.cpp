@@ -6,19 +6,19 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[0x3] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnBarbell::state_0_Init, 
         (EnemyStrategyStateFn)&AEnBarbell::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnBarbell::state_1_Init, 
         (EnemyStrategyStateFn)&AEnBarbell::state_1_Behavior
     },
 
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnBarbell::state_2_Init, 
         (EnemyStrategyStateFn)&AEnBarbell::state_2_Behavior
     }

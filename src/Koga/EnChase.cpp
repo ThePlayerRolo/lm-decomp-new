@@ -9,7 +9,7 @@ enemies_float_data()
 // I'm assuming its CircleMove for now since the function is labelled before EnChase first functions
 static EnemyStrategyState enemiesStatesCircleMove[1] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&EnCircleMove::state_0_Init, 
         (EnemyStrategyStateFn)&EnCircleMove::state_0_Behavior
     },
@@ -50,19 +50,19 @@ EnCircleMove::~EnCircleMove() {
 // EnChase
 static EnemyStrategyState enemiesStatesChase[3] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&EnChase::state_0_Init, 
         (EnemyStrategyStateFn)&EnChase::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&EnChase::state_1_Init, 
         (EnemyStrategyStateFn)&EnChase::state_1_Behavior
     },
 
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&EnChase::state_2_Init, 
         (EnemyStrategyStateFn)&EnChase::state_2_Behavior
     },

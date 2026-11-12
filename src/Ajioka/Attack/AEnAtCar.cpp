@@ -7,37 +7,37 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[6] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnAtCar::state_1_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_1_Behavior
     },
 
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnAtCar::state_2_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_2_Behavior
     },
 
     {
-        UNK_STRAT_STATE_102, 
+        STRAT_STATE_102, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x102_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x102_Behavior
     },
 
     {
-        UNK_STRAT_STATE_100, 
+        STRAT_STATE_100, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x100_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x100_Behavior
     },
 
     {
-        UNK_STRAT_STATE_101, 
+        STRAT_STATE_101, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x101_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x101_Behavior
     },

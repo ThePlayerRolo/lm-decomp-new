@@ -7,37 +7,37 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[6] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnBeam1::state_0_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnBeam1::state_2_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_2_Behavior
     },
 
     {
-        UNK_STRAT_STATE_3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnBeam1::state_3_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_3_Behavior
     },
 
     {
-        UNK_STRAT_STATE_4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnBeam1::state_4_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_4_Behavior
     },
 
     {
-        UNK_STRAT_STATE_5, 
+        STRAT_STATE_5, 
         (EnemyStrategyStateFn)&AEnBeam1::state_5_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_5_Behavior
     },
 
     {
-        UNK_STRAT_STATE_6, 
+        STRAT_STATE_6, 
         (EnemyStrategyStateFn)&AEnBeam1::state_6_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_6_Behavior
     },

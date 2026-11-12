@@ -8,25 +8,25 @@ enemies_float_data()
 // EnemyStrategy in EnItem ?
 static EnemyStrategyState entityStruct[4] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&EnItem::state_0_Init, 
         (EnemyStrategyStateFn)&EnItem::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&EnItem::state_1_Init, 
         (EnemyStrategyStateFn)&EnItem::state_1_Behavior
     },
 
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&EnItem::state_2_Init, 
         (EnemyStrategyStateFn)&EnItem::state_2_Behavior
     },
 
     {
-        UNK_STRAT_STATE_3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&EnItem::state_3_Init, 
         (EnemyStrategyStateFn)&EnItem::state_3_Behavior
     }

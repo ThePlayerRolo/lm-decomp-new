@@ -7,74 +7,74 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[12] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnHustler::state_0_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnHustler::state_1_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_1_Behavior
     },
 
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnHustler::state_2_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_2_Behavior
     },
 
     {
-        UNK_STRAT_STATE_3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnHustler::state_3_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_3_Behavior
     },
 
     {
-        UNK_STRAT_STATE_4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnHustler::state_4_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_4_Behavior
     },
 
     {
-        UNK_STRAT_STATE_5, 
+        STRAT_STATE_5, 
         (EnemyStrategyStateFn)&AEnHustler::state_5_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_5_Behavior
     },
 
     {
-        UNK_STRAT_STATE_6, 
+        STRAT_STATE_6, 
         (EnemyStrategyStateFn)&AEnHustler::state_6_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_6_Behavior
     },
 
     {
-        UNK_STRAT_STATE_7, 
+        STRAT_STATE_7, 
         (EnemyStrategyStateFn)&AEnHustler::state_7_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_7_Behavior
     },
 
     {
-        UNK_STRAT_STATE_8, 
+        STRAT_STATE_8, 
         (EnemyStrategyStateFn)&AEnHustler::state_8_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_8_Behavior
     },
 
     {
-        UNK_STRAT_STATE_9, 
+        STRAT_STATE_9, 
         (EnemyStrategyStateFn)&AEnHustler::state_9_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_9_Behavior
     },
 
     {
-        UNK_STRAT_STATE_A, 
+        STRAT_STATE_A, 
         (EnemyStrategyStateFn)&AEnHustler::state_A_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_A_Behavior
     },
     
 
     {
-        UNK_STRAT_STATE_B, 
+        STRAT_STATE_B, 
         (EnemyStrategyStateFn)&AEnHustler::state_B_Init, 
         (EnemyStrategyStateFn)&AEnHustler::state_B_Behavior
     },

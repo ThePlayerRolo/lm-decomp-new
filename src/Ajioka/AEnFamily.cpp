@@ -6,116 +6,116 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[0x12] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnFamily::state_0_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnFamily::state_1_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_1_Behavior
     },
 
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnFamily::state_2_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_2_Behavior
     },
 
     {
-        UNK_STRAT_STATE_3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnFamily::state_3_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_3_Behavior
     },
 
     {
-        UNK_STRAT_STATE_4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnFamily::state_4_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_4_Behavior
     },
 
     {
-        UNK_STRAT_STATE_5, 
+        STRAT_STATE_5, 
         (EnemyStrategyStateFn)&AEnFamily::state_5_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_5_Behavior
     },
 
     {
-        UNK_STRAT_STATE_6, 
+        STRAT_STATE_6, 
         (EnemyStrategyStateFn)&AEnFamily::state_6_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_6_Behavior
     },
 
     {
-        UNK_STRAT_STATE_7, 
+        STRAT_STATE_7, 
         (EnemyStrategyStateFn)&AEnFamily::state_7_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_7_Behavior
     },
 
     {
-        UNK_STRAT_STATE_8, 
+        STRAT_STATE_8, 
         (EnemyStrategyStateFn)&AEnFamily::state_8_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_8_Behavior
     },
 
     {
-        UNK_STRAT_STATE_9, 
+        STRAT_STATE_9, 
         (EnemyStrategyStateFn)&AEnFamily::state_9_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_9_Behavior
     },
 
     {
-        UNK_STRAT_STATE_A, 
+        STRAT_STATE_A, 
         (EnemyStrategyStateFn)&AEnFamily::state_A_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_A_Behavior
     },
     
 
     {
-        UNK_STRAT_STATE_B, 
+        STRAT_STATE_B, 
         (EnemyStrategyStateFn)&AEnFamily::state_B_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_B_Behavior
     },
     
 
     {
-        UNK_STRAT_STATE_C, 
+        STRAT_STATE_C, 
         (EnemyStrategyStateFn)&AEnFamily::state_C_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_C_Behavior
     },
     
 
     {
-        UNK_STRAT_STATE_D, 
+        STRAT_STATE_D, 
         (EnemyStrategyStateFn)&AEnFamily::state_D_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_D_Behavior
     },
     
 
     {
-        UNK_STRAT_STATE_E, 
+        STRAT_STATE_E, 
         (EnemyStrategyStateFn)&AEnFamily::state_E_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_E_Behavior
     },
     
 
     {
-        UNK_STRAT_STATE_F, 
+        STRAT_STATE_F, 
         (EnemyStrategyStateFn)&AEnFamily::state_F_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_F_Behavior
     },
     
 
     {
-        UNK_STRAT_STATE_10, 
+        STRAT_STATE_10, 
         (EnemyStrategyStateFn)&AEnFamily::state_0x10_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_0x10_Behavior
     },
     
 
     {
-        UNK_STRAT_STATE_11, 
+        STRAT_STATE_11, 
         (EnemyStrategyStateFn)&AEnFamily::state_0x11_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_0x11_Behavior
     },

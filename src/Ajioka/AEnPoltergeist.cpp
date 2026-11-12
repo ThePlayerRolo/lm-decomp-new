@@ -6,37 +6,37 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[6] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_0_Init, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_1_Init, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_1_Behavior
     },
 
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_2_Init, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_2_Behavior
     },
 
     {
-        UNK_STRAT_STATE_3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_3_Init, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_3_Behavior
     },
 
     {
-        UNK_STRAT_STATE_4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_4_Init, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_4_Behavior
     },
 
     {
-        UNK_STRAT_STATE_5, 
+        STRAT_STATE_5, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_5_Init, 
         (EnemyStrategyStateFn)&AEnPoltergeist::state_5_Behavior
     }

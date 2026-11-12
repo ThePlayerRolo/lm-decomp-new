@@ -6,13 +6,13 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[2] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnESkull::state_0_Init, 
         (EnemyStrategyStateFn)&AEnESkull::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_A, 
+        STRAT_STATE_A, 
         (EnemyStrategyStateFn)&AEnESkull::state_0xA_Init, 
         (EnemyStrategyStateFn)&AEnESkull::state_0xA_Behavior
     },

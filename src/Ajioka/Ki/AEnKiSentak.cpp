@@ -10,27 +10,27 @@ static char lbl_804D41C0[] = "ENDING";
 
 static EnemyStrategyState enemiesStates[4] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnKiSentak::state_0_Init, 
         (EnemyStrategyStateFn)&AEnKiSentak::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnKiSentak::state_1_Init, 
         (EnemyStrategyStateFn)&AEnKiSentak::state_1_Behavior
     },
 
     
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnKiSentak::state_2_Init, 
         (EnemyStrategyStateFn)&AEnKiSentak::state_2_Behavior
     },
 
     
     {
-        UNK_STRAT_STATE_3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnKiSentak::state_3_Init, 
         (EnemyStrategyStateFn)&AEnKiSentak::state_3_Behavior
     },

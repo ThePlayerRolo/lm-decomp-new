@@ -6,45 +6,45 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[7] = {
     {
-        UNK_STRAT_STATE_0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0_Behavior
     },
 
     {
-        UNK_STRAT_STATE_2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_2_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_2_Behavior
     },
 
     
     {
-        UNK_STRAT_STATE_3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_3_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_3_Behavior
     },
 
     
     {
-        UNK_STRAT_STATE_4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_4_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_4_Behavior
     },
 
     {
-        UNK_STRAT_STATE_102, 
+        STRAT_STATE_102, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x102_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x102_Behavior
     },
 
     {
-        UNK_STRAT_STATE_100, 
+        STRAT_STATE_100, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x100_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x100_Behavior
     },
 
     {
-        UNK_STRAT_STATE_101, 
+        STRAT_STATE_101, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x101_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x101_Behavior
     },
