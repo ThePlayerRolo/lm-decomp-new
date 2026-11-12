@@ -54,6 +54,8 @@ GXRenderModeObj sProgRenderModeObj = {
     { 0,0, 26,12,26, 0,0  }
 };
 
+Vec gZeroVec = {0.0f, 0.0f, 0.0f};
+
 Mtx sDefaultMtx = {
     {1.0f, 0.0f, 0.0f, 0.0f},
     {0.0f, 1.0f, 0.0f, 0.0f},

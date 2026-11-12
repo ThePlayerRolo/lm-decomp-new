@@ -7,37 +7,37 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[6] = {
     {
-        0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnBeam1::state_0_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_0_Behavior
     },
 
     {
-        2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnBeam1::state_2_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_2_Behavior
     },
 
     {
-        3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnBeam1::state_3_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_3_Behavior
     },
 
     {
-        4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnBeam1::state_4_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_4_Behavior
     },
 
     {
-        5, 
+        STRAT_STATE_5, 
         (EnemyStrategyStateFn)&AEnBeam1::state_5_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_5_Behavior
     },
 
     {
-        6, 
+        STRAT_STATE_6, 
         (EnemyStrategyStateFn)&AEnBeam1::state_6_Init, 
         (EnemyStrategyStateFn)&AEnBeam1::state_6_Behavior
     },
@@ -47,10 +47,19 @@ static char lbl_804D426C[] = "FLYT";
 static char lbl_804D4274[] = "NORMAL";
 
 void AEnBeam1::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void AEnBeam1::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
+
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }    
 }
 
 bool AEnBeam1::vt_14() {

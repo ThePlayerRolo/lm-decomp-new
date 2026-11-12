@@ -5,13 +5,13 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[2] = {
     {
-        0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnNoMove2::state_0_Init, 
         (EnemyStrategyStateFn)&AEnNoMove2::state_0_Behavior
     },
 
     {
-        2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnNoMove2::state_2_Init, 
         (EnemyStrategyStateFn)&AEnNoMove2::state_2_Behavior
     },
@@ -19,10 +19,18 @@ static EnemyStrategyState enemiesStates[2] = {
 
 
 void AEnNoMove2::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 void AEnNoMove2::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool AEnNoMove2::state_0_Init() {

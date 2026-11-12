@@ -14,27 +14,27 @@ static char lbl_804D412C[] = "CLOSE";
 
 static EnemyStrategyState enemiesStates[4] = {
     {
-        0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_0_Init, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_0_Behavior
     },
 
     {
-        1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_1_Init, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_1_Behavior
     },
 
     
     {
-        2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_2_Init, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_2_Behavior
     },
 
     
     {
-        3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_3_Init, 
         (EnemyStrategyStateFn)&AEnKaguBase::state_3_Behavior
     },
@@ -53,11 +53,19 @@ AEnKaguBase::AEnKaguBase() {
 
 
 void AEnKaguBase::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void AEnKaguBase::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool AEnKaguBase::state_0_Init() {

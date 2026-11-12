@@ -64,7 +64,8 @@ public:
     /* 0x08C */ s16 _8C;
     /* 0x08E */ s16 _8E;
 
-    /* 0x090 */ u8 _90[0xB4 - 0x90];
+    /* 0x090 */ Vec _90; // set the same value on all 3 axes in AEnEBone. Scale ? 
+    /* 0x09C */ u8 _9C[0xB4 - 0x9C];
 
     /* 0x0B4 */ u32 _B4;
     
@@ -72,8 +73,10 @@ public:
     /* 0x0BC */ u32 _BC;
     /* 0x0C0 */ u32 _C0;
     /* 0x0C4 */ u32 _C4;
-    /* 0x0C8 */ u8 _C8[0xE0 - 0xC8];
+    /* 0x0C8 */ u8 _C8[0xD8 - 0xC8];
 
+    /* 0x0D8 */ f32 _D8;
+    /* 0x0DC */ void* _DC;
     /* 0x0E0 */ bool _E0;
     /* 0x0E1 */ bool _E1;
     /* 0x0E2 */ bool _E2;

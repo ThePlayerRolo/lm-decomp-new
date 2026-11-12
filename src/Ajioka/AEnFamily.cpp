@@ -6,116 +6,116 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[0x12] = {
     {
-        0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnFamily::state_0_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_0_Behavior
     },
 
     {
-        1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnFamily::state_1_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_1_Behavior
     },
 
     {
-        2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnFamily::state_2_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_2_Behavior
     },
 
     {
-        3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnFamily::state_3_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_3_Behavior
     },
 
     {
-        4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnFamily::state_4_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_4_Behavior
     },
 
     {
-        5, 
+        STRAT_STATE_5, 
         (EnemyStrategyStateFn)&AEnFamily::state_5_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_5_Behavior
     },
 
     {
-        6, 
+        STRAT_STATE_6, 
         (EnemyStrategyStateFn)&AEnFamily::state_6_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_6_Behavior
     },
 
     {
-        7, 
+        STRAT_STATE_7, 
         (EnemyStrategyStateFn)&AEnFamily::state_7_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_7_Behavior
     },
 
     {
-        8, 
+        STRAT_STATE_8, 
         (EnemyStrategyStateFn)&AEnFamily::state_8_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_8_Behavior
     },
 
     {
-        9, 
+        STRAT_STATE_9, 
         (EnemyStrategyStateFn)&AEnFamily::state_9_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_9_Behavior
     },
 
     {
-        0xA, 
+        STRAT_STATE_A, 
         (EnemyStrategyStateFn)&AEnFamily::state_A_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_A_Behavior
     },
     
 
     {
-        0xB, 
+        STRAT_STATE_B, 
         (EnemyStrategyStateFn)&AEnFamily::state_B_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_B_Behavior
     },
     
 
     {
-        0xC, 
+        STRAT_STATE_C, 
         (EnemyStrategyStateFn)&AEnFamily::state_C_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_C_Behavior
     },
     
 
     {
-        0xD, 
+        STRAT_STATE_D, 
         (EnemyStrategyStateFn)&AEnFamily::state_D_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_D_Behavior
     },
     
 
     {
-        0xE, 
+        STRAT_STATE_E, 
         (EnemyStrategyStateFn)&AEnFamily::state_E_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_E_Behavior
     },
     
 
     {
-        0xF, 
+        STRAT_STATE_F, 
         (EnemyStrategyStateFn)&AEnFamily::state_F_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_F_Behavior
     },
     
 
     {
-        0x10, 
+        STRAT_STATE_10, 
         (EnemyStrategyStateFn)&AEnFamily::state_0x10_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_0x10_Behavior
     },
     
 
     {
-        0x11, 
+        STRAT_STATE_11, 
         (EnemyStrategyStateFn)&AEnFamily::state_0x11_Init, 
         (EnemyStrategyStateFn)&AEnFamily::state_0x11_Behavior
     },
@@ -127,11 +127,19 @@ AEnFamily::~AEnFamily() {}
 
 
 void AEnFamily::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void AEnFamily::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool AEnFamily::vt_14() {
