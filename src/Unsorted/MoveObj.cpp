@@ -73,7 +73,7 @@ void MoveObj::fn_80068268(s32 val, JGeometry::TVec3<f32>& vec) {
     }
 }
 
-void MoveObj::fn_80068DAC(s16 x, s16 y, s16 z) {
+void MoveObj::vt_0C(u16 x, u16 y, u16 z) {
     _86 = x;
     _84 = x;
     _8A = y;

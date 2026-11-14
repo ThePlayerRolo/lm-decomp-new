@@ -37,9 +37,6 @@ protected:
     void fn_800682DC(s16);
     void fn_800685B0();
 
-    // Maybe header defined
-    void fn_80068DAC(s16, s16, s16);
-
 public:
     inline void setE3andE7() {
         _E3 = false;
@@ -57,12 +54,12 @@ public:
     /* 0x068 */ f32 _68;
     /* 0x06C */ Vec _6C;
     /* 0x078 */ Vec _78;
-    /* 0x084 */ s16 _84;
-    /* 0x086 */ s16 _86;
-    /* 0x088 */ s16 _88;
-    /* 0x08A */ s16 _8A;
-    /* 0x08C */ s16 _8C;
-    /* 0x08E */ s16 _8E;
+    /* 0x084 */ u16 _84;
+    /* 0x086 */ u16 _86;
+    /* 0x088 */ u16 _88;
+    /* 0x08A */ u16 _8A;
+    /* 0x08C */ u16 _8C;
+    /* 0x08E */ u16 _8E;
 
     /* 0x090 */ u8 _90[0xB4 - 0x90];
 
