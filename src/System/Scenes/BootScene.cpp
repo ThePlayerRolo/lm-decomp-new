@@ -38,8 +38,10 @@ static u8 staticdata_usa_arc[0xE1000] ATTRIBUTE_ALIGN(32) = {
 };
 #define STATIC_DATA staticdata_usa_arc
 #else
+static u8 staticdata_arc[0xE1000] ATTRIBUTE_ALIGN(32) = {
 #include "staticdata_arc.inc"
-#define STATIC_DATA  staticdata_arc
+};
+#define STATIC_DATA staticdata_arc
 #endif
 
 static GXColor sLogoMatColor = { 255, 255, 255, 32 }; // White
