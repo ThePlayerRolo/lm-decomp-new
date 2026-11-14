@@ -19,7 +19,7 @@ static EnemyStrategyState enemiesStates[0x2] = {
 };
 
 
-SaEnDust::SaEnDust() {}
+SaEnDust::SaEnDust() : Koga::CharacterEvent(Koga::CharacterEvent::MESSAGE_TRUE) {}
 SaEnDust::~SaEnDust() {}
 void SaEnDust::doBehavior() {
     EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);

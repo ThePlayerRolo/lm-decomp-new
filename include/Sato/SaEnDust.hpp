@@ -1,8 +1,9 @@
 #ifndef SA_EN_DUST
 #define SA_EN_DUST
 
+#include "Koga/CharacterEventObserver.hpp"
 #include "Sato/EnemyTypicalStrategy.hpp"
-class SaEnDust : public EnemyTypicalStrategy {
+class SaEnDust : public EnemyTypicalStrategy, public Koga::CharacterEvent {
 public:
     SaEnDust();
     virtual ~SaEnDust();
