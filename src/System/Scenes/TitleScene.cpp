@@ -61,7 +61,7 @@ namespace TitleScene {
         }
 
         setCurHeapGroupId(2);
-        if (lbl_804D8058 != 1) {
+        if (sProgressiveScanPromptState != 1) {
             fn_8003ADE0(0);
         } else {
             fn_8003ADE0(1);
@@ -92,7 +92,7 @@ namespace TitleScene {
                     OpeningScene::sNextSceneID = SCENE_MAIN_GAME;
                     fn_8018A2A0(0x3802);
                     SceneManager::fn_8000B334(3);
-                    updateProgressiveMode();
+                    applyProgressiveChoice();
                     break;
                 }
 
@@ -116,7 +116,7 @@ namespace TitleScene {
 
     void draw() {
         fn_8003AE7C();
-        fn_80007F90();
+        updateProgressiveScanPrompt();
     }
 
     void destroy() {

@@ -80,7 +80,7 @@ namespace SelectScene {
 
     void draw() {
         fn_8004CFBC();
-        fn_80008004();
+        tickProgressiveMessage();
     }
 
     void destroy() {

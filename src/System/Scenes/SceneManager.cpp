@@ -204,7 +204,7 @@ namespace SceneManager {
             }
 
             fn_80185910();
-            fn_800079B0();
+            applyRenderMode();
             JUTGamePad::read();
             fn_80009580();
 

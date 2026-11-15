@@ -163,7 +163,7 @@ namespace BootScene {
         switch (sBootSceneState) {
         case BOOT_IDLE:
             startBackgroundTask(loadStaticData);
-            fn_80007F28();
+            checkProgressiveScanPrompt();
             sBootSceneState = BOOT_LOADING;
             return SCENE_BOOT;
         case BOOT_LOADING:
@@ -209,7 +209,7 @@ namespace BootScene {
         nintendoLogoPicture->mWhite = color;
         nintendoLogoPicture->draw(0, 0, 640, 480, false, false, false);
         if (SceneManager::lbl_804D8098 >= 2) {
-            fn_80007E50(1);
+            setDisplayFlags(1);
         }
         if (sBootSceneState == BOOT_READY) {
             bootSceneFrameCount++;
