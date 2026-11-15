@@ -12,12 +12,8 @@
 
 
 namespace MainGameScene {
-    s32 lbl_804D80E8;
-    s32 lbl_804D80EC;
-    s32 lbl_804D80F0;
-    s8 lbl_804D80F4;
-    s32 lbl_804D80F8;
-    s8 lbl_804D80FC;
+    static s32 lbl_804D80E8;
+    static s32 lbl_804D80EC;
 
     void fn_8000CC18() {
         lbl_804D8438 = 0;
@@ -64,10 +60,7 @@ namespace MainGameScene {
     }
     
     void fn_8000CD60() {
-        if (!lbl_804D80F4) {
-            lbl_804D80F0 = 0;
-            lbl_804D80F4 = 1;
-        }
+        static s32 lbl_804D80F0 = 0;
 
         if (lbl_804D80C4 != 6) {
             return;
@@ -88,10 +81,7 @@ namespace MainGameScene {
     }
 
     void fn_8000CDE0() {
-        if (!lbl_804D80FC) {
-            lbl_804D80F8 = 0;
-            lbl_804D80FC = 1;
-        }
+        static s32 lbl_804D80F8 = 0;
 
         if (lbl_804D80C4 != 7) {
             return;

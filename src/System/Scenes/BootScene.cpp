@@ -73,8 +73,6 @@ namespace BootScene {
     static f32 lbl_804D811C;
     static J2DPicture* nintendoLogoPicture;
     static JKRMemArchive* staticDataArchive;
-    static s32 bootSceneFrameCount;
-    static s8 bootInit;
 
     void dvdFileOpenCallback(void* param_1, DiscFileInfo* param_2) {
         u8* block = reinterpret_cast<u8*>(JKRAllocFromHeap(nullptr, getYay0ArcSize(param_2->mFileBuffer), 32));
@@ -181,10 +179,8 @@ namespace BootScene {
 
     // problems but can't create a scratch because tu is too big lol
     void draw() {
-        if (bootInit == 0) {
-            bootSceneFrameCount = 0;
-            bootInit = 1;
-        }
+        static s32 bootSceneFrameCount = 0;
+        
         fn_80009B80();
         fn_80008654(&lbl_803A3820);
         GXSetChanMatColor(GX_COLOR0A0, sLogoMatColor);
