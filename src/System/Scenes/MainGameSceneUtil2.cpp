@@ -4,6 +4,7 @@
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "System/DisplayUtil.hpp"
+#include "Unsorted/800080DC.hpp"
 
 namespace MainGameScene {
     s32 lbl_804D80D8;

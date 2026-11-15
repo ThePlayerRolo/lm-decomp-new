@@ -8,6 +8,11 @@
 #include "System/Memory.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "System/UnknownSystemCalls.hpp"
+#include "Unsorted/80009B80.hpp"
+#include "dolphin/os/OSMessage.h"
+#include "macros.h"
+
+dummy_float_data()
 
 struct FrameSync {
     /* 0x00 */ u32 mLastRetraceCount;
@@ -52,20 +57,12 @@ GXRenderModeObj sProgRenderModeObj = {
     },
     { 0,0, 26,12,26, 0,0  }
 };
-
-Vec gZeroVec = {0.0f, 0.0f, 0.0f};
-
-Mtx sDefaultMtx = {
-    {1.0f, 0.0f, 0.0f, 0.0f},
-    {0.0f, 1.0f, 0.0f, 0.0f},
-    {0.0f, 0.0f, 1.0f, 0.0f}
-};
 // clang-format on
 
 // .data end
 
 // .sbss start
-s32 lbl_804D8030;
+JUTDirectPrint* sDirectPrintManager;
 u8 sRenderMode;
 DisplayState sDisplayState;
 void* sFrameBufferA;
@@ -104,13 +101,12 @@ static void initDisplayInternal(DisplayState* dst) {
     OSInitMessageQueue(&sFrameSync.mMsgQueue, &sFrameSync.mMsg, 1);
     sFrameSync.mLastRetraceCount = VIGetRetraceCount();
     sFrameSync.mFrameRateDivisor = 1;
-    u8 groupID = 2;
 
     dst->mFlags = 0;
     dst->mIsDoubleBuffered = true;
     dst->mBufferIndex = 0;
     sMainFrameBuffer = nullptr;
-    sSystemHeap->changeGroupID(groupID);
+    sSystemHeap->changeGroupID(2);
 
     u32 frameBufferSize = 0x96000;
     if (sFrameBufferA == nullptr) {
@@ -134,14 +130,13 @@ static void initDisplayInternal(DisplayState* dst) {
         sFrameBufferB = sMainFrameBuffer = sFrameBufferA;
     }
 
+    void* firstBuffer = sMainFrameBuffer;
     sFrameBuffers[0] = sFrameBufferA;
-    void* temp = sMainFrameBuffer;
     sFrameBuffers[1] = sFrameBufferB;
 
-    VISetNextFrameBuffer(temp);
+    VISetNextFrameBuffer(firstBuffer);
     sCurRenderModeObj = &sIntRenderModeObj;
     configureRenderDisplay();
-    // Temp to match stack, its possible they used this for debugging
     VISetPostRetraceCallback(postRetraceCallback);
 
     sSystemHeap->changeGroupID(26);
@@ -149,7 +144,8 @@ static void initDisplayInternal(DisplayState* dst) {
 
 void postRetraceCallback(u32 retraceCount) {
     if (retraceCount - sFrameSync.mLastRetraceCount >= sFrameSync.mFrameRateDivisor) {
-        OSSendMessage(&sFrameSync.mMsgQueue, (void*)0x444F4E45, OS_MESSAGE_NOBLOCK);
+        // Reports "DONE" once the frame rate divisor retraces have passed since the frames started.
+        OSSendMessage(&sFrameSync.mMsgQueue, OSMessage(0x444F4E45), OS_MESSAGE_NOBLOCK);
     }
 }
 
@@ -171,8 +167,7 @@ static void setNextVIFrameBuffer(DisplayState* pSettings) {
 }
 
 void resetRenderDisplay() {
-    GXColor clearColor = {0, 0, 0, 0};
-    GXSetCopyClear(clearColor, 0xFFFFFF);
+    GXSetCopyClear(sReset, 0xFFFFFF);
     GXSetColorUpdate(GX_TRUE);
     GXSetAlphaUpdate(GX_TRUE);
     GXSetZMode(GX_TRUE, GX_LESS, GX_TRUE);
@@ -207,13 +202,13 @@ void initDisplay() {
     initDisplayInternal(&sDisplayState);
 }
 
-void fn_80007800() {
+void beginFrame() {
     GXInvalidateTexAll();
     GXInvalidateVtxCache();
     GXSetScissor(0, 0, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight);
 }
 
-void fn_8000783C() {
+void endFrameSingleBuffered() {
     GXDrawDone();
     OSReceiveMessage(&sFrameSync.mMsgQueue, nullptr, OS_MESSAGE_BLOCK);
     sFrameSync.mLastRetraceCount = VIGetRetraceCount();
@@ -242,7 +237,7 @@ void fn_8000783C() {
     GXFlush();
 }
 
-void changeFrameBuffer() {
+void endFrame() {
     resetRenderDisplay();
     if (sDisplayState.mIsDoubleBuffered == true) {
         GXDrawDone();
@@ -254,10 +249,10 @@ void changeFrameBuffer() {
         OSReceiveMessage(&sFrameSync.mMsgQueue, NULL, OS_MESSAGE_BLOCK);
         sFrameSync.mLastRetraceCount = VIGetRetraceCount();
     } else {
-        fn_8000783C();
+        endFrameSingleBuffered();
     }
-    void* frameBuf = sMainFrameBuffer;
 
+    void* frameBuf = sMainFrameBuffer;
     JUTDirectPrint::getManager()->changeFrameBuffer(frameBuf, 640, 480);
 }
 
@@ -268,12 +263,14 @@ void applyRenderMode() {
     }
 }
 
-// https://decomp.me/scratch/d7YKn
 void defaultOrthoView() {
+    f32 x = 0.0f;
+    f32 y = 0.0f;
+
     GXSetScissor(0, 0, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight);
-    GXSetViewportJitter(0.0f, 0.0f, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight, 0.0f, 1.875f, 1);
-    Mtx orthoMtx;
-    MTXOrtho(orthoMtx, -0.0f, 3.96875f, -0.0f, sCurRenderModeObj->fbWidth, -1.875f, 4.4765625f);
+    GXSetViewportJitter(0.0f, 0.0f, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight, 0.0f, 1.0f, 1);
+    Mtx44 orthoMtx;
+    MTXOrtho(orthoMtx, -y, 480.0f - y, -x, sCurRenderModeObj->fbWidth - x, -1.0f, 1000.0f);
     GXSetProjection(orthoMtx, GX_ORTHOGRAPHIC);
     GXSetCullMode(GX_CULL_NONE);
     GXLoadPosMtxImm(sDefaultMtx, 0);
@@ -287,16 +284,11 @@ void defaultOrthoView() {
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
     GXSetChanCtrl(GX_COLOR1A1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
-    GXColor local_70 = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetChanMatColor(GX_COLOR0A0, local_70);
-    GXColor local_74 = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetChanAmbColor(GX_COLOR0A0, local_74);
-    GXColor local_78 = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetChanMatColor(GX_COLOR1A1, local_78);
-    GXColor local_7c = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetChanAmbColor(GX_COLOR1A1, local_7c);
-    GXColor local_80 = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetTevKColor(GX_KCOLOR0, local_80);
+    GXSetChanMatColor(GX_COLOR0A0, sWhite);
+    GXSetChanAmbColor(GX_COLOR0A0, sWhite);
+    GXSetChanMatColor(GX_COLOR1A1, sWhite);
+    GXSetChanAmbColor(GX_COLOR1A1, sWhite);
+    GXSetTevKColor(GX_KCOLOR0, sWhite);
     GXSetTevKColorSel(GX_TEVSTAGE0, GX_TEV_KCSEL_K0);
     GXSetTevKAlphaSel(GX_TEVSTAGE0, GX_TEV_KASEL_K0_A);
     GXSetNumTexGens(1);
@@ -314,31 +306,30 @@ void defaultOrthoView() {
     GXSetDstAlpha(GX_FALSE, 0xFF);
 }
 
-// https://decomp.me/scratch/tMgJK
 void setViewportJitter(f32 left, f32 top, f32 width, f32 height, f32 near, f32 far) {
     f32 widthScale = sCurRenderModeObj->fbWidth / 640.0f;
+    f32 heightScale = 1.0f;
 
     if (sCurRenderModeObj->field_rendering) {
-        GXSetViewportJitter(left * widthScale, top * -1.0f, width * widthScale, height * -1.0f, near, far, VIGetNextField());
+        GXSetViewportJitter(left * widthScale, top * heightScale, width * widthScale, height * heightScale, near, far, VIGetNextField());
     } else {
-        GXSetViewportJitter(left * widthScale, top * -1.0f, width * widthScale, height * -1.0f, near, far, 1);
+        GXSetViewportJitter(left * widthScale, top * heightScale, width * widthScale, height * heightScale, near, far, 1);
     }
 }
 
-void setDisplayFlags(u16 param_1) {
-    sDisplayState.mFlags |= param_1;
+void setDisplayFlags(u16 flags) {
+    sDisplayState.mFlags |= flags;
 }
 
-void setFrameRateDivisor(s32 param_1) {
-    sFrameSync.mFrameRateDivisor = param_1;
+void setFrameRateDivisor(s32 divisor) {
+    sFrameSync.mFrameRateDivisor = divisor;
 }
 
-// https://decomp.me/scratch/BHaSG
-void setDoubleBuffered(bool param_1) {
-    sDisplayState.mIsDoubleBuffered = param_1;
-    if (param_1 == true) {
+void setDoubleBuffered(bool enable) {
+    sDisplayState.mIsDoubleBuffered = enable;
+    if (enable == true) {
         sDisplayState.mBufferIndex ^= 1;
-        sDisplayState.mBufferIndex &= sDisplayState.mFlags;
+        sDisplayState.mBufferIndex &= sDisplayState.mIsDoubleBuffered;
         sMainFrameBuffer = sFrameBuffers[sDisplayState.mBufferIndex];
         return;
     }
@@ -363,8 +354,7 @@ u32 getFrameRateDivisor() {
     return sFrameSync.mFrameRateDivisor;
 }
 
-// https://decomp.me/scratch/jpyvK
-void setIntRenderModeVFilter(u8 vfilterVal) {
+void setIntRenderModeVFilter(s32 vfilterVal) {
     sIntRenderModeObj.vfilter[0] = vfilterVal;
     sIntRenderModeObj.vfilter[6] = vfilterVal;
     sIntRenderModeObj.vfilter[2] = 26 - vfilterVal;
@@ -402,13 +392,7 @@ void updateProgressiveScanPrompt() {
 }
 
 void tickProgressiveMessage() {
-    static u32 lbl_804D8064;
-    static s8 lbl_804D8068;
-
-    if (!lbl_804D8068) {
-        lbl_804D8064 = false;
-        lbl_804D8068 = true;
-    }
+    static u32 lbl_804D8064 = 0;
 
     if (sProgressiveScanPromptState != 2)
         return;
@@ -418,7 +402,7 @@ void tickProgressiveMessage() {
         return;
     }
 
-    sProgressiveScanMsgTimer = sProgressiveScanMsgTimer - 1;
+    sProgressiveScanMsgTimer--;
     fn_80047444(sProgressiveScanChoice + 2);
 }
 

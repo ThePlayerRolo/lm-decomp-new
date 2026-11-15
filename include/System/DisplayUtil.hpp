@@ -16,11 +16,13 @@ enum ProgressiveScanState {
     PSCAN_SHOW_RESULT,
 };
 
+class JUTDirectPrint;
+
 void initDisplay();
-void fn_80007800();
-void changeFrameBuffer();
+void beginFrame();
+void endFrame();
 void defaultOrthoView();
-void setViewportJitter(f32 left, f32 top, f32 width, f32 height, f32 near, f32 far);
+void setViewportJitter(f32, f32, f32, f32, f32, f32);
 void applyRenderMode();
 void setDisplayFlags(u16);
 void setFrameRateDivisor(s32);
@@ -28,7 +30,7 @@ void setDoubleBuffered(bool);
 void* getMainFrameBuffer();
 void* getPrevMainFrameBuffer();
 u32 getFrameRateDivisor();
-void setIntRenderModeVFilter(u8 vfilterVal);
+void setIntRenderModeVFilter(s32);
 
 // Progressive mode related functions start
 void checkProgressiveScanPrompt();
@@ -37,8 +39,7 @@ void tickProgressiveMessage();
 void applyProgressiveChoice();
 // Progressive mode related functions end
 
-extern Mtx sDefaultMtx;
-extern void* lbl_803A3810; // Probably some struct
 extern ProgressiveScanState sProgressiveScanPromptState;
+extern JUTDirectPrint* sDirectPrintManager;
 
 #endif

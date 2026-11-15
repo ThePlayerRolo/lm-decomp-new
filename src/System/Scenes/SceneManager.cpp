@@ -13,6 +13,7 @@
 
 #include "Unsorted/MathUtils.hpp"
 #include "Unsorted/800080DC.hpp"
+#include "Unsorted/80009B80.hpp"
 
 // Other Scene related stuff
 #include "System/Scenes/SceneManager.hpp"
@@ -177,7 +178,7 @@ namespace SceneManager {
 
         while (true) {
             lbl_804D80B4 = 0;
-            fn_80007800();
+            beginFrame();
 
             if (sSceneMgr.mState == SM_STATE_2) {
                 fn_8000B370();
@@ -222,7 +223,7 @@ namespace SceneManager {
                 fn_80188710();
             }
 
-            changeFrameBuffer();
+            endFrame();
             if (sSceneMgr.mState != SM_STATE_0) {
                 fn_800080DC(&lbl_803A3810);
             }
