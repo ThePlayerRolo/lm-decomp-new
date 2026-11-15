@@ -2,18 +2,20 @@
 #include <dolphin/gx/GXCull.h>
 #include <JSystem/JKernel/JKRExpHeap.hpp>
 
-#include "System/Scenes/MainGameSceneUtil1.hpp"
+#include "System/DisplayUtil.hpp"
 #include "System/Memory.hpp"
+#include "System/DataOnly.hpp"
+
+#include "System/Scenes/MainGameSceneUtil1.hpp"
 #include "System/Scenes/MainGameSceneUtil2.hpp"
 #include "System/Scenes/MainGameScene.hpp"
 #include "System/Scenes/SceneManager.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "System/Scenes/SelectScene.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
+
 #include "Unsorted/GamePad.hpp"
 #include "Unsorted/80009B80.hpp"
 #include "Unsorted/80008418.hpp"
-#include "System/DataOnly.hpp"
 
 #include "macros.h"
 #include "types.h"
@@ -51,7 +53,7 @@ namespace MainGameScene {
                 if (SceneManager::lbl_804D8098 <= 2) {
                     lbl_804D80C4 = 2;
                     lbl_804D8438 = 0;
-                    fn_80007E60(1);
+                    setFrameRateDivisor(1);
                     fn_8018A678(1);
                     fn_8018A2A0(0x3804);
                     lbl_804D80D0 = 0;
@@ -147,7 +149,7 @@ namespace MainGameScene {
             fn_801219C4();
             fn_80188760(lbl_804D8008 & 0xFF, nullptr);
             fn_8005DAFC();
-            fn_80007E60(2);
+            setFrameRateDivisor(2);
 
             lbl_804D80D0 = 0;
             lbl_803A3B10._0 = 0;

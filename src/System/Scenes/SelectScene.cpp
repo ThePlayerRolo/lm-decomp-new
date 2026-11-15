@@ -2,9 +2,9 @@
 #include "System/Scenes/MainGameScene.hpp"
 #include "System/Scenes/OpeningScene.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
+#include "System/DisplayUtil.hpp"
 
 #include "Unsorted/InGameFlagsUtil.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
 
 namespace SelectScene {
     static void fn_8000B978();

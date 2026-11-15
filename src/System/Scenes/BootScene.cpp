@@ -13,8 +13,8 @@
 #include "System/BackgroundTask.hpp"
 #include "System/DiscFile.hpp"
 #include "System/Yay0.hpp"
+#include "System/DisplayUtil.hpp"
 
-#include "Unsorted/LMDisplayUtil.hpp"
 #include "Unsorted/staticDataAramData.h"
 #include "Unsorted/80008418.hpp"
 #include "Unsorted/80009B80.hpp"
@@ -188,7 +188,7 @@ namespace BootScene {
         fn_80009B80();
         fn_80008654(&lbl_803A3820);
         GXSetChanMatColor(GX_COLOR0A0, sLogoMatColor);
-        LMSetViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+        setViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
         GXSetScissor(0, 0, 640, 480);
         GXSetCurrentMtx(0);
         GXSetNumChans(1);

@@ -3,7 +3,7 @@
 #include "System/Scenes/MainGameSceneUtil2.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "Unsorted/GamePad.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
+#include "System/DisplayUtil.hpp"
 
 namespace MainGameScene {
     s32 lbl_804D80D8;
@@ -14,7 +14,7 @@ namespace MainGameScene {
             
             lbl_804D80C4 = 1;
             lbl_804D8438 = 0;
-            fn_80007E60(1);
+            setFrameRateDivisor(1);
             fn_8018A678(1);
             fn_8018A2A0(0x3804);
             fn_8007220C();
@@ -43,7 +43,7 @@ namespace MainGameScene {
     void fn_8000C860() {
         fn_8018A678(0);
         lbl_804D8438 = 1;
-        fn_80007E60(2);
+        setFrameRateDivisor(2);
     }
 
     void fn_8000C894() {
@@ -51,7 +51,7 @@ namespace MainGameScene {
         lbl_804D80C4 = 0;
         fn_8018A678(0);
         lbl_804D8438 = 1;
-        fn_80007E60(2);
+        setFrameRateDivisor(2);
         fn_800393CC();
     }
 

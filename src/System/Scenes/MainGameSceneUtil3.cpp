@@ -9,11 +9,11 @@
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "System/DataOnly.hpp"
 #include "System/Memory.hpp"
+#include "System/DisplayUtil.hpp"
 
 #include "Unsorted/GamePad.hpp"
 #include "Unsorted/80008418.hpp"
 #include "Unsorted/80009B80.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
 
 namespace MainGameScene {
     s32 lbl_804D80E0;
@@ -31,12 +31,12 @@ namespace MainGameScene {
                     void* temp = fn_800AD39C(0); //checks against the 0x55 byte
                     lbl_804D80C4 = 3;
                     lbl_804D8438 = 0;
-                    fn_80007E60(1);
+                    setFrameRateDivisor(1);
                     fn_8018A678(1);
                     fn_8018A2A0(0x3804);
                     lbl_804D80E0 = 1;
                     fn_8007220C();
-                    LMSetIntRenderModeVFilter(0x10);
+                    setIntRenderModeVFilter(0x10);
                     fn_800531B8();
                     break;
             }
@@ -112,8 +112,8 @@ namespace MainGameScene {
             fn_801219C4();
             fn_80188760(lbl_804D8008 & 0xFF, 0);
             fn_8005DAFC();
-            fn_80007E60(2);
-            LMSetIntRenderModeVFilter(6);
+            setFrameRateDivisor(2);
+            setIntRenderModeVFilter(6);
 
             if (sUnusedHeap != nullptr) {
                 sUnusedHeap->destroy();

@@ -9,9 +9,9 @@
 #include "System/DiscFile.hpp"
 #include "System/BackgroundTask.hpp"
 #include "System/Memory.hpp"
+#include "System/DisplayUtil.hpp"
 
 #include "Unsorted/MathUtils.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
 #include "Unsorted/800080DC.hpp"
 
 // Other Scene related stuff
@@ -120,7 +120,7 @@ namespace SceneManager {
         GXLoadNrmMtxImm(sDefaultMtx, 27);
 
         sCurrScene->mDrawFn();
-        LMDefaultOrthoView();
+        defaultOrthoView();
     }
 
     void fn_8000B4A0() {
@@ -191,7 +191,7 @@ namespace SceneManager {
                     if (pollBackgroundTaskComplete() == 1) {
                         sSceneMgr.mState = SM_STATE_1;
                         fn_80009540(sCurrScene->_10);
-                        fn_80007E60(sCurrScene->_10);
+                        setFrameRateDivisor(sCurrScene->_10);
                     }
                     break;
                 case SM_STATE_1:
@@ -222,7 +222,7 @@ namespace SceneManager {
                 fn_80188710();
             }
 
-            LMChangeFrameBuffer();
+            changeFrameBuffer();
             if (sSceneMgr.mState != SM_STATE_0) {
                 fn_800080DC(&lbl_803A3810);
             }

@@ -9,7 +9,7 @@
 #include "Unsorted/800627D8.hpp"
 #include "Unsorted/BackgroundMusic.hpp"
 #include "Unsorted/GamePad.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
+#include "System/DisplayUtil.hpp"
 
 namespace TitleScene {
     static void init();
@@ -92,7 +92,7 @@ namespace TitleScene {
                     OpeningScene::sNextSceneID = SCENE_MAIN_GAME;
                     fn_8018A2A0(0x3802);
                     SceneManager::fn_8000B334(3);
-                    LMUpdateProgressiveMode();
+                    updateProgressiveMode();
                     break;
                 }
 
