@@ -29,7 +29,7 @@ void SaEnDust::doBehavior() {
     }
 }
 void SaEnDust::doBehaviorInit() {
-        EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
     if (state != nullptr) {
         (this->*state->mBehaviorInitFunc)();
