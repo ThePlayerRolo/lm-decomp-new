@@ -3,7 +3,7 @@
 #include "Sato/EnZako.hpp"
 #include "System/MathUtils.hpp"
 #include "dolphin/mtx.h"
-#include "Unsorted/globals.hpp"
+#include "System/80009B80.hpp"
 
 void fn_800F4374(EnZako*, s32, s32);
 

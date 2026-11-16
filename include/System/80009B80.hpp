@@ -9,13 +9,7 @@ extern GXColor sWhite;
 extern GXColor sBlack;
 
 extern Mtx sDefaultMtx;
-/* Move to C++ file when made
-Mtx sDefaultMtx = {
-    {1.0f, 0.0f, 0.0f, 0.0f},
-    {0.0f, 1.0f, 0.0f, 0.0f},
-    {0.0f, 0.0f, 1.0f, 0.0f}
-};
-*/
+extern Vec gZeroVec;
 
 void fn_80009B80();
 
