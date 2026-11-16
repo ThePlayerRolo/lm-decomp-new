@@ -817,7 +817,7 @@ config.libs = [
         Object(Matching, "System/DataOnly.cpp"),
         Object(NonMatching, "System/DisplayUtil.cpp"),
         Object(NonMatching, "System/800080DC.cpp"),
-        Object(NonMatching, "System/80009584.cpp", extra_cflags=["-fp_contract off"]),
+        Object(Matching, "System/80009584.cpp", extra_cflags=["-fp_contract off"]),
         Object(NonMatching, "System/MathUtils.cpp", extra_cflags=["-fp_contract off"]),
         Object(NonMatching, "System/80009B80.cpp"),
 
