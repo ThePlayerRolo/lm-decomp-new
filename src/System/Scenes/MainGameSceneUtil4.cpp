@@ -1,14 +1,15 @@
 #include <dolphin/gx/GXTransform.h>
 #include <dolphin/gx/GXCull.h>
 #include <JSystem/JKernel/JKRExpHeap.hpp>
+#include <JSystem/JUtility/JUTGamePad.hpp>
 
 #include "System/Scenes/MainGameScene.hpp"
 #include "System/Scenes/MainGameSceneUtil4.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "System/DataOnly.hpp"
+#include "System/DisplayUtil.hpp"
 
 #include "Unsorted/GamePad.hpp"
-#include "System/DisplayUtil.hpp"
 
 
 namespace MainGameScene {
@@ -73,7 +74,7 @@ namespace MainGameScene {
             return;
         }
 
-        if (sGamePad->testButton(0x200)) {
+        if (sGamePad->testButton(JUTGamePad::B)) {
             lbl_804D80F0 = 1;
         }
 
