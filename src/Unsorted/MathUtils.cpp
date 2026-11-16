@@ -1,5 +1,8 @@
+#include <math.h>
+
 #include "Unsorted/MathUtils.hpp"
-#include "math.h"
+
+
 static u32 seed = 1;
 u32 lbl_80218210[2][4] = {
     { 0, 1, 2, 3},
