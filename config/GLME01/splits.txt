@@ -52,7 +52,7 @@ System/800080DC.cpp:
 	.sbss       start:0x804D8070 end:0x804D8078
 	.sdata2     start:0x804D98A0 end:0x804D98A8
 
-Unsorted/80008418.cpp:
+System/80008418.cpp:
 	.text       start:0x80008418 end:0x80009540
 	.ctors      start:0x8020BAC8 end:0x8020BACC
 	.bss        start:0x803A3820 end:0x803A3A80
@@ -74,17 +74,17 @@ System/ResetGX.cpp:
 	.sdata      start:0x804CFF80 end:0x804CFF90
 	.sdata2     start:0x804D9968 end:0x804D9978
 
-Unsorted/8000A0D0.cpp:
+System/8000A0D0.cpp:
 	.text       start:0x8000A0D0 end:0x8000AC48
 	.sdata2     start:0x804D9978 end:0x804D9998
 
-Unsorted/8000AC48.cpp:
+System/8000AC48.cpp:
 	.text       start:0x8000AC48 end:0x8000AED8
 	.bss        start:0x803A3A80 end:0x803A3A98
 	.sdata      start:0x804CFF90 end:0x804CFF98
 	.sdata2     start:0x804D9998 end:0x804D99A8
 
-Unsorted/8000AED8.cpp:
+System/8000AED8.cpp:
 	.text       start:0x8000AED8 end:0x8000B328
 	.ctors      start:0x8020BACC end:0x8020BAD0
 	.data       start:0x8021DA80 end:0x8021DB20
