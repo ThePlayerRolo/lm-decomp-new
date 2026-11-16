@@ -1,17 +1,19 @@
+#include <JSystem/JUtility/JUTGamePad.hpp>
+
 #include "System/Scenes/MainGameScene.hpp"
 #include "System/Scenes/SceneManager.hpp"
 #include "System/Scenes/MainGameSceneUtil2.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "System/DisplayUtil.hpp"
-#include "Unsorted/800080DC.hpp"
+#include "System/800080DC.hpp"
 
 namespace MainGameScene {
     s32 lbl_804D80D8;
 
     s32 fn_8000C784(void*, s32 param_1) {
         if (lbl_804D80C4 == 0 && SceneManager::lbl_804D8088 == 0 && 
-            sGamePad->testTrigger(0x1000)) {
+            sGamePad->testTrigger(JUTGamePad::START)) {
             
             lbl_804D80C4 = 1;
             lbl_804D8438 = 0;
