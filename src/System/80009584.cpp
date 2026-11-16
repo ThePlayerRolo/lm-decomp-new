@@ -14,8 +14,8 @@ void fn_80009540(s32 param_1) {
 
 void fn_80009580() {}
 
-f32 fn_80009584(Vec* param_1, Vec* param_2) {
+f32 distance(Vec* from, Vec* to) {
     Vec diff;
-    PSVECSubtract(param_1, param_2, &diff);
+    PSVECSubtract(from, to, &diff);
     return sqrtf(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
 }

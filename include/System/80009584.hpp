@@ -5,6 +5,6 @@
 
 void fn_80009540(s32);
 void fn_80009580();
-f32 fn_80009584();
+f32 distance();
 
 #endif
