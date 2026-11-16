@@ -1,6 +1,7 @@
 #include <dolphin/gx/GXTransform.h>
 #include <dolphin/gx/GXCull.h>
 #include <JSystem/JKernel/JKRExpHeap.hpp>
+#include <JSystem/JUtility/JUTGamePad.hpp>
 
 #include "System/Scenes/SceneManager.hpp"
 #include "System/Scenes/MainGameScene.hpp"
@@ -24,7 +25,7 @@ namespace MainGameScene {
             return;
         }
 
-        if (fn_8000C8D8() && sGamePad->testTrigger(0x10) && SceneManager::lbl_804D8098 <= 2) {
+        if (fn_8000C8D8() && sGamePad->testTrigger(JUTGamePad::Z) && SceneManager::lbl_804D8098 <= 2) {
             switch (MainGameScene::sCurMapNo) {
                 case 6:
                 case 2:
