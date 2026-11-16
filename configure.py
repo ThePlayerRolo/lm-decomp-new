@@ -835,7 +835,6 @@ config.libs = [
 
         # Unsorted
         Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
-        Object(NonMatching, "Unsorted/80005EB8.cpp"),
         Object(NonMatching, "Unsorted/MoveObj.cpp"),
         Object(NonMatching, "Unsorted/Character.cpp"),
         Object(NonMatching, "Unsorted/RailInfoUtil.cpp"),
