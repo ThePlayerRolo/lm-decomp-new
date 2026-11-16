@@ -58,7 +58,7 @@ Unsorted/80008418.cpp:
 	.bss        start:0x803A3820 end:0x803A3A80
 	.sdata2     start:0x804D98A8 end:0x804D9928
 
-Unsorted/80009584.cpp:
+System/80009584.cpp:
 	.text       start:0x80009540 end:0x8000962C
 	.sdata2     start:0x804D9928 end:0x804D9940
 
