@@ -45,7 +45,7 @@ System/DisplayUtil.cpp:
 	.sbss       start:0x804D8030 end:0x804D8070
 	.sdata2     start:0x804D9880 end:0x804D98A0
 
-Unsorted/800080DC.cpp:
+System/800080DC.cpp:
 	.text       start:0x800080DC end:0x80008418
 	.ctors      start:0x8020BAC4 end:0x8020BAC8
 	.bss        start:0x803A3668 end:0x803A3820
@@ -53,12 +53,13 @@ Unsorted/800080DC.cpp:
 	.sdata2     start:0x804D98A0 end:0x804D98A8
 
 Unsorted/80008418.cpp:
-	.text       start:0x80008418 end:0x80009584
+	.text       start:0x80008418 end:0x80009540
 	.ctors      start:0x8020BAC8 end:0x8020BACC
+	.bss        start:0x803A3820 end:0x803A3A80
 	.sdata2     start:0x804D98A8 end:0x804D9928
 
 Unsorted/80009584.cpp:
-	.text       start:0x80009584 end:0x8000962C
+	.text       start:0x80009540 end:0x8000962C
 	.sdata2     start:0x804D9928 end:0x804D9940
 
 Unsorted/MathUtils.cpp:

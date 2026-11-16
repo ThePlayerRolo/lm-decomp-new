@@ -1,9 +1,10 @@
 #ifndef SCENE_UNK_FUNCTIONS_HPP
 #define SCENE_UNK_FUNCTIONS_HPP
 
-#include "System/Scenes/Scene.hpp"
 #include <dolphin/mtx.h>
 #include <dolphin/gx/GXStruct.h>
+
+#include "System/Scenes/Scene.hpp"
 
 class JKRMemArchive;
 class J2DPicture;
@@ -24,15 +25,10 @@ extern void fn_8000A40C(f32, f32, f32, f32, f32, f32, Mtx, s32, s32, u32);
 // SceneManager calls these, unsure of types/args
 extern u8 fn_8018A8B4();
 extern void fn_8018A8BC(s32);
-extern void fn_80008394();
-extern void fn_800083B4(s32);
 extern bool fn_8018A860();
 extern u32 fn_80185938();
 extern void fn_8000AD48();
 extern void fn_8000ADA0();
-extern void fn_800081A8(void*); //Probable same TU as below
-extern void fn_8000812C(void*);
-extern void fn_800083A4(s32);
 extern void fn_80009540(u16);
 extern void fn_80185910();
 extern void fn_80009580();

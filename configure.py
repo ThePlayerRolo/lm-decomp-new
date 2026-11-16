@@ -816,6 +816,7 @@ config.libs = [
         Object(NonMatching, "System/Yay0.cpp"),
         Object(Matching, "System/DataOnly.cpp"),
         Object(NonMatching, "System/DisplayUtil.cpp"),
+        Object(NonMatching, "System/800080DC.cpp"),
 
         # System/Scenes
         Object(NonMatching, "System/Scenes/SceneManager.cpp"),

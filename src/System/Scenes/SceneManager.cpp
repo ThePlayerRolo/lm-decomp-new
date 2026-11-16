@@ -10,9 +10,9 @@
 #include "System/BackgroundTask.hpp"
 #include "System/Memory.hpp"
 #include "System/DisplayUtil.hpp"
+#include "System/800080DC.hpp"
 
 #include "Unsorted/MathUtils.hpp"
-#include "Unsorted/800080DC.hpp"
 #include "Unsorted/80009B80.hpp"
 
 // Other Scene related stuff
@@ -196,7 +196,7 @@ namespace SceneManager {
                     }
                     break;
                 case SM_STATE_1:
-                    if (lbl_803A3810) {
+                    if (lbl_803A3810._0 != 1) {
                         fn_800083A4(2);
                         sSceneMgr.mState = SM_STATE_2;
                         setCurHeapGroupId(0x16);

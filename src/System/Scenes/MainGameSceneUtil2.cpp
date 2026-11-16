@@ -59,7 +59,7 @@ namespace MainGameScene {
     }
 
     bool fn_8000C8D8() {
-        if (lbl_803A3810 != 0) {
+        if (lbl_803A3810._0 != 0) {
             return false;
         }
 
