@@ -55,7 +55,7 @@ namespace MainGameScene {
                 lbl_804D80E0 = 2;
             }
 
-            if (sGamePad->testTrigger(0x210)) {
+            if (sGamePad->testTrigger(JUTGamePad::B | JUTGamePad::Z)) {
                 fn_8000CB78();
                 return;
             }
