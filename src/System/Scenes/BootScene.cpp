@@ -14,10 +14,10 @@
 #include "System/DiscFile.hpp"
 #include "System/Yay0.hpp"
 #include "System/DisplayUtil.hpp"
+#include "System/80009B80.hpp"
 
 #include "Unsorted/staticDataAramData.h"
 #include "Unsorted/80008418.hpp"
-#include "Unsorted/80009B80.hpp"
 #include "macros.h"
 
 enum BootSceneState {

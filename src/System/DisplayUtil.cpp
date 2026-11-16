@@ -3,13 +3,13 @@
 #include <dolphin/gx.h>
 #include <dolphin/os.h>
 #include <dolphin/vi.h>
+#include <dolphin/os/OSMessage.h>
 
 #include "System/DisplayUtil.hpp"
 #include "System/Memory.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "System/UnknownSystemCalls.hpp"
-#include "Unsorted/80009B80.hpp"
-#include "dolphin/os/OSMessage.h"
+#include "system/80009B80.hpp"
 #include "macros.h"
 
 dummy_float_data()

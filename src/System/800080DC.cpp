@@ -6,7 +6,7 @@
 #include "System/800080DC.hpp"
 #include "System/DisplayUtil.hpp"
 #include "System/UnknownSystemCalls.hpp"
-#include "Unsorted/80009B80.hpp"
+#include "System/80009B80.hpp"
 #include "dolphin/gx/GXStruct.h"
 
 struct SomeUnk {

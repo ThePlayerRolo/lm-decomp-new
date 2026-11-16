@@ -819,6 +819,7 @@ config.libs = [
         Object(NonMatching, "System/800080DC.cpp"),
         Object(NonMatching, "System/80009584.cpp", extra_cflags=["-fp_contract off"]),
         Object(NonMatching, "System/MathUtils.cpp", extra_cflags=["-fp_contract off"]),
+        Object(NonMatching, "System/80009B80.cpp"),
 
         # System/Scenes
         Object(NonMatching, "System/Scenes/SceneManager.cpp"),
