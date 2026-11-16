@@ -1,6 +1,7 @@
 #include <dolphin/gx/GXTransform.h>
 #include <dolphin/gx/GXCull.h>
 #include <JSystem/JKernel/JKRExpHeap.hpp>
+#include <JSystem/JUtility/JUTGamePad.hpp>
 
 #include "System/DisplayUtil.hpp"
 #include "System/Memory.hpp"
@@ -81,7 +82,7 @@ namespace MainGameScene {
                 lbl_804D80D0 = 1;
             }
 
-            if (sGamePad->testTrigger(0xA00)) {
+            if (sGamePad->testTrigger(JUTGamePad::Y | JUTGamePad::B)) {
                 fn_8000C6A8();
                 return;
             }
