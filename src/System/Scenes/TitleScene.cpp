@@ -1,3 +1,5 @@
+#include <JSystem/JUtility/JUTGamePad.hpp>
+
 #include "System/Scenes/TitleScene.hpp"
 #include "System/BackgroundTask.hpp"
 #include "System/Scenes/OpeningScene.hpp"
@@ -83,7 +85,7 @@ namespace TitleScene {
                 }
                 break;
             case 2:
-                if (sGamePad->testTrigger(0x1100)) {
+                if (sGamePad->testTrigger(JUTGamePad::START | JUTGamePad::A)) {
                     lbl_804d813C = 1;
                 }
 
