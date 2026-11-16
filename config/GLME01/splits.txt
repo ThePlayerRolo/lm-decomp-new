@@ -62,7 +62,7 @@ System/80009584.cpp:
 	.text       start:0x80009540 end:0x8000962C
 	.sdata2     start:0x804D9928 end:0x804D9940
 
-Unsorted/MathUtils.cpp:
+System/MathUtils.cpp:
 	.text       start:0x8000962C end:0x80009B80
 	.data       start:0x80218210 end:0x8021DA40
 	.sdata      start:0x804CFF78 end:0x804CFF80

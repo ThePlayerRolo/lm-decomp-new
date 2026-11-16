@@ -12,8 +12,8 @@
 #include "System/DisplayUtil.hpp"
 #include "System/800080DC.hpp"
 #include "System/80009584.hpp"
+#include "System/MathUtils.hpp"
 
-#include "Unsorted/MathUtils.hpp"
 #include "Unsorted/80009B80.hpp"
 
 // Other Scene related stuff

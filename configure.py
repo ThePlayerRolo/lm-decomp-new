@@ -818,6 +818,7 @@ config.libs = [
         Object(NonMatching, "System/DisplayUtil.cpp"),
         Object(NonMatching, "System/800080DC.cpp"),
         Object(NonMatching, "System/80009584.cpp", extra_cflags=["-fp_contract off"]),
+        Object(NonMatching, "System/MathUtils.cpp", extra_cflags=["-fp_contract off"]),
 
         # System/Scenes
         Object(NonMatching, "System/Scenes/SceneManager.cpp"),
@@ -840,7 +841,6 @@ config.libs = [
         Object(NonMatching, "Unsorted/Character.cpp"),
         Object(NonMatching, "Unsorted/RailInfoUtil.cpp"),
         Object(NonMatching, "Unsorted/800627D8.cpp"),
-        Object(NonMatching, "Unsorted/MathUtils.cpp", extra_cflags=["-fp_contract off"]),
         Object(NonMatching, "Unsorted/s3dmodel.cpp"),
         Object(NonMatching, "Unsorted/ActorData.cpp"),
     ]),
