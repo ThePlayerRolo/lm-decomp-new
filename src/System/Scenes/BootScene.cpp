@@ -14,7 +14,7 @@
 #include "System/DiscFile.hpp"
 #include "System/Yay0.hpp"
 #include "System/DisplayUtil.hpp"
-#include "System/80009B80.hpp"
+#include "System/ResetGX.hpp"
 
 #include "Unsorted/staticDataAramData.h"
 #include "Unsorted/80008418.hpp"
@@ -181,7 +181,7 @@ namespace BootScene {
     void draw() {
         static s32 bootSceneFrameCount = 0;
         
-        fn_80009B80();
+        resetGXState();
         fn_80008654(&lbl_803A3820);
         GXSetChanMatColor(GX_COLOR0A0, sLogoMatColor);
         setViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);

@@ -4,7 +4,7 @@
 #include "Sato/EnZako.hpp"
 #include "Sato/EnemyStrategy.hpp"
 #include "macros.h"
-#include "System/80009B80.hpp"
+#include "System/ResetGX.hpp"
 
 dummy_float_data();
 enemies_float_data();

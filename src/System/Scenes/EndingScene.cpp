@@ -8,7 +8,7 @@
 
 #include "System/DiscFile.hpp"
 #include "System/Memory.hpp"
-#include "System/80009B80.hpp"
+#include "System/ResetGX.hpp"
 
 #include "Unsorted/BackgroundMusic.hpp"
 #include "macros.h"

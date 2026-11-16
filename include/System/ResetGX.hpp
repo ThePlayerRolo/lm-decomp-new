@@ -1,5 +1,5 @@
-#ifndef _800098B0_HPP
-#define _800098B0_HPP
+#ifndef RESET_GX_HPP
+#define RESET_GX_HPP
 
 #include <dolphin/mtx.h>
 #include <dolphin/gx/GXStruct.h>
@@ -11,6 +11,6 @@ extern GXColor sBlack;
 extern Mtx sDefaultMtx;
 extern Vec gZeroVec;
 
-void fn_80009B80();
+void resetGXState();
 
 #endif

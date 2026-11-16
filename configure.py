@@ -817,9 +817,9 @@ config.libs = [
         Object(Matching, "System/DataOnly.cpp"),
         Object(NonMatching, "System/DisplayUtil.cpp"),
         Object(NonMatching, "System/800080DC.cpp"),
-        Object(Matching, "System/80009584.cpp", extra_cflags=["-fp_contract off"]),
+        Object(NonMatching, "System/80009584.cpp", extra_cflags=["-fp_contract off"]),
         Object(NonMatching, "System/MathUtils.cpp", extra_cflags=["-fp_contract off"]),
-        Object(NonMatching, "System/80009B80.cpp"),
+        Object(NonMatching, "System/ResetGX.cpp"),
 
         # System/Scenes
         Object(NonMatching, "System/Scenes/SceneManager.cpp"),

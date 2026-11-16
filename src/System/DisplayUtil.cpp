@@ -9,7 +9,7 @@
 #include "System/Memory.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "System/UnknownSystemCalls.hpp"
-#include "system/80009B80.hpp"
+#include "System/ResetGX.hpp"
 #include "macros.h"
 
 dummy_float_data()

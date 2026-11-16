@@ -6,7 +6,7 @@
 #include "System/800080DC.hpp"
 #include "System/DisplayUtil.hpp"
 #include "System/UnknownSystemCalls.hpp"
-#include "System/80009B80.hpp"
+#include "System/ResetGX.hpp"
 #include "dolphin/gx/GXStruct.h"
 
 struct SomeUnk {
@@ -53,7 +53,7 @@ void fn_8000812C(SomeOtherUnk* param_1) {
 
 void fn_800081A8(SomeOtherUnk* param_1) {
     GXTexObj gObj;
-    fn_80009B80();
+    resetGXState();
 
     switch (param_1->_0) {
         case 4:

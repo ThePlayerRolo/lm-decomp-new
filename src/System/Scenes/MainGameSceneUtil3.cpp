@@ -11,7 +11,7 @@
 #include "System/DataOnly.hpp"
 #include "System/Memory.hpp"
 #include "System/DisplayUtil.hpp"
-#include "System/80009B80.hpp"
+#include "System/ResetGX.hpp"
 
 #include "Unsorted/GamePad.hpp"
 #include "Unsorted/80008418.hpp"
@@ -82,7 +82,7 @@ namespace MainGameScene {
             case 1:
                 break;
             case 2:
-                fn_80009B80();
+                resetGXState();
                 fn_80008654(&lbl_803A3820);
                 GXSetViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f, 1);
                 GXSetScissor(0, 0, 640, 480);
