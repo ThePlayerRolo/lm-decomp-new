@@ -652,6 +652,13 @@ Sato/SaEnCandle.cpp:
 	.data       start:0x80374508 end:0x80374750
 	.sdata      start:0x804D57F0 end:0x804D5840
 
+Sato/SaEnKoopaTelesa.cpp:
+	.text       start:0x80125DEC end:0x801278B4
+	.ctors      start:0x8020BCBC end:0x8020BCC0
+	.data       start:0x80374750 end:0x80374B40
+	.sdata      start:0x804D5840 end:0x804D5918
+	.sdata2     start:0x804DC210 end:0x804DC258
+
 Sato/SaEnGenUtility.cpp:
 	.text       start:0x80142F88 end:0x801443E8
 	.data       start:0x8037A1D0 end:0x8037A2B0

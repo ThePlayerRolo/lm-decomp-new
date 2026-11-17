@@ -9,7 +9,8 @@ public:
     SaEnTelesaBase();
     virtual ~SaEnTelesaBase();
 
-    virtual void SaEnTelesaBase_vt_0C() = 0;
+    // From SaEnZakoUtility
+    // virtual void vt_08() = 0;
     virtual void SaEnTelesaBase_vt_0F() = 0;
     virtual void SaEnTelesaBase_vt_14() = 0;
 };
