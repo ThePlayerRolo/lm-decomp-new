@@ -14,6 +14,7 @@
 #include "System/80009584.hpp"
 #include "System/MathUtils.hpp"
 #include "System/ResetGX.hpp"
+#include "System/8000AC48.hpp"
 
 // Other Scene related stuff
 #include "System/Scenes/SceneManager.hpp"
