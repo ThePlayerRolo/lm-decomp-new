@@ -12,6 +12,18 @@ Sections:
 	.sbss       type:bss align:16
 	.sdata2     type:rodata align:32
 
+Main.cpp:
+	.text       start:0x80005760 end:0x80005C00
+	.data       start:0x80218100 end:0x80218180
+	.bss        start:0x803968E0 end:0x80396900
+	.sdata      start:0x804CFF60 end:0x804CFF68
+	.sbss       start:0x804D7FE0 end:0x804D7FF0
+
+System/80005C00.cpp:
+	.text       start:0x80005C00 end:0x80005EB8
+	.bss        start:0x80396900 end:0x8039AC38
+	.sbss       start:0x804D7FF0 end:0x804D8008
+
 System/DataOnly.cpp:
 	.sbss       start:0x804D8008 end:0x804D8010
 
