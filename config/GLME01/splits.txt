@@ -669,6 +669,13 @@ Sato/801278B4.cpp:
 	.sdata      start:0x804D5918 end:0x804D5960
 	.sdata2     start:0x804DC258 end:0x804DC2E0
 
+Sato/SaEnDancer2.cpp:
+	.text       start:0x8012DB68 end:0x8012E350
+	.ctors      start:0x8020BCC4 end:0x8020BCC8
+	.data       start:0x803774F8 end:0x803778C0
+	.sdata      start:0x804D5960 end:0x804D5A00
+	.sdata2     start:0x804DC2E0 end:0x804DC2E8
+
 Sato/SaEnGenUtility.cpp:
 	.text       start:0x80142F88 end:0x801443E8
 	.data       start:0x8037A1D0 end:0x8037A2B0
