@@ -24,6 +24,7 @@ s32 normalizeAngle(f64 x) {
 }
 
 f32 fn_800BA380() {
+    //TODO use MathUtils now and maybe combine this function call there?
     return fn_80009638C_Modulate(10000) / 9999.0f;
 }
 
