@@ -17,7 +17,6 @@ extern void fn_8004D4C8();
 extern void fn_80188714(void*);
 extern void fn_80188638();
 extern bool fn_80188740();
-extern void fn_80009490();
 extern void fn_8005FD80();
 extern void fn_8003EB44();
 extern void fn_8000A40C(f32, f32, f32, f32, f32, f32, Mtx, s32, s32, u32);

@@ -7,6 +7,7 @@
 #include "System/Memory.hpp"
 #include "System/DataOnly.hpp"
 #include "System/ResetGX.hpp"
+#include "System/80008418.hpp"
 
 #include "System/Scenes/MainGameSceneUtil1.hpp"
 #include "System/Scenes/MainGameSceneUtil2.hpp"
@@ -16,7 +17,6 @@
 #include "System/Scenes/SelectScene.hpp"
 
 #include "Unsorted/GamePad.hpp"
-#include "Unsorted/80008418.hpp"
 #include "macros.h"
 
 MainGameSceneHelper::MainGameSceneHelper() {

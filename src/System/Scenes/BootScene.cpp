@@ -15,9 +15,9 @@
 #include "System/Yay0.hpp"
 #include "System/DisplayUtil.hpp"
 #include "System/ResetGX.hpp"
+#include "System/80008418.hpp"
 
 #include "Unsorted/staticDataAramData.h"
-#include "Unsorted/80008418.hpp"
 #include "macros.h"
 
 enum BootSceneState {

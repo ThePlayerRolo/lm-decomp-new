@@ -12,9 +12,9 @@
 #include "System/Memory.hpp"
 #include "System/DisplayUtil.hpp"
 #include "System/ResetGX.hpp"
+#include "System/80008418.hpp"
 
 #include "Unsorted/GamePad.hpp"
-#include "Unsorted/80008418.hpp"
 
 namespace MainGameScene {
     s32 lbl_804D80E0;

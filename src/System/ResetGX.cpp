@@ -8,7 +8,7 @@
 
 #include "System/ResetGX.hpp"
 #include "System/DisplayUtil.hpp"
-#include "Unsorted/80008418.hpp"
+#include "System/80008418.hpp"
 
 
 GXColor sReset = {0, 0, 0, 0};
