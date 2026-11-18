@@ -19,7 +19,7 @@ public:
     void fn_80008D58(); //Could also be static
     void fn_80009148();
     bool fn_800093EC();
-    void fn_80009490(); //Could be static
+    static void fn_80009490();
 
     /* 0x000 */ u8 pad[0x18C];
     /* 0x18C */ Mtx _18C;

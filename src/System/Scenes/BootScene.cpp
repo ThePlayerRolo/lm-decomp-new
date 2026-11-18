@@ -16,6 +16,7 @@
 #include "System/DisplayUtil.hpp"
 #include "System/ResetGX.hpp"
 #include "System/80008418.hpp"
+#include "System/8000A0D0.hpp"
 
 #include "Unsorted/staticDataAramData.h"
 #include "macros.h"
@@ -130,7 +131,7 @@ namespace BootScene {
         sBootSceneState = BOOT_IDLE;
         sBootReady = 0;
         sSystemHeap->becomeCurrentHeap();
-        fn_80009490();
+        unk_lbl_803A3820::fn_80009490();
         fn_8005FD80();
         setCurHeapGroupId(8);
         fn_8003EB44();
@@ -182,7 +183,7 @@ namespace BootScene {
         static s32 bootSceneFrameCount = 0;
         
         resetGXState();
-        fn_80008654(&lbl_803A3820);
+        lbl_803A3820.fn_80008654();
         GXSetChanMatColor(GX_COLOR0A0, sLogoMatColor);
         setViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
         GXSetScissor(0, 0, 640, 480);

@@ -109,13 +109,13 @@ namespace MainGameScene {
                 break;
             case 1:
                 resetGXState();
-                fn_80008654(&lbl_803A3820);
+                lbl_803A3820.fn_80008654();
                 GXSetViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f, 1);
                 GXSetScissor(0, 0, 640, 480);
                 fn_80121AFC();
                 break;
             case 2:
-                fn_80008654(&lbl_803A3820);
+                lbl_803A3820.fn_80008654();
                 GXSetViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f, 1);
                 GXSetScissor(0, 0, 640, 480);
                 fn_80029FA0();
