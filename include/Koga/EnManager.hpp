@@ -93,17 +93,12 @@ namespace Koga {
         static int fn_800E5E60(int);  // Requires some lbl to be decompiled: lbl_80363B50
         void fn_800E5E78(const char*);
 
-        inline s32 getAppearSlotIndex() { return sAppearPointSlotIndex; }
-        inline s32 getMaxAppearSlotIndex() { return sAppearPointSlotIndex + 1; }
-
     public:
         /* 0x004 */ MR::FixedArray<unkEnManager1, 0x80> _4;
         /* 0x804 */ MR::AssignableArray<unkEnManager2, 0x80> _804; // Explicitly not ArrayHolder
         /* 0xE08 */ AppearPointSlot _E08[2];
         /* 0xE40 */ Koga::ToolData* mInfoTable;
         /* 0xE44 */ u8 _E44;
-
-        static s32 sAppearPointSlotIndex;
     };
 };
 

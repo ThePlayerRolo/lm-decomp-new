@@ -12,7 +12,10 @@ Sections:
 	.sbss       type:bss align:16
 	.sdata2     type:rodata align:32
 
-Unsorted/80005EB8.cpp:
+System/DataOnly.cpp:
+	.sbss       start:0x804D8008 end:0x804D8010
+
+System/Memory.cpp:
 	.text       start:0x80005EB8 end:0x80006258
 	.sdata      start:0x804CFF68 end:0x804CFF70
 	.sbss       start:0x804D8010 end:0x804D8028
@@ -87,43 +90,57 @@ Unsorted/8000AED8.cpp:
 	.bss        start:0x803A3A98 end:0x803A3AE0
 	.sdata2     start:0x804D99A8 end:0x804D99C8
 
-Unsorted/8000B328.cpp:
-	.text       start:0x8000B328 end:0x8000B978
+System/Scenes/SceneManager.cpp:
+	.text       start:0x8000B328 end:0x8000B8D8
 	.ctors      start:0x8020BAD0 end:0x8020BAD4
 	.data       start:0x8021DB20 end:0x8021DB40
 	.bss        start:0x803A3AE0 end:0x803A3B10
 	.sdata      start:0x804CFF98 end:0x804CFFA0
+	.sbss       start:0x804D8088 end:0x804D80C0
 
-Unsorted/SelectScene.cpp:
-	.text       start:0x8000B978 end:0x8000BA4C
+System/Scenes/SelectScene.cpp:
+	.text       start:0x8000B8D8 end:0x8000BA4C
 	.data       start:0x8021DB40 end:0x8021DB68
+	.sbss       start:0x804D80C0 end:0x804D80C4
 
-Unsorted/GameScene.cpp:
+System/Scenes/MainGameScene.cpp:
 	.text       start:0x8000BA4C end:0x8000C36C
 	.data       start:0x8021DB68 end:0x8021DBD8
 	.sdata      start:0x804CFFA0 end:0x804CFFA8
+	.sbss       start:0x804D80C4 end:0x804D80D0
 
-Unsorted/8000C36C.cpp:
-	.text       start:0x8000C36C end:0x8000C90C
+System/Scenes/MainGameSceneUtil1.cpp:
+	.text       start:0x8000C36C end:0x8000C784
 	.ctors      start:0x8020BAD4 end:0x8020BAD8
 	.bss        start:0x803A3B10 end:0x803A3B40
+	.sbss       start:0x804D80D0 end:0x804D80D8
 	.sdata2     start:0x804D99C8 end:0x804D99D8
 
-Unsorted/8000C90C.cpp:
-	.text       start:0x8000C90C end:0x8000CE58
+System/Scenes/MainGameSceneUtil2.cpp:
+	.text       start:0x8000C784 end:0x8000C90C
+	.sbss       start:0x804D80D8 end:0x804D80E0
+
+System/Scenes/MainGameSceneUtil3.cpp:
+	.text       start:0x8000C90C end:0x8000CC18
+	.sbss       start:0x804D80E0 end:0x804D80E8
 	.sdata2     start:0x804D99D8 end:0x804D99E8
 
-Unsorted/OpeningScene.cpp:
+System/Scenes/MainGameSceneUtil4.cpp:
+	.text       start:0x8000CC18 end:0x8000CE58
+	.sbss       start:0x804D80E8 end:0x804D8100
+
+System/Scenes/OpeningScene.cpp:
 	.text       start:0x8000CE58 end:0x8000CFC8
 	.data       start:0x8021DBD8 end:0x8021DC00
 	.sdata      start:0x804CFFA8 end:0x804CFFB0
 
-Unsorted/StuffRollScene.cpp:
-	.text       start:0x8000CFC8 end:0x8000D0AC
+System/Scenes/StuffRollScene.cpp:
+	.text       start:0x8000CFC8 end:0x8000D064
 	.data       start:0x8021DC00 end:0x8021DC28
 
-Unsorted/EndingScene.cpp:
-	.text       start:0x8000D0AC end:0x8000E46C
+System/Scenes/EndingScene.cpp:
+	.text       start:0x8000D064 end:0x8000E46C
+	.rodata     start:0x8020BE00 end:0x8020BE20
 	.data       start:0x8021DC28 end:0x8021DFC0
 	.bss        start:0x803A3B40 end:0x803A3C08
 	.sbss       start:0x804D8100 end:0x804D8110
@@ -132,18 +149,23 @@ Unsorted/EndingScene.cpp:
 Unsorted/aramStaticData.cpp:
 	.bss        start:0x803D34C8 end:0x803D3540
 
-Unsorted/bootScene.cpp:
+System/Scenes/BootScene.cpp:
 	.text       start:0x8000E46C end:0x8000EC98
 	.data       start:0x8021DFC0 end:0x802FF0A8
 	.sdata      start:0x804CFFB0 end:0x804CFFB8
 	.sbss       start:0x804D8110 end:0x804D8130
 	.sdata2     start:0x804D9A08 end:0x804D9A20
 
-Unsorted/TitleScene.cpp:
+System/Scenes/TitleScene.cpp:
 	.text       start:0x8000EC98 end:0x8000EF58
 	.data       start:0x802FF0A8 end:0x802FF0D0
+	.sbss       start:0x804D8130 end:0x804D8140
 
-Unsorted/TitleScreenPane.cpp:
+System/Scenes/MovieScene.cpp:
+	.text       start:0x8000EF58 end:0x8000F094
+	.data       start:0x802FF0D0 end:0x802FF108
+
+System/Scenes/TitleScreenPane.cpp:
 	.text       start:0x8003A430 end:0x8003AF2C
 	.ctors      start:0x8020BAEC end:0x8020BAF0
 

@@ -2,7 +2,7 @@
 #include <dolphin/os/OSFastCast.h>
 
 #include "System/DiscThread.hpp"
-#include "Unsorted/80005EB8.hpp"
+#include "System/Memory.hpp"
 #include "System/DiscFile.hpp"
 
 struct DiscThread : public OSThread {
@@ -35,14 +35,14 @@ void* createDiscThreadCallback(void* pPtr) {
         DiscFileInfo* info = (DiscFileInfo*)msg;
 
         if (info->mFileBuffer == nullptr) {
-            u8 groupId = fn_800061B8(info->mHeapGroupID);
+            u8 groupId = setCurHeapGroupId(info->mHeapGroupID);
 
             info->mFileBuffer = reinterpret_cast<u8*>(allocDiscFile(info->mAlignedFileSize, getDiscFileAllocDirection() * 32));
 
             //Have no idea what was meant to be for since the block of code for it is optimized out sooooooo
             if (info->mFileBuffer == nullptr) { info = info; }
 
-            fn_800061B8(groupId);
+            setCurHeapGroupId(groupId);
             info->mBufferBreakFlag = MBF_1;
         }
 
@@ -53,7 +53,7 @@ void* createDiscThreadCallback(void* pPtr) {
                 break;
             default:
             closeDiscFile(nullptr, info);
-            u8 groupId = fn_800061B8(info->mHeapGroupID);
+            u8 groupId = setCurHeapGroupId(info->mHeapGroupID);
             if (info->mPostLoadFunc != nullptr) {
                 info->mPostLoadFunc(info->mFileBuffer, info);
             }
@@ -63,7 +63,7 @@ void* createDiscThreadCallback(void* pPtr) {
                     info->mCallback(nullptr, info);
                 }
 
-                fn_800061B8(groupId);
+                setCurHeapGroupId(groupId);
 
                 sDvdThread.mCurrFileInfo = sDvdThread.mCurrFileInfo->mNext;
             }

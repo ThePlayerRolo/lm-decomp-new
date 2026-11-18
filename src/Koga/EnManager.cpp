@@ -13,7 +13,7 @@
 #include "Unsorted/AssortedEnManager.hpp"
 #include "Koga/800E634C.hpp"
 #include "Unsorted/Character.hpp"
-#include "types.h"
+#include "System/Scenes/SceneManager.hpp"
 
 
 namespace Koga {
@@ -38,7 +38,7 @@ namespace Koga {
     // https://decomp.me/scratch/maIlk
     void EnManager::fn_800E46C0() {
         _E44 = 1;
-        s32 maxPoint = getMaxAppearSlotIndex();
+        s32 maxPoint = SceneManager::lbl_804D80B0 + 1;
 
         for (int i = 0; i < maxPoint; i++) {
             _E08[i].fn_800E616C(&_E08[i].mPosition);
@@ -75,7 +75,7 @@ namespace Koga {
     }
 
     void EnManager::fn_800E52BC(ToolData* pCharacterInfo) {
-        s32 appearPoint = sAppearPointSlotIndex + 1;
+        s32 appearPoint = SceneManager::lbl_804D80B0 + 1;
         u32 currAppearPoint = getLuigiAppearPoint();
 
         for (s32 i = 0; i < appearPoint; i++) {
@@ -196,7 +196,7 @@ namespace Koga {
     // https://decomp.me/scratch/AfFrv
     s32 EnManager::fn_800E5784(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* out) {
         int returnVal = -1;
-        int maxAppear = getMaxAppearSlotIndex();
+        int maxAppear = SceneManager::lbl_804D80B0 + 1;
         f32 lowVal = MAX_FLOAT;
 
         if (maxAppear == 1 && out == nullptr) {

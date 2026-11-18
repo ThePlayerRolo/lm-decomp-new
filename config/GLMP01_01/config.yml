@@ -9,3 +9,4 @@ extract:
     - symbol: staticdata_arc
       binary: staticdata.arc
       header: staticdata_arc.inc
+      header_type: raw
