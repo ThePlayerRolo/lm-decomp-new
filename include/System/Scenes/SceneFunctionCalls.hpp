@@ -28,7 +28,6 @@ extern u32 fn_80185938();
 extern void fn_80185910();
 extern void fn_8018865C();
 extern void fn_80188710();
-extern void fn_80005E04();
 
 // Definitely not from SceneManager's data
 extern s32 lbl_804D7FF0;
@@ -90,7 +89,6 @@ extern s32 fn_8003AE54();
 extern void fn_8000EC98();
 extern void fn_8003AE7C();
 extern void fn_8003AEA0();
-extern void fn_80005C00();
 
 // MainGameUtils call these, unsure of types/args
 extern void* fn_800AD39C(s32); //Probably a player object, unsure

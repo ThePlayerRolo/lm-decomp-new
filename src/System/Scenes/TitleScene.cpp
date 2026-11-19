@@ -12,6 +12,8 @@
 #include "Unsorted/BackgroundMusic.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "System/DisplayUtil.hpp"
+#include "System/80005C00.hpp"
+
 
 namespace TitleScene {
     static void init();

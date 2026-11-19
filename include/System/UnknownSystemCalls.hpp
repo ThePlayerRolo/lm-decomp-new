@@ -14,6 +14,8 @@ extern void fn_80039C74(void*, void*);
 extern void fn_80039464(); // Constructor of lbl_803A3674
 extern void fn_80039550(); // Deconstructor of lbl_803A3674
 
+extern void fn_8018A78C(s32);
+
 extern void* lbl_804D86BC;
 
 #endif
