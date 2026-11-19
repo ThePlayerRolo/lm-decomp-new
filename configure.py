@@ -813,7 +813,7 @@ config.libs = [
         Object(NonMatching, "Main.cpp"),
 
         # System
-        Object(NonMatching, "System/80005C00.cpp"),
+        Object(NonMatching, "System/Reset.cpp"),
         Object(NonMatching, "System/Memory.cpp"),
         Object(NonMatching, "System/DiscFile.cpp"),
         Object(Matching, "System/DiscThread.cpp"),

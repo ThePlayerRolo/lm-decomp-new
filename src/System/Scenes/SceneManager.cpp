@@ -6,6 +6,7 @@
 #include <dolphin/dvd.h>
 #include <JSystem/JUtility/JUTGamePad.hpp>
 
+#include "System/Reset.hpp"
 #include "System/DiscFile.hpp"
 #include "System/BackgroundTask.hpp"
 #include "System/Memory.hpp"
@@ -235,7 +236,7 @@ namespace SceneManager {
             }
 
             fn_8000B4A0();
-            fn_80005E04();
+            updateReset();
             lbl_804D8090++;
             lbl_804D8098++;
         }

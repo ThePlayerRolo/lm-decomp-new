@@ -19,7 +19,7 @@ Main.cpp:
 	.sdata      start:0x804CFF60 end:0x804CFF68
 	.sbss       start:0x804D7FE0 end:0x804D7FF0
 
-System/80005C00.cpp:
+System/Reset.cpp:
 	.text       start:0x80005C00 end:0x80005EB8
 	.bss        start:0x80396900 end:0x8039AC38
 	.sbss       start:0x804D7FF0 end:0x804D8008

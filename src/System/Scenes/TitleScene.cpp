@@ -12,7 +12,7 @@
 #include "Unsorted/BackgroundMusic.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "System/DisplayUtil.hpp"
-#include "System/80005C00.hpp"
+#include "System/Reset.hpp"
 
 
 namespace TitleScene {
@@ -38,7 +38,7 @@ namespace TitleScene {
 
     // May not be a TitleScene function.
     void fn_8000EC98() {
-        fn_80005C00();
+        initReset();
     }
 
     void init() {
