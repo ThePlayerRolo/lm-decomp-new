@@ -1,5 +1,4 @@
 #include <JSystem/JUtility/JUTGamePad.hpp>
-#include <dolphin/mtx.h>
 #include <math.h>
 
 #include "System/80009584.hpp"
