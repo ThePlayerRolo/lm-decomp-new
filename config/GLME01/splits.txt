@@ -676,6 +676,15 @@ Sato/SaEnDancer2.cpp:
 	.sdata      start:0x804D5960 end:0x804D5A00
 	.sdata2     start:0x804DC2E0 end:0x804DC2E8
 
+Sato/DustlevelMgr.cpp:
+	.text       start:0x8012E350 end:0x80130C14
+	.ctors      start:0x8020BCC8 end:0x8020BCCC
+	.rodata     start:0x8020CCA0 end:0x8020CCC8
+	.data       start:0x803778C0 end:0x803781C8
+	.bss        start:0x803D8358 end:0x803D8870
+	.sdata      start:0x804D5A00 end:0x804D5A70
+	.sdata2     start:0x804DC2E8 end:0x804DC340
+
 Sato/SaEnGenUtility.cpp:
 	.text       start:0x80142F88 end:0x801443E8
 	.data       start:0x8037A1D0 end:0x8037A2B0
