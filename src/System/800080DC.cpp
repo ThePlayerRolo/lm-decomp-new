@@ -2,12 +2,12 @@
 #include <dolphin/gx/GXEnum.h>
 #include <dolphin/gx/GXManage.h>
 #include <dolphin/gx/GXTexture.h>
+#include <dolphin/gx/GXStruct.h>
 
 #include "System/800080DC.hpp"
 #include "System/DisplayUtil.hpp"
 #include "System/UnknownSystemCalls.hpp"
 #include "System/ResetGX.hpp"
-#include "dolphin/gx/GXStruct.h"
 
 struct SomeUnk {
     SomeUnk(); // fn_80039464()
