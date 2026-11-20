@@ -95,7 +95,7 @@ public:
 
     /* 0x5D4 */ u8 _5D4[0x788 - 0x5d4];
 
-    /* 0x788 */ u8 _size; // TEMP ! USED JUST FOR MY CALCULATION FOR THE SIZE TO NOT DESTROY EVERYTHING
+    /* 0x788 */ s32 _788;
 };
 
 #endif

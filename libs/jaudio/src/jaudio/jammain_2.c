@@ -790,9 +790,15 @@ u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
  * @TODO: Documentation
  * @note UNUSED Size: 00004C
  */
-void Jam_WritePortApp(void)
+BOOL Jam_WritePortApp(u32 handle, u32 param_2, u16 param_3)
 {
+	seqp_* seq = Jaq_HandleToSeq(handle);
 
+	if (seq == NULL) {
+		return FALSE;
+	}
+
+	return Jam_WritePortIndirect(seq, param_2, param_3);
 }
 
 /**
@@ -823,7 +829,7 @@ void Jam_CheckImportApp(void)
  * @TODO: Documentation
  * @note UNUSED Size: 0000A0
  */
-void Jam_WritePortIndirect(void)
+BOOL Jam_WritePortIndirect(seqp_*, u32, u16)
 {
 }
 

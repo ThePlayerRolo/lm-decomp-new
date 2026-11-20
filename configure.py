@@ -484,6 +484,9 @@ config.libs = [
     JSystem([
 
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAIBasic.cpp"),
+        Object(NonMatching, "JSystem/JAudio/JAInterface/JAIData.cpp"),
+        Object(NonMatching, "JSystem/JAudio/JAInterface/JAIEntrySequence.cpp"),
+        Object(NonMatching, "JSystem/JAudio/JAInterface/JAISound.cpp"),
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAIAnimation.cpp"),
 
         # 2D

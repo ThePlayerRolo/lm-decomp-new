@@ -25,11 +25,6 @@ public:
 	};
 
 	/* 0x00 */ Slot mSlots[8];
-	/* 0x60 */ u32 unk60;
-	/* 0x64 */ u32 unk64;
-	/* 0x68 */ u32 unk68;
-	/* 0x6C */ u32 unk6C;
-	/* 0x70 */ void* unk70[2];
 	/* 0x78 */ int mDataCounterInc;
 	/* 0x7C */ int mDataCounterLimit;
 	/* 0x80 */ u32 mDataCounter;

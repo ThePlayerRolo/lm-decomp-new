@@ -3,6 +3,7 @@
 #include "Unsorted/character.hpp"
 #include "dolphin/mtx.h"
 #include "macros.h"
+#include "Unsorted/ActorData.hpp"
 
 dummy_float_data();
 enemies_float_data();
@@ -11,7 +12,7 @@ s32 fn_8006A4E8(s32, const char*);
 void fn_8013DCD8(Vec*, Vec*, Vec*, s32);
 
 MoveObj::MoveObj() {
-    _size = true;
+    _788 = 0;
 }
 
 MoveObj::~MoveObj() {
@@ -37,7 +38,7 @@ void MoveObj::fn_80067CB0(f32 var1, f32 var2, f32 var3) {
 }
 
 u16 MoveObj::fn_80067D3C(u16 val) {
-    return Character::fn_8006A3BC(_3C, val);
+    return ActorData::checkFlags(_3C, val);
 }
 
 bool MoveObj::fn_800681E8(const char* name) {

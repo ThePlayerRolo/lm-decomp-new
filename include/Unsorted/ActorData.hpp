@@ -21,7 +21,7 @@ class ActorData {
         static u16 fn_8006A36C(s32);
         static u32 getEnemyBrightColor(s32);
         static const char* getActorName(s32);
-        static u16 checkFlags(s32, s32);
+        static u16 checkFlags(s32, u16);
         static ActorData* getActorData(s32);
     
     private:

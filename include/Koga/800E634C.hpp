@@ -46,7 +46,6 @@ bool fn_800E71D4(JGeometry::TVec3f*, s32);
 bool fn_800E7280(s32);
 void fn_800E730C();
 void fn_800E7378();
-void fn_800E7414();
 void* fn_800E7510(void*, void*);
 void fn_800E75B8(JGeometry::TVec3f*, void*);
 void fn_800E760C(void*);
