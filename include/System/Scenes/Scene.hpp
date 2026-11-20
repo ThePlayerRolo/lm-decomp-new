@@ -1,14 +1,9 @@
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef SCENE_HPP
+#define SCENE_HPP
 
 #include <types.h>
 
 #define MAX_SCENE_NAME_SIZE 16
-
-typedef void (*SceneInitFunc)();
-typedef u32 (*SceneUpdateFunc)();
-typedef void (*SceneDrawFunc)();
-typedef void (*SceneDestroyFunc)();
 
 enum SceneID {
     SCENE_BOOT,
@@ -22,17 +17,18 @@ enum SceneID {
     SCENE_MAX,
 };
 
+typedef void (*SceneInitFunc)();
+typedef SceneID (*SceneUpdateFunc)();
+typedef void (*SceneDrawFunc)();
+typedef void (*SceneDestroyFunc)();
+
 struct Scene {
     /* 0x00 */ char mName[MAX_SCENE_NAME_SIZE];
-    /* 0x10 */ s16 _10;
+    /* 0x10 */ u16 _10;
     /* 0x14 */ SceneInitFunc mInitFn;
     /* 0x18 */ SceneUpdateFunc mUpdateFn;
     /* 0x1C */ SceneDrawFunc mDrawFn;
     /* 0x20 */ SceneDestroyFunc mDestroyFn;
 };
-
-extern Scene* sCurScene;
-extern SceneID sCurSceneId;
-extern Scene* sSceneTable[SCENE_MAX];
 
 #endif

@@ -53,7 +53,10 @@ public:
     virtual void vt_0C() = 0; // Did not check args/return type
     virtual void vt_10() { }; // Did not check args/return type
 
+    void fn_800BF384(); // Did not check return type
+    void fn_800BF3E0(); // Did not check return type
     void fn_800BF81C(); // Did not check args/return type. So many function calls.
+    void fn_800BFB98(const char*, s32);
     void reset(); //  fn_800BF0CC lmao golden function
     void setToolDataRef(Koga::ToolData*, s32);
     ToolDataRef getToolDataRef() const;

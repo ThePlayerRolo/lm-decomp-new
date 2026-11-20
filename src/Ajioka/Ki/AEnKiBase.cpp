@@ -9,33 +9,33 @@ static char lbl_804D41A0[] = "ENDING";
 
 static EnemyStrategyState enemiesStates[5] = {
     {
-        0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnKiBase::state_0_Init, 
         (EnemyStrategyStateFn)&AEnKiBase::state_0_Behavior
     },
 
     {
-        1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnKiBase::state_1_Init, 
         (EnemyStrategyStateFn)&AEnKiBase::state_1_Behavior
     },
 
     
     {
-        2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnKiBase::state_2_Init, 
         (EnemyStrategyStateFn)&AEnKiBase::state_2_Behavior
     },
 
     
     {
-        3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnKiBase::state_3_Init, 
         (EnemyStrategyStateFn)&AEnKiBase::state_3_Behavior
     },
     
     {
-        4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnKiBase::state_4_Init, 
         (EnemyStrategyStateFn)&AEnKiBase::state_4_Behavior
     },
@@ -53,11 +53,19 @@ AEnKiBase::AEnKiBase() {
 }
 
 void AEnKiBase::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void AEnKiBase::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 

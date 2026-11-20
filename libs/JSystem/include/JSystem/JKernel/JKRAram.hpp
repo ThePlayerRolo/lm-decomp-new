@@ -73,8 +73,6 @@ public:
 
 	static OSMessageQueue sMessageQueue;
 
-	void aramSync(JKRAMCommand*, int);
-
 private:
 	static JKRAram* sAramObject;
 	static u32 szpBufferSize;

@@ -6,43 +6,43 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[7] = {
     {
-        0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_0_Init, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_0_Behavior
     },
 
     {
-        1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_1_Init, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_1_Behavior
     },
 
     {
-        2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_2_Init, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_2_Behavior
     },
 
     {
-        3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_3_Init, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_3_Behavior
     },
 
     {
-        0x102, 
+        STRAT_STATE_102, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_0x102_Init, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_0x102_Behavior
     },
 
     {
-        0x100, 
+        STRAT_STATE_100, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_0x100_Init, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_0x100_Behavior
     },
 
     {
-        0x101, 
+        STRAT_STATE_101, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_0x101_Init, 
         (EnemyStrategyStateFn)&AEnAtThrow::state_0x101_Behavior
     },
@@ -62,10 +62,18 @@ AEnAtThrow::~AEnAtThrow() {
 }
 
 void AEnAtThrow::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 void AEnAtThrow::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool AEnAtThrow::vt_14() {

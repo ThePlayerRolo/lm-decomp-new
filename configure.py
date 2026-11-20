@@ -742,7 +742,10 @@ config.libs = [
     Game([
         # Sato
         Object(Matching, "Sato/EnemyStrategy.cpp"),
+        Object(NonMatching, "Sato/EnHeyMask.cpp"),
         Object(NonMatching, "Sato/EnemyTypicalStrategy.cpp"),
+        Object(NonMatching, "Sato/EnGhostA.cpp"),
+        Object(NonMatching, "Sato/EnItems.cpp"),
         Object(NonMatching, "Sato/EnemyStrategyInit.cpp"),
         Object(NonMatching, "Sato/EnThought.cpp"),
         Object(Matching, "Sato/EnObjThought.cpp"),
@@ -771,6 +774,19 @@ config.libs = [
         Object(NonMatching, "Ajioka/AEnHustler.cpp"),
         Object(NonMatching, "Ajioka/AEnFamily.cpp"),
         Object(NonMatching, "Ajioka/AEnBarbell.cpp"),
+        Object(NonMatching, "Ajioka/AEnDog.cpp"),
+        Object(NonMatching, "Ajioka/AEnSkull.cpp"),
+        Object(NonMatching, "Ajioka/AEnESkull.cpp"),
+        Object(Matching, "Ajioka/AEnEBone.cpp"),
+        Object(NonMatching, "Ajioka/AEnTwins.cpp"),
+        Object(NonMatching, "Ajioka/AEnToy.cpp"),
+        Object(NonMatching, "Ajioka/AEnBuilder.cpp"),
+        Object(NonMatching, "Ajioka/AEnPoltergeist.cpp"),
+        Object(NonMatching, "Ajioka/AEnItems.cpp"),
+        Object(NonMatching, "Ajioka/Generators/AGeSimple1.cpp"),
+        Object(NonMatching, "Ajioka/Generators/AGeSimple2.cpp"),
+        Object(NonMatching, "Ajioka/Generators/AGeMinigame1.cpp"),
+        Object(NonMatching, "Ajioka/Generators/AGeHideSeek.cpp"),
 
         # Koga
         Object(Matching, "Koga/GameModeUtil.cpp"),
@@ -792,17 +808,33 @@ config.libs = [
         Object(NonMatching, "Koga/800E82D8.cpp"),
         Object(NonMatching, "Koga/800E9568.cpp"),
         Object(NonMatching, "Koga/EnTypesManager.cpp"),
+        Object(NonMatching, "Koga/EnChase.cpp"),
         Object(NonMatching, "Koga/EnemyGenManager.cpp"),
 
         # System
+        Object(NonMatching, "System/Memory.cpp"),
         Object(NonMatching, "System/DiscFile.cpp"),
         Object(Matching, "System/DiscThread.cpp"),
         Object(Matching, "System/BackgroundTask.cpp"),
         Object(NonMatching, "System/Yay0.cpp"),
+        Object(Matching, "System/DataOnly.cpp"),
+
+        # System/Scenes
+        Object(NonMatching, "System/Scenes/SceneManager.cpp"),
+        Object(NonMatching, "System/Scenes/BootScene.cpp"),
+        Object(NonMatching, "System/Scenes/TitleScene.cpp"),
+        Object(NonMatching, "System/Scenes/SelectScene.cpp"),
+        Object(NonMatching, "System/Scenes/MainGameScene.cpp"),
+        Object(NonMatching, "System/Scenes/MainGameSceneUtil1.cpp"),
+        Object(NonMatching, "System/Scenes/MainGameSceneUtil2.cpp"),
+        Object(NonMatching, "System/Scenes/MainGameSceneUtil3.cpp"),
+        Object(NonMatching, "System/Scenes/MainGameSceneUtil4.cpp"),
+        Object(NonMatching, "System/Scenes/OpeningScene.cpp"),
+        Object(NonMatching, "System/Scenes/StuffRollScene.cpp"),
+        Object(NonMatching, "System/Scenes/EndingScene.cpp"),
+        Object(NonMatching, "System/Scenes/MovieScene.cpp"),
 
         # Unsorted
-        Object(NonMatching, "Unsorted/bootScene.cpp"),
-        Object(NonMatching, "Unsorted/TitleScene.cpp"),
         Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
         Object(NonMatching, "Unsorted/80005EB8.cpp"),
         Object(NonMatching, "Unsorted/MoveObj.cpp"),

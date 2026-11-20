@@ -6,45 +6,45 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[7] = {
     {
-        0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0_Behavior
     },
 
     {
-        2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_2_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_2_Behavior
     },
 
     
     {
-        3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_3_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_3_Behavior
     },
 
     
     {
-        4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_4_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_4_Behavior
     },
 
     {
-        0x102, 
+        STRAT_STATE_102, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x102_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x102_Behavior
     },
 
     {
-        0x100, 
+        STRAT_STATE_100, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x100_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x100_Behavior
     },
 
     {
-        0x101, 
+        STRAT_STATE_101, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x101_Init, 
         (EnemyStrategyStateFn)&AEnAtPlane::state_0x101_Behavior
     },
@@ -55,10 +55,18 @@ AEnAtPlane::AEnAtPlane() {
 
 
 void AEnAtPlane::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 void AEnAtPlane::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool AEnAtPlane::state_0_Init() {

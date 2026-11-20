@@ -1,4 +1,5 @@
 #include "Ajioka/Attack/AEnAtCar.hpp"
+#include "Sato/EnemyStrategy.hpp"
 
 
 dummy_float_data()
@@ -6,37 +7,37 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[6] = {
     {
-        0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0_Behavior
     },
 
     {
-        1, 
+        STRAT_STATE_1, 
         (EnemyStrategyStateFn)&AEnAtCar::state_1_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_1_Behavior
     },
 
     {
-        2, 
+        STRAT_STATE_2, 
         (EnemyStrategyStateFn)&AEnAtCar::state_2_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_2_Behavior
     },
 
     {
-        0x102, 
+        STRAT_STATE_102, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x102_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x102_Behavior
     },
 
     {
-        0x100, 
+        STRAT_STATE_100, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x100_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x100_Behavior
     },
 
     {
-        0x101, 
+        STRAT_STATE_101, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x101_Init, 
         (EnemyStrategyStateFn)&AEnAtCar::state_0x101_Behavior
     },
@@ -47,10 +48,18 @@ AEnAtCar::AEnAtCar() {
 
 
 void AEnAtCar::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 void AEnAtCar::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool AEnAtCar::vt_14() {

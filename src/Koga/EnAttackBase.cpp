@@ -1,9 +1,7 @@
+#include <JSystem/JKernel/JKRMemArchive.hpp>
+
 #include "Koga/EnAttackBase.hpp"
-#include "JSystem/JGeometry/JGVec3.hpp"
-#include "JSystem/JKernel/JKRFileLoader.hpp"
-#include "JSystem/JKernel/JKRMemArchive.hpp"
 #include "Koga/EnTypesManager.hpp"
-#include "Unsorted/bootScene.hpp"
 #include "Koga/Params.hpp"
 
 struct UnkStruct1 {

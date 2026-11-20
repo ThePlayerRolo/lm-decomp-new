@@ -7,27 +7,27 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[4] = {
     {
-        0, 
+        STRAT_STATE_0, 
         (EnemyStrategyStateFn)&AEnSimple1::state_0_Init, 
         (EnemyStrategyStateFn)&AEnSimple1::state_0_Behavior
     },
 
     {
-        3, 
+        STRAT_STATE_3, 
         (EnemyStrategyStateFn)&AEnSimple1::state_3_Init, 
         (EnemyStrategyStateFn)&AEnSimple1::state_3_Behavior
     },
 
     
     {
-        4, 
+        STRAT_STATE_4, 
         (EnemyStrategyStateFn)&AEnSimple1::state_4_Init, 
         (EnemyStrategyStateFn)&AEnSimple1::state_4_Behavior
     },
 
     
     {
-        5, 
+        STRAT_STATE_5, 
         (EnemyStrategyStateFn)&AEnSimple1::state_5_Init, 
         (EnemyStrategyStateFn)&AEnSimple1::state_5_Behavior
     },
@@ -44,16 +44,20 @@ AEnSimple1::AEnSimple1() {
 
 }
 
-
-
-
-
 void AEnSimple1::doBehavior() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorFunc)();
+    }
 }
 
 void AEnSimple1::doBehaviorInit() {
+    EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
 
+    if (state != nullptr) {
+        (this->*state->mBehaviorInitFunc)();
+    }
 }
 
 bool AEnSimple1::vt_14() {
