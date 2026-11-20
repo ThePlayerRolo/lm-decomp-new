@@ -40,7 +40,7 @@ struct SceneManagerHelper {
     inline SceneManagerHelper();
     
     /* 0x00 */ SceneManagerState mState;
-    /* 0x04 */ SceneID _4;
+    /* 0x04 */ SceneID mSceneID;
     /* 0x08 */ OSMessageQueue mOSMsgQueue;
     /* 0x28 */ OSMessage mMsgs;
 }; // size 0x2C
@@ -82,8 +82,8 @@ namespace SceneManager {
     static SceneManagerHelper sSceneMgr;
     static Scene* sCurrScene = &BootScene::sBootScene;
 
-    u16 fn_8000B328() {
-        return sCurrScene->_10;
+    u16 getFrameInterval() {
+        return sCurrScene->mFrameInterval;
     }
 
     void fn_8000B334(s32 param_1) {
@@ -127,7 +127,7 @@ namespace SceneManager {
     }
 
     void fn_8000B4A0() {
-        SceneID val = sSceneMgr._4;
+        SceneID val = sSceneMgr.mSceneID;
         if (SceneManager::sCurrSceneId != val) {
             SceneManager::sCurrSceneId = val;
             lbl_804D8088 = 1;
@@ -176,7 +176,7 @@ namespace SceneManager {
 
     void fn_8000B610() {
         sSceneMgr.mState = SM_STATE_0;
-        sSceneMgr._4 = SceneManager::sCurrSceneId;
+        sSceneMgr.mSceneID = SceneManager::sCurrSceneId;
 
         while (true) {
             lbl_804D80B4 = 0;
@@ -193,8 +193,8 @@ namespace SceneManager {
                 case SM_STATE_0:
                     if (pollBackgroundTaskComplete() == 1) {
                         sSceneMgr.mState = SM_STATE_1;
-                        fn_80009540(sCurrScene->_10);
-                        setFrameRateDivisor(sCurrScene->_10);
+                        setDirectionalRepeat(sCurrScene->mFrameInterval);
+                        setFrameRateDivisor(sCurrScene->mFrameInterval);
                     }
                     break;
                 case SM_STATE_1:
@@ -213,7 +213,7 @@ namespace SceneManager {
 
             if (sSceneMgr.mState == 2 && lbl_804D80AC == 0 && lbl_804D80A8 == 0) {
                 fn_8000ADCC();
-                sSceneMgr._4 = sCurrScene->mUpdateFn();
+                sSceneMgr.mSceneID = sCurrScene->mUpdateFn();
             }
 
             fn_8000812C(&lbl_803A3810);

@@ -18,7 +18,7 @@ namespace MainGameScene {
 
     void fn_8000CC18() {
         lbl_804D8438 = 0;
-        setFrameRateDivisor(1);
+        setFrameRateDivisor(FRAME_INTERVAL_60FPS);
         fn_8018A2A0(0x3804);
         fn_8007220C();
         fn_80055114(lbl_804D80E8);
@@ -29,7 +29,7 @@ namespace MainGameScene {
         if (lbl_804D80C4 == 5) {
             if (lbl_804D80EC == 0) {
                 lbl_804D8438 = 0;
-                setFrameRateDivisor(1);
+                setFrameRateDivisor(FRAME_INTERVAL_60FPS);
                 fn_8018A2A0(0x3804);
                 fn_8007220C();
                 fn_80055114(lbl_804D80E8);
@@ -56,7 +56,7 @@ namespace MainGameScene {
         lbl_804D8438 = 1;
         fn_80055338();
         fn_80188760(lbl_804D8008 & 0xFF, nullptr);
-        setFrameRateDivisor(2);
+        setFrameRateDivisor(FRAME_INTERVAL_30FPS);
         lbl_804D80EC = 0;
     }
     

@@ -32,7 +32,7 @@ namespace MainGameScene {
                     void* temp = fn_800AD39C(0); //checks against the 0x55 byte
                     lbl_804D80C4 = 3;
                     lbl_804D8438 = 0;
-                    setFrameRateDivisor(1);
+                    setFrameRateDivisor(FRAME_INTERVAL_60FPS);
                     fn_8018A678(1);
                     fn_8018A2A0(0x3804);
                     lbl_804D80E0 = 1;
@@ -113,7 +113,7 @@ namespace MainGameScene {
             fn_801219C4();
             fn_80188760(lbl_804D8008 & 0xFF, 0);
             fn_8005DAFC();
-            setFrameRateDivisor(2);
+            setFrameRateDivisor(FRAME_INTERVAL_30FPS);
             setIntRenderModeVFilter(6);
 
             if (sUnusedHeap != nullptr) {

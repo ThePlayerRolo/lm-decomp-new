@@ -5,10 +5,10 @@
 #include "Unsorted/GamePad.hpp"
 
 
-void fn_80009540(s32 param_1) {
+void setDirectionalRepeat(s32 frameInterval) {
     sGamePad->setButtonRepeat(JUTGamePad::MAINSTICK_LEFT | JUTGamePad::MAINSTICK_UP | JUTGamePad::MAINSTICK_RIGHT | JUTGamePad::MAINSTICK_DOWN |
         JUTGamePad::CSTICK_LEFT | JUTGamePad::CSTICK_UP | JUTGamePad::CSTICK_RIGHT | JUTGamePad::CSTICK_DOWN | 
-        JUTGamePad::DPAD_LEFT | JUTGamePad::DPAD_UP | JUTGamePad::DPAD_RIGHT | JUTGamePad::DPAD_DOWN, 32 / param_1, 4 / param_1);
+        JUTGamePad::DPAD_LEFT | JUTGamePad::DPAD_UP | JUTGamePad::DPAD_RIGHT | JUTGamePad::DPAD_DOWN, 32 / frameInterval, 4 / frameInterval);
 }
 
 void fn_80009580() {}

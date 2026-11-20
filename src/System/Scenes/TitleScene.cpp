@@ -36,8 +36,7 @@ namespace TitleScene {
         destroy
     };
 
-    // May not be a TitleScene function.
-    void fn_8000EC98() {
+    void reset() {
         initReset();
     }
 
