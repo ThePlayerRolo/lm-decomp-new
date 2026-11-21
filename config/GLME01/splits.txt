@@ -97,10 +97,14 @@ System/8000AC48.cpp:
 	.sdata2     start:0x804D9998 end:0x804D99A8
 
 System/8000AED8.cpp:
-	.text       start:0x8000AED8 end:0x8000B328
+	.text       start:0x8000AED8 end:0x8000B014
 	.ctors      start:0x8020BACC end:0x8020BAD0
-	.data       start:0x8021DA80 end:0x8021DB20
+	.data       start:0x8021DA80 end:0x8021DAE0
 	.bss        start:0x803A3A98 end:0x803A3AE0
+
+System/8000B014.cpp:
+	.text       start:0x8000B014 end:0x8000B328
+	.data       start:0x8021DAE0 end:0x8021DB20
 	.sdata2     start:0x804D99A8 end:0x804D99C8
 
 System/Scenes/SceneManager.cpp:
