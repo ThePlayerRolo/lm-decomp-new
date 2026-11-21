@@ -24,7 +24,7 @@ public:
 
     /* 0x00 */ Control* mControls;
     /* 0x04 */ Param* mParams;
-    /* 0x08 */ saGrainList<Param> mFreeParam;
+    /* 0x08 */ saGrainList<Param> mListParam;
     saGrainList<Control> mControlList;
     saGrainList<Control> mControlList2;
 };
@@ -57,17 +57,17 @@ void saGrainControl<Control, Param>::init(u16 paramCount, u16 controlCount) {
     control->mNext = mControlList.mHead;
     mControlList.mHead->mPrev = control;
 
-    mFreeParam.mHead = &mFreeParam.mSentinel;
-    mFreeParam.mHead->mNext = param;
-    param->mPrev = mFreeParam.mHead;
+    mListParam.mHead = &mListParam.mSentinel;
+    mListParam.mHead->mNext = param;
+    param->mPrev = mListParam.mHead;
     for (u16 i = 0; i < paramCount - 1; i++) {
         param->mNext = nextParam;
         nextParam->mPrev = param;
         param++;
         nextParam++;
     }
-    param->mNext = mFreeParam.mHead;
-    mFreeParam.mHead->mPrev = param;
+    param->mNext = mListParam.mHead;
+    mListParam.mHead->mPrev = param;
 }
 
 #endif
