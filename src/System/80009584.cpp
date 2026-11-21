@@ -6,9 +6,7 @@
 
 
 void setDirectionalRepeat(s32 frameInterval) {
-    sGamePad->setButtonRepeat(JUTGamePad::MAINSTICK_LEFT | JUTGamePad::MAINSTICK_UP | JUTGamePad::MAINSTICK_RIGHT | JUTGamePad::MAINSTICK_DOWN |
-        JUTGamePad::CSTICK_LEFT | JUTGamePad::CSTICK_UP | JUTGamePad::CSTICK_RIGHT | JUTGamePad::CSTICK_DOWN | 
-        JUTGamePad::DPAD_LEFT | JUTGamePad::DPAD_UP | JUTGamePad::DPAD_RIGHT | JUTGamePad::DPAD_DOWN, 32 / frameInterval, 4 / frameInterval);
+    sGamePad->setButtonRepeat(JUTGamePad::ANY_MAIN_STICK | JUTGamePad::ANY_CSTICK | JUTGamePad::PRESS_DPAD, 32 / frameInterval, 4 / frameInterval);
 }
 
 void fn_80009580() {}
