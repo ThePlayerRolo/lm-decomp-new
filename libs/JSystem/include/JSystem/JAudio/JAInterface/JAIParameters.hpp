@@ -72,9 +72,10 @@ struct JAISeqParameter {
 	/* 0x1784 */ u32 mTrackDolbyUpdate;
 	/* 0x1788 */ u32 mTrackFirUpdate;
 	/* 0x178C */ u32 mTrackPortUpdate;
-	/* 0x1790 */ u32 mTrackPortDataUpdate[32];
-	/* 0x1810 */ u8 mTrackInterruptSwitch[32];
-	/* 0x1830 */ MuteBit mMuteBits[32];
+	///* 0x1790 */ u32 mTrackPortDataUpdate[32];
+	/* 0x1790 */ u8 mTrackInterruptSwitch[32];
+	// /* 0x1830 */ MuteBit mMuteBits;
+	/* 0x17B0 */ u8 _17B0[32];
 	/* 0x1850 */ JAISeqUpdateData* mUpdateData;
 	/* 0x1854 */ JAISeqParameter* mPrev;
 	/* 0x1858 */ JAISeqParameter* mNext;

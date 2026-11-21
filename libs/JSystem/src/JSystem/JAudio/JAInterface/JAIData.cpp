@@ -225,3 +225,79 @@ void JAIData::reloadInfoDataWork(JAISoundTable* soundTable)
 		soundTable->mDataSize = size;
 	}
 }
+
+
+void JAIData::initSeqParameter(JAISeqParameter* param)
+{
+	param->mWaitSceneSet        = 0xffffffff;
+	param->mTempo.mCurrentValue = 1.0f;
+	param->mTempo.mMoveCounter  = 0;
+	param->mPauseMode           = 0;
+	param->unk1756              = 0;
+
+	param->mPortUpdate   = 0;
+	param->mVolumeUpdate = 0;
+	param->mPanUpdate    = 0;
+	param->mPitchUpdate  = 0;
+
+	param->mTrackVolumeUpdate = 0;
+	param->mTrackPanUpdate    = 0;
+	param->mTrackPitchUpdate  = 0;
+	param->mTrackFxmixUpdate  = 0;
+	param->mTrackDolbyUpdate  = 0;
+	param->mTrackFirUpdate    = 0;
+	param->mTrackPortUpdate   = 0;
+
+	for (u32 i = 0; i < JAIGlobalParameter::seqTrackMax; ++i) {
+		param->mTrackVolume[i].mCurrentValue = 1.0f;
+		param->mTrackPan[i].mCurrentValue    = 0.5f;
+		param->mTrackPitch[i].mCurrentValue  = 1.0f;
+		param->mTrackFxmix[i].mCurrentValue  = 0.0f;
+		param->mTrackDolby[i].mCurrentValue  = 0.0f;
+		param->mTrackFir[i].mCurrentValue    = 0.0f;
+
+		param->mTrackVolume[i].mTargetValue = 1.0f;
+		param->mTrackPan[i].mTargetValue    = 0.5f;
+		param->mTrackPitch[i].mTargetValue  = 1.0f;
+		param->mTrackFxmix[i].mTargetValue  = 0.0f;
+		param->mTrackDolby[i].mTargetValue  = 0.0f;
+		param->mTrackFir[i].mTargetValue    = 0.0f;
+
+		param->mTrackVolume[i].mMoveCounter = 0;
+		param->mTrackPan[i].mMoveCounter    = 0;
+		param->mTrackPitch[i].mMoveCounter  = 0;
+		param->mTrackFxmix[i].mMoveCounter  = 0;
+		param->mTrackDolby[i].mMoveCounter  = 0;
+		param->mTrackFir[i].mMoveCounter    = 0;
+
+		param->mTrackInterruptSwitch[i] = 0;
+
+		for (u32 j = 0; j < 16; ++j)
+			param->mTrackPortData[i][j] = 0;
+	}
+
+	for (u32 i = 0; i < 16; ++i) {
+		param->mPortData[i].mCurrentValue = 0.0f;
+		param->mPortData[i].mMoveCounter  = 0;
+	}
+
+	for (u32 i = 0; i < JAIGlobalParameter::seqPlayTrackMax + 0xC; ++i) {
+		param->mVolume[i].mCurrentValue = 1.0f;
+		param->mPan[i].mCurrentValue    = 0.5f;
+		param->mPitch[i].mCurrentValue  = 1.0f;
+		param->mFxmix[i].mCurrentValue  = 0.0f;
+		param->mDolby[i].mCurrentValue  = 0.0f;
+
+		param->mVolume[i].mTargetValue = 1.0f;
+		param->mPan[i].mTargetValue    = 0.5f;
+		param->mPitch[i].mTargetValue  = 1.0f;
+		param->mFxmix[i].mTargetValue  = 0.0f;
+		param->mDolby[i].mTargetValue  = 0.0f;
+
+		param->mVolume[i].mMoveCounter = 0;
+		param->mPan[i].mMoveCounter    = 0;
+		param->mPitch[i].mMoveCounter  = 0;
+		param->mFxmix[i].mMoveCounter  = 0;
+		param->mDolby[i].mMoveCounter  = 0;
+	}
+}

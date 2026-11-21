@@ -677,6 +677,7 @@ JSystem/JAudio/JAInterface/JAIEntrySequence.cpp:
 
 JSystem/JAudio/JAInterface/JAISound.cpp:
 	.text       start:0x80197C14 end:0x8019B424
+	.sdata2     start:0x804DD250 end:0x804DD2C0
 
 JSystem/JAudio/JAInterface/JAIAnimation.cpp:
 	.text       start:0x8019B424 end:0x8019BE00

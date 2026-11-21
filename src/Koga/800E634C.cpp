@@ -1,5 +1,7 @@
 #include <JSystem/JGeometry/JGVec3.hpp>
 
+#include "Koga/MapCol.hpp"
+#include "Koga/ToolData.hpp"
 #include "Sato/EnThought.hpp"
 #include "Koga/800E634C.hpp"
 #include "Unsorted/MoveObj.hpp"
@@ -23,4 +25,20 @@ bool fn_800E6ED0(EnThought* pThought) {
     pThought->getCharacter()->vt_0C(temp._0, temp._2, temp._4);
 
     return true;
+}
+
+f32 fn_800E6C5C(EnThought* pThought) {
+    JGeometry::TVec3f& unk_44 = pThought->getCharacter()->_44;
+    ToolDataRef dataRef = pThought->getToolDataRef();
+
+    if (dataRef.isValid()) {
+        u32 floatingHeight = 0;
+        dataRef.getToolData()->getValue(dataRef.mEntryIndex, "floating_height", &floatingHeight);
+        return floatingHeight;
+    }
+
+    f32 val_1 =  Koga::MapCol::sCurMapCol->fn_800BBE08(unk_44);
+    f32 val_2  = Koga::MapCol::sCurMapCol->fn_800BBE2C(unk_44);
+
+    return (val_2 - val_1) * 0.5f;
 }

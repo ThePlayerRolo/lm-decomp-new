@@ -24,7 +24,6 @@ public:
     
     inline s32 get_38() const { return _38; }
     inline s32 get_3C() const { return _3C; }
-
     void fn_80067C30(const Vec*);
     void fn_80067CB0(f32 var1, f32 var2, f32 var3); //This may be protected but TU 800E9568 calls it, may need to do something different.
 
@@ -62,8 +61,8 @@ public:
     /* 0x08E */ u16 _8E;
 
     /* 0x090 */ Vec _90; // set the same value on all 3 axes in AEnEBone. Scale ? 
-    /* 0x09C */ u8 _9C[0xB4 - 0x9C];
-
+    /* 0x09C */ u8 _9C[0xB0 - 0x9C];
+    /* 0x0B0 */ s16 _B0;
     /* 0x0B4 */ u32 _B4;
     
     /* 0x0B8 */ u32 _B8;

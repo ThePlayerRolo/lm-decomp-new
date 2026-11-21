@@ -84,12 +84,8 @@ void JAISeqEntry::storeBuffer(JAISound** out_handle, JAIActor* actor,
 		if (unk0->getSoundSwBit(info) & JAISeqSwBit_PauseOthers) {
 			for (u32 i = 0; i < JAIGlobalParameter::seqPlayTrackMax; ++i) {
 				JAISound* sound = data->mSeqTrackInfo[i].mSound;
-				if (i != bVar10 && sound && sound->mState >= SOUNDSTATE_Started
-				    && (sound->getSwBit() & JAISeqSwBit_NoPause) == 0) {
+				if (i != bVar10 && sound && sound->mState >= SOUNDSTATE_Started) {
 					sound->setSeqInterVolume(10, 0.0f, 10);
-					JASystem::TrackMgr::handleToSeq(
-					    sound->getSeqParameter()->mSeqHandle)
-					    ->pauseTrackAll();
 				}
 			}
 		}

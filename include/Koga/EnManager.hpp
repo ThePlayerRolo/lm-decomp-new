@@ -14,6 +14,7 @@
 class EnemyStrategy;
 class EnThought;
 class JKRArchive;
+class Player;
 
 namespace Koga {
     class EnManager;
@@ -39,7 +40,7 @@ public:
     unkEnManager2();
     unkEnManager2(const ToolDataRef&);
 
-    u32 fn_800E601C(); 
+    u32 fn_800E601C();
     const char* getCreateName();
     ToolDataRef fn_800E6134();
 
@@ -68,12 +69,12 @@ namespace Koga {
         void fn_800E52BC(ToolData*);
         u32 findLuigiAppearIndex(ToolData*, u32);
         ToolDataRef* fn_800E5488(s32);
-        
+
         Vec* fn_800E5564(s32);
         u32 fn_800E55AC(s32);
         s32 fn_800E55F0(s32); // Gets _0 member from AppearSlot
-        void* fn_800E5600(s32); // Dynamicaly casts Player to MoveObj 
-        void* fn_800E5634(s32); // Helper function to get a player object from fn_80069130 (by taking in _E08[param_1]._0?)
+        Player* getPlayer(s32);
+        Player* fn_800E5634(s32); // Helper function to get a player object from fn_80069130 (by taking in _E08[param_1]._0?)
 
         s32 fn_800E5660(JGeometry::TVec3f*, JGeometry::TVec3f*, f32);
         s32 fn_800E56E4(JGeometry::TVec3f*, JGeometry::TVec3f*);

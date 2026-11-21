@@ -33,6 +33,7 @@ namespace Koga {
         void fn_800BC89C(s32);
         void fn_800BC8B4(s32);
         int fn_800BC8CC(s16);
+        f32 fn_800BBE08(JGeometry::TVec3f&);
         f32 fn_800BBE2C(JGeometry::TVec3f&);
         ToolData* getPolygonInfo();
 

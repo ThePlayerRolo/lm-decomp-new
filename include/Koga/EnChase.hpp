@@ -1,11 +1,12 @@
 #ifndef EN_CHASE_HPP
 #define EN_CHASE_HPP
 
+#include "Koga/EnCircleMove.hpp"
 #include "Sato/EnemyStrategy.hpp"
 
 class EnChase : public EnemyStrategy {
 public:
-    EnChase();
+    EnChase(f32);
     virtual ~EnChase() {};
 
     // From EnemyStrategy
@@ -19,6 +20,8 @@ public:
     bool state_1_Behavior();
     bool state_2_Init();
     bool state_2_Behavior();
+
+    EnCircleMove mCircleMove;
 };
 
 #endif

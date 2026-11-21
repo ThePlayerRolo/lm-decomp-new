@@ -17,13 +17,29 @@ namespace Koga {
         }
     }
 
-    //Adding this here, although its probably some struct nonsense here: https://decomp.me/scratch/HzVXW
-    bool SimpleModeler::fn_800BB6A4(f32 param_1, f32 param_2, void* param_3, void* param_4) {
-        if (mUnk2._300 >= 32) {
+    bool SimpleModeler::addCylinder(const Vec& param_1, f32 param_2, f32 param_3, const GXColor& rTevColor) {
+        if (mCylinders.getSize() >= 32) {
             return false;
         }
 
-        mUnk2.fn_800BB9E4(param_3);
+        CylinderInfo cylinder;
+        cylinder._0 = param_1;
+        cylinder._C = param_2;
+        cylinder._10 = param_3;
+        cylinder.mTevColor = rTevColor;
+        mCylinders.addMember(&cylinder);
+        return true;
+    }
+
+    bool SimpleModeler::addCube(Mtx mtx, const GXColor& rColor) {
+        if (mCubes.getSize() >= 32) {
+            return true;  // bug?
+        }
+
+        CubeInfo cube;
+        PSMTXCopy(cube.mMtx, mtx);
+        cube.mColor = rColor;
+        mCubes.addMember(&cube);
         return true;
     }
 
@@ -37,14 +53,6 @@ namespace Koga {
     }
 }
 
-unkSimpleModeler3::unkSimpleModeler3() {
-    _680 = 0; //Could also be nullptr
-}
-
-
-unkSimpleModeler2::unkSimpleModeler2() {
-    _300 = 0; //Could also be nullptr
-}
 
 unkSimpleModeler1::unkSimpleModeler1() {
     _280 = 0; //Could also be nullptr

@@ -1,3 +1,5 @@
+#include "jaudio/jammain_2.h"
+#include "jaudio/random.h"
 #include <JSystem/JAudio/JAInterface/JAISound.hpp>
 #include <JSystem/JAudio/JAInterface/JAIBasic.hpp>
 #include <JSystem/JAudio/JAInterface/JAIParameters.hpp>
@@ -152,8 +154,6 @@ void JAISound::setPortData(u8 param_1, u16 param_2)
 	case JAISoundID_Type_Se:
 		setSePortData(param_1, param_2);
 		break;
-	case JAISoundID_Type_Stream:
-		break;
 	}
 }
 
@@ -169,6 +169,9 @@ void JAISound::setSeqInterVolume(u8 param, f32 volume, u32 moveTime)
 	if (!getSeqParameter())
 		return;
 
+	if (getSeqParameter()->mUpdateData) {
+		getSeqParameter()->mUpdateData->unk8 |= 0x40000;
+	}
 
 	int ret = initMoveParameter(&getSeqParameter()->mVolume[param], volume,
 	                            moveTime);
@@ -186,12 +189,13 @@ void JAISound::setSeqInterPan(u8 param, f32 pan, u32 moveTime)
 	if (!getSeqParameter())
 		return;
 
+	if (getSeqParameter()->mUpdateData)
+		getSeqParameter()->mUpdateData->unk8 |= 0x80000;
+
 	int ret = initMoveParameter(&getSeqParameter()->mPan[param], pan, moveTime);
-	if (ret == 1)
+	if (ret != 0)
 		getSeqParameter()->mPanUpdate |= 1 << param;
 
-	if (getSeqParameter()->mUpdateData && ret != 2)
-		getSeqParameter()->mUpdateData->unk8 |= 0x80000;
 }
 
 void JAISound::setSeqInterPitch(u8 param, f32 pitch, u32 moveTime)
@@ -202,13 +206,14 @@ void JAISound::setSeqInterPitch(u8 param, f32 pitch, u32 moveTime)
 	if (!getSeqParameter())
 		return;
 
+	if (getSeqParameter()->mUpdateData)
+		getSeqParameter()->mUpdateData->unk8 |= 0x100000;
+
 	int ret
 	    = initMoveParameter(&getSeqParameter()->mPitch[param], pitch, moveTime);
-	if (ret == 1)
+	if (ret != 0)
 		getSeqParameter()->mPitchUpdate |= 1 << param;
 
-	if (getSeqParameter()->mUpdateData && ret != 2)
-		getSeqParameter()->mUpdateData->unk8 |= 0x100000;
 }
 
 void JAISound::setSeqInterFxmix(u8 param, f32 fxmix, u32 moveTime)
@@ -219,13 +224,13 @@ void JAISound::setSeqInterFxmix(u8 param, f32 fxmix, u32 moveTime)
 	if (!getSeqParameter())
 		return;
 
+	if (getSeqParameter()->mUpdateData)
+		getSeqParameter()->mUpdateData->unk8 |= 0x200000;
+
 	int ret
 	    = initMoveParameter(&getSeqParameter()->mFxmix[param], fxmix, moveTime);
-	if (ret == 1)
+	if (ret != 0)
 		getSeqParameter()->mFxmixUpdate |= 1 << param;
-
-	if (getSeqParameter()->mUpdateData && ret != 2)
-		getSeqParameter()->mUpdateData->unk8 |= 0x200000;
 }
 
 void JAISound::setSeqInterDolby(u8 param, f32 dolby, u32 moveTime)
@@ -274,21 +279,22 @@ void JAISound::setSeqPortData(u8 param_1, u16 param_2, u32 param_3)
 	if (!getSeqParameter())
 		return;
 
+	if (getSeqParameter()->mUpdateData)
+		getSeqParameter()->mUpdateData->unk8 |= 0x10;
+
 	if (getSeqParameter()->mPortData[param_1].mCurrentValue == 0.0f
 	    && mState >= SOUNDSTATE_Started) {
 		u16 local_38;
-		JAISystemInterface::readPortApp(getSeqParameter()->mSeqHandle,
+		Jam_ReadPortApp(getSeqParameter()->mSeqHandle,
 		                                param_1 << 16, &local_38);
 		getSeqParameter()->mPortData[param_1].mCurrentValue = local_38;
 	}
 
+	// possible bug? this is missing the ret != 0 check
 	int ret = initMoveParameter(&getSeqParameter()->mPortData[param_1], param_2,
 	                            param_3);
-	if (ret == 1)
-		getSeqParameter()->mPortUpdate |= 1 << param_1;
+	getSeqParameter()->mPortUpdate |= 1 << param_1;
 
-	if (getSeqParameter()->mUpdateData && ret != 2)
-		getSeqParameter()->mUpdateData->unk8 |= 0x10;
 }
 
 void JAISound::setWaveReadMode(s32 bank_id, s32 group_no)
@@ -324,7 +330,7 @@ void JAISound::setTrackInterruptSwitch(u8 param_1, u8 param_2)
 	if (!getSeqParameter())
 		return;
 
-	//getSeqParameter()->mTrackInterruptSwitch[param_1] = param_2;
+	getSeqParameter()->mTrackInterruptSwitch[param_1] = param_2;
 	if (getSeqParameter()->mUpdateData)
 		getSeqParameter()->mUpdateData->unk8 |= 0x800000;
 }
@@ -391,7 +397,7 @@ static inline u32 rand_u32()
 
 void JAISound::setSeInterRandomPara(f32* target, u32 random, f32 min, f32 max)
 {
-	f32 rnd = ((f32)((rand_u32() % (random * 2)) + 1) - (f32)random) / 1000.0f;
+	f32 rnd = ((f32)((GetRandom_u32() % (random * 2)) + 1) - (f32)random) / 1000.0f;
 	if (*target + rnd > max) {
 		*target = max;
 	} else if (*target < min - rnd) {
