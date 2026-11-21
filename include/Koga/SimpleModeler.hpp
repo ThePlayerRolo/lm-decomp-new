@@ -43,7 +43,7 @@ namespace Koga {
         void draw(); //Draws the models of each class in a loop.
 
         SimpleModeler* fn_800BB88C();
-        void fn_800BB8BC();
+        void setInitialized();
     public:
         /* 0x004 */ MR::AssignableArray<SphereInfo, 32> mSpheres;
         /* 0x288 */ MR::AssignableArray<CylinderInfo, 32> mCylinders;

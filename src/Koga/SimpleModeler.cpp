@@ -93,11 +93,11 @@ namespace Koga {
     }
 
     SimpleModeler* SimpleModeler::fn_800BB88C() {
-        fn_800BB8BC();
+        setInitialized();
         return this;
     }
 
-    void SimpleModeler::fn_800BB8BC() {
+    void SimpleModeler::setInitialized() {
         sSimpleModelerInitialized += 1;
     }
 }
