@@ -5,24 +5,20 @@
 #include <dolphin/gx.h>
 #include <JSystem/JGeometry/JGVec3.hpp>
 
-class unkSimpleModeler1 {
-public:
-    unkSimpleModeler1();
-    ~unkSimpleModeler1();
-
-    // TODO figure out what this data is
-    /* 0x0 - 0x27C */ u8 _0[0x280];
-    /* 0x280 */ s32 _280; //Some Counter or ptr?
-};
-
 namespace Koga {
     class SimpleModeler {
     public:
+        struct SphereInfo {
+            /* 0x00 */ Vec mTranslation;
+            /* 0x0C */ f32 mSize;
+            /* 0x10 */ GXColor mColor;
+        };
+
         struct CylinderInfo {
-            /* 0x00 */ Vec _0;
-            /* 0x0C */ f32 _C;
-            /* 0x10 */ f32 _10;
-            /* 0x14 */ GXColor mTevColor;
+            /* 0x00 */ Vec mTranslation;
+            /* 0x0C */ f32 mWidth;
+            /* 0x10 */ f32 mHeight;
+            /* 0x14 */ GXColor mColor;
         };
 
         struct CubeInfo {
@@ -41,15 +37,15 @@ namespace Koga {
         static void deleteSimpleModeler();
         static SimpleModeler* getCurSimpleModeler() { return sCurSimpleModeler; }
 
-        bool addCylinder(const Vec& param_1, f32 param_2, f32 param_3, const GXColor& rTevColor);
+        bool addCylinder(const Vec& rTranslation, f32 param_2, f32 param_3, const GXColor& rTevColor);
+        bool addCube(Mtx, const GXColor& rColor);
 
-        bool addCube(Mtx, const GXColor& rColor); //Seems to be some Matrix copying or something similar of unkSimpleModeler3. Missing Args
         void draw(); //Draws the models of each class in a loop.
 
         SimpleModeler* fn_800BB88C();
         void fn_800BB8BC();
     public:
-        /* 0x4 */ unkSimpleModeler1 mUnk1;
+        /* 0x004 */ MR::AssignableArray<SphereInfo, 32> mSpheres;
         /* 0x288 */ MR::AssignableArray<CylinderInfo, 32> mCylinders;
         /* 0x58C */ MR::AssignableArray<CubeInfo, 32> mCubes;
 

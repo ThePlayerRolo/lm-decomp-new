@@ -1,4 +1,5 @@
-#pragma once
+#ifndef  PLAYER_HPP
+#define PLAYER_HPP
 
 #include "Unsorted/character.hpp"
 
@@ -8,3 +9,5 @@ class Player : public Character {
 
 
 };
+
+#endif

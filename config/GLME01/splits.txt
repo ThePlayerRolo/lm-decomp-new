@@ -199,6 +199,10 @@ Unsorted/ActorData.cpp:
 Unsorted/RailInfoUtil.cpp:
 	.text       start:0x80092568 end:0x8009359C
 
+Unsorted/SimpleDraw.cpp:
+	.text       start:0x80093C5C end:0x80094F94
+	.sdata2     start:0x804DAEF0 end:0x804DAEF8
+
 Koga/GameModeUtil.cpp:
 	.text       start:0x800B9D1C end:0x800B9F7C
 
@@ -227,9 +231,10 @@ Koga/MissionMode.cpp:
 	.sdata2     start:0x804DB628 end:0x804DB630
 
 Koga/SimpleModeler.cpp:
-	.text       start:0x800BB54C end:0x800BBA78
+	.text       start:0x800BB464 end:0x800BBA78
 	.data       start:0x80359F98 end:0x80359FD0
 	.sdata      start:0x804D2D10 end:0x804D2D18
+	.sdata2     start:0x804DB638 end:0x804DB640
 
 Koga/MapCol.cpp:
 	.text       start:0x800BBA78 end:0x800BC9FC

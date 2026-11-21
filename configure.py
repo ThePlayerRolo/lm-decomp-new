@@ -840,6 +840,7 @@ config.libs = [
         Object(NonMatching, "Unsorted/MoveObj.cpp"),
         Object(NonMatching, "Unsorted/Character.cpp"),
         Object(NonMatching, "Unsorted/RailInfoUtil.cpp"),
+        Object(NonMatching, "Unsorted/SimpleDraw.cpp"),
         Object(NonMatching, "Unsorted/800627D8.cpp"),
         Object(NonMatching, "Unsorted/LMDisplayUtil.cpp"),
         Object(NonMatching, "Unsorted/MathUtils.cpp", extra_cflags=["-fp_contract off"]),
