@@ -182,8 +182,6 @@ namespace Koga {
         return dynamic_cast<Player*>(player);
     }
 
-    // Based on ObjDiff, this seems to do some copy constructor stuff but the TVec3f struct seems to give me a lot of issues in this class
-    // Also no-inline temproarily because it spills into the other function.
     s32 EnManager::fn_800E5660(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* out, f32 param_2) {
         JGeometry::TVec3f localOut;
         s32 result = fn_800E5784(pParam_1, &localOut);

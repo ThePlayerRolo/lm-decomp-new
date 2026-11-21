@@ -1,10 +1,12 @@
 // Based on the previous decompilation effort: https://github.com/CoNesTra/zmansion/blob/main/src/Unsorted/IncludeStrategy.cpp
 #include "Sato/EnThought.hpp"
+#include "Koga/EnManager.hpp"
 #include "Koga/ToolData.hpp"
 #include "Sato/EnemyStrategy.hpp"
 #include "Sato/IncludeStrategy.hpp"
 #include "Koga/UnkUtil.hpp"
 #include "macros.h"
+#include  "Unsorted/globals.hpp"
 
 dummy_float_data()
 enemies_float_data()
@@ -84,11 +86,8 @@ void EnThought::reset() {
     array_828.resetSize();
     mAlphaControl._08 = lbl_804D2D6C;
     mAlphaControl._04 = lbl_804D2D70;;
-    //var1 = lbl_804DB69C;
     mAlphaControl._0C.y = 1.0f;
     mAlphaControl._0C.z = 1.0f;
-    //mAlphaControl._10 = lbl_804DB69C;
-    //mAlphaControl._14 = var1;
     mAlphaControl._18 = _808;
     _8c8 = -1;
     _8cc = 0;
@@ -112,17 +111,27 @@ void EnThought::reset() {
 
     destroyStrategy();
 
-    void* var_this = _808;
-    if (var_this != nullptr) {
+    Character* character = getCharacter();
+    if (_808 != nullptr) {
+        _808->_E8 = 4;
+        character->_84 = 0;
+        character->_86 = 0;
+        character->_88 = 0;
+        character->_8A = 0;
+        character->_8C = 0;
+        character->_8E = 0;
+        character->fn_80067C30(&gZeroVec);
         ToolDataRef ref = getToolDataRef();
         if (ref.isValid()) {
             u8 invisible = 0;
             ref.getToolData()->getValue(ref.getEntryIndex(), "invisible", &invisible);
 
             if (invisible != 0) {
-
+                character->_E3 = invisible;
+                character->_E7 = invisible;
             } else {
-
+                character->_E3 = 255;
+                character->_E7 = 255;
             }
         }
     }
@@ -160,12 +169,12 @@ bool EnThought::getPosition(JGeometry::TVec3f* out) {
     pData->getValue(entryIdx, "pos_x", &out->x);
     pData->getValue(entryIdx, "pos_y", &out->y);
     pData->getValue(entryIdx, "pos_z", &out->z);
-    
+
     return true;
 }
 
 bool EnThought::getDirectionNormalized(u16* param_1, u16* param_2, u16* param_3) {
-    ToolDataRef ref; 
+    ToolDataRef ref;
     setToolDataRef(mpToolData, mEntryIdx);
     if (!ref.isValid()) {
         return false;
