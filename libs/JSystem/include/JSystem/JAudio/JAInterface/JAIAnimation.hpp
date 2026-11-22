@@ -46,7 +46,6 @@ public:
 
 public:
 	JAIAnimeSound();
-	~JAIAnimeSound();
 
 	virtual void startAnimSound(void* data, u32 id, JAISound** sound,
 	                            JAIActor* actor, u8 flag);

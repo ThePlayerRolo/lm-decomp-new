@@ -6,7 +6,8 @@
 #include <types.h>
 #include <dolphin/mtx.h>
 
-// 0xe3, 0xe7
+class S3DModel;
+
 class MoveObj {
 public:
     MoveObj();
@@ -24,6 +25,7 @@ public:
     
     inline s32 get_38() const { return _38; }
     inline s32 get_3C() const { return _3C; }
+
     void fn_80067C30(const Vec*);
     void fn_80067CB0(f32 var1, f32 var2, f32 var3); //This may be protected but TU 800E9568 calls it, may need to do something different.
 
@@ -38,15 +40,15 @@ protected:
 
 public:
     inline void setE3andE7() {
-        _E3 = false;
-        _E7 = false;
+        _E3 = 0;
+        _E7 = 0;
     }
 
-    /* 0x004 */ u8 _4[0x34];
+    /* 0x004 */ S3DModel* mModel;
+    /* 0x008 */ u8 _8[0x30];
     /* 0x038 */ s32 _38;
     /* 0x03C */ s32 _3C;
     /* 0x040 */ s32 _40;
-
     /* 0x044 */ JGeometry::TVec3<f32> _44;
     /* 0x050 */ JGeometry::TVec3<f32> _50;
     /* 0x05c */ JGeometry::TVec3<f32> _5C;

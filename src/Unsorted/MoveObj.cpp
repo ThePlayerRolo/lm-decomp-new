@@ -4,6 +4,7 @@
 #include "dolphin/mtx.h"
 #include "macros.h"
 #include "Unsorted/ActorData.hpp"
+#include "Unsorted/s3dmodel.hpp"
 
 dummy_float_data();
 enemies_float_data();
@@ -16,7 +17,7 @@ MoveObj::MoveObj() {
 }
 
 MoveObj::~MoveObj() {
-    
+    delete mModel;
 }
 
 void MoveObj::fn_80067C30(const Vec* vec) {
@@ -67,8 +68,7 @@ void MoveObj::fn_80068268(s32 val, JGeometry::TVec3<f32>& vec) {
 
     _100 = vec;
 
-    // FIXME
-    if (_4[0]) {
+    if (mModel != nullptr) {
         _40 |= 0x80000;
         fn_8013DCD8(_10C, _100, _44, val);
     }
