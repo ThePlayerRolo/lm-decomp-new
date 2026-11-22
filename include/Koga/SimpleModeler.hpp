@@ -37,7 +37,7 @@ namespace Koga {
         static void deleteSimpleModeler();
         static SimpleModeler* getCurSimpleModeler() { return sCurSimpleModeler; }
 
-        bool addCylinder(const Vec& rTranslation, f32 param_2, f32 param_3, const GXColor& rTevColor);
+        bool addCylinder(const Vec& rTranslation, f32 width, f32 height, const GXColor& rColor);
         bool addCube(Mtx, const GXColor& rColor);
 
         void draw(); //Draws the models of each class in a loop.

@@ -1,4 +1,3 @@
-#include "jaudio/cmdstack.h"
 #include <JSystem/JAudio/JAInterface/JAISystemInterface.hpp>
 #include <JSystem/JAudio/JAInterface/JAISound.hpp>
 #include <JSystem/JAudio/JAInterface/JAIGlobalParameter.hpp>
@@ -6,8 +5,8 @@
 #include <jaudio/jammain_2.h>
 #include <jaudio/seqsetup.h>
 #include <jaudio/dvdthread.h>
+#include <jaudio/cmdstack.h>
 #include <dolphin/types.h>
-
 
 BOOL JAISystemInterface::checkFileExsistence(char* path)
 {

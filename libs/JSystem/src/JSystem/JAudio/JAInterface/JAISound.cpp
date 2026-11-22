@@ -1,5 +1,3 @@
-#include "jaudio/jammain_2.h"
-#include "jaudio/random.h"
 #include <JSystem/JAudio/JAInterface/JAISound.hpp>
 #include <JSystem/JAudio/JAInterface/JAIBasic.hpp>
 #include <JSystem/JAudio/JAInterface/JAIParameters.hpp>
@@ -8,6 +6,8 @@
 #include <JSystem/JAudio/JAInterface/JAIConst.hpp>
 #include <JSystem/JAudio/JAInterface/JAIInter.hpp>
 #include <JSystem/JAudio/JASystem/JASTrackMgr.hpp>
+#include <jaudio/jammain_2.h>
+#include <jaudio/random.h>
 #include <math.h>
 
 JAISound::JAISound()

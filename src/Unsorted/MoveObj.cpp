@@ -61,6 +61,7 @@ void MoveObj::fn_80068238(s32 index) {
     }
 }
 
+// Note: seems to be called whenever a ghost is about to sucked into the poltergust
 void MoveObj::fn_80068268(s32 val, JGeometry::TVec3<f32>& vec) {
     if ((_40 & 0x80000) != 0) {
         return;

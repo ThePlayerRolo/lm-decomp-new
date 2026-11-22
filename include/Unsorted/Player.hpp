@@ -6,8 +6,6 @@
 // stub
 class Player : public Character {
     Player();
-
-
 };
 
 #endif

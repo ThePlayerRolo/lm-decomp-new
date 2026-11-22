@@ -1,11 +1,10 @@
-#include "jaudio/dvdthread.h"
 #include <JSystem/JAudio/JAInterface/JAIData.hpp>
 #include <JSystem/JAudio/JAInterface/JAIBasic.hpp>
 #include <JSystem/JAudio/JAInterface/JAIGlobalParameter.hpp>
 #include <JSystem/JAudio/JAInterface/JAIParameters.hpp>
 #include <JSystem/JAudio/JAInterface/JAISystemInterface.hpp>
 #include <JSystem/JAudio/JAInterface/JAIConst.hpp>
-#include <JSystem/JAudio/JASystem/JASDvdThread.hpp>
+#include <jaudio/dvdthread.h>
 #include <JSystem/JUtility/JUTAssert.hpp>
 
 JAIData::JAIData() { }

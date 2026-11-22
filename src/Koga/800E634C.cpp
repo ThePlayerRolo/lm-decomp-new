@@ -7,7 +7,7 @@
 #include "Unsorted/MoveObj.hpp"
 
 f32 fn_800E6C5C(EnThought* pThought) {
-    JGeometry::TVec3f& unk_44 = pThought->getCharacter()->_44;
+    JGeometry::TVec3f& charPosition = pThought->getCharacter()->_44;
     ToolDataRef dataRef = pThought->getToolDataRef();
 
     if (dataRef.isValid()) {
@@ -16,8 +16,8 @@ f32 fn_800E6C5C(EnThought* pThought) {
         return floatingHeight;
     }
 
-    f32 val_1 =  Koga::MapCol::sCurMapCol->fn_800BBE08(unk_44);
-    f32 val_2  = Koga::MapCol::sCurMapCol->fn_800BBE2C(unk_44);
+    f32 val_1 =  Koga::MapCol::sCurMapCol->fn_800BBE08(charPosition);
+    f32 val_2  = Koga::MapCol::sCurMapCol->fn_800BBE2C(charPosition);
 
     return (val_2 - val_1) * 0.5f;
 }
