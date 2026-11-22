@@ -5,10 +5,10 @@
 #include <JSystem/JAudio/JASystem/JASCmdStack.hpp>
 
 class JAISound;
-
+struct seqp_;
 
 struct JAIPlayerParameter {
-	/* 0x0 */ JASystem::TTrack* mTrack;
+	/* 0x0 */ seqp_* mTrack;
 	union {
 		/* 0x4 */ JASystem::Kernel::TPortArgs mArgs;
 		/* 0x4 */ f32 mArgsAsF32[10];
@@ -55,7 +55,7 @@ int setSeqData(JASystem::TTrack*, u8*, s32, JASystem::Player::SEQ_PLAYMODE);
 JAISeqParameter* rootInit(JAISeqUpdateData*);
 void trackInit(JAISeqUpdateData*);
 void outerInit(JAISeqUpdateData*, void*, u32, u16, u8);
-JASystem::TTrack* trackToSeqp(JAISound*, u8);
+seqp_* trackToSeqp(JAISound*, u8);
 
 void setSeqPortargsF32(JAISeqUpdateData*, u32, u8, f32);
 void setSeqPortargsU32(JAISeqUpdateData*, u32, u8, u32);

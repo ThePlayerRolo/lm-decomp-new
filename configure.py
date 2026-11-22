@@ -485,6 +485,7 @@ config.libs = [
 
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAIBasic.cpp"),
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAIData.cpp"),
+        Object(NonMatching, "JSystem/JAudio/JAInterface/JAISystemInterface.cpp", extra_cflags=["-sym on"]),
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAIEntrySequence.cpp"),
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAISound.cpp"),
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAIAnimation.cpp"),
