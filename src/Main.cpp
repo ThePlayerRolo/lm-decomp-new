@@ -20,6 +20,13 @@ static u32 sCrashComboSequence[8] = {
     JUTGamePad::A, JUTGamePad::B, JUTGamePad::DPAD_DOWN, 0
 };
 
+enum CrashPage {
+    CRASH_PAGE_STACK,
+    CRASH_PAGE_GPR,
+    CRASH_PAGE_FLOAT,
+    CRASH_PAGE_MAX,
+};
+
 void exceptionCallback(u16 error, OSContext* pContext, u32 dsisr, u32 dar) {
     OSTime start = OSGetTime();
     while (OSTicksToMilliseconds(OSGetTime() - start) < 3000) {}
@@ -43,10 +50,10 @@ void exceptionCallback(u16 error, OSContext* pContext, u32 dsisr, u32 dar) {
         SceneManager::lbl_804D8090++;
     }
 
-    s32 redraw = 1;
+    BOOL redraw = 1;
     JUTDirectPrint::getManager()->print(160, 218, "%s %s", "Sep 24 2001", "14:49:49");
     while (true) {
-        static s32 debugPage = 0;
+        static CrashPage debugPage = CRASH_PAGE_STACK;
         
         OSTime curr = OSGetTime();
         while (OSTicksToMilliseconds(OSGetTime() - curr) < 50) {}
@@ -54,19 +61,19 @@ void exceptionCallback(u16 error, OSContext* pContext, u32 dsisr, u32 dar) {
         JUTGamePad::read();
         if (sGamePad->testTrigger(JUTGamePad::A)) {
             redraw = 1;
-            debugPage = (debugPage + 1) % 3;
+            debugPage = CrashPage((debugPage + 1) % CRASH_PAGE_MAX);
         }
 
         if (redraw) {
             switch (debugPage) {
-                case 0:
-                    JUTException::getManager()->showMainInfo(3, error, pContext, dsisr, dar);
+                case CRASH_PAGE_STACK:
+                    JUTException::getManager()->showMainInfo(EINFO_PAGE_STACK, error, pContext, dsisr, dar);
                     break;
-                case 1:
-                    JUTException::getManager()->showMainInfo(1, error, pContext, dsisr, dar);
+                case CRASH_PAGE_GPR:
+                    JUTException::getManager()->showMainInfo(EINFO_PAGE_GPR, error, pContext, dsisr, dar);
                     break;
-                case 2:
-                    JUTException::getManager()->showMainInfo(2, error, pContext, dsisr, dar);
+                case CRASH_PAGE_FLOAT:
+                    JUTException::getManager()->showMainInfo(EINFO_PAGE_FLOAT, error, pContext, dsisr, dar);
                     break;
             }
         }
