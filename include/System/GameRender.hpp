@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-struct SomeDoubleBuffer {
+struct PerFrameBuffer {
     u8* mBuffers[2];
     u8* mCurrentBufferEnd;
     u32 mSize;
@@ -12,14 +12,14 @@ struct SomeDoubleBuffer {
 
 // Unsure of return types / args. should validate these
 void fn_8000AC48();
-void fn_8000AD48(); // Allocs Memory for lbl_803A3A80
-void fn_8000ADA0(); // Just a freeMem call from lbl_803A3A80
-void fn_8000ADCC();
-s32 fn_8000ADFC();
-void fn_8000AE04(s32);
-void fn_8000AE0C();
+void initPerFrameBuffer();
+void freePerFrameBuffer();
+void swapPerFrameBuffer();
+s32 getViewPortCount();
+void setViewPortCount(s32);
+void setViewPortScissor();
 
 // Definitely some custom struct
-extern SomeDoubleBuffer lbl_803A3A80;
+extern PerFrameBuffer sPerFrameBuffer;
 
 #endif

@@ -15,7 +15,7 @@
 #include "System/80009584.hpp"
 #include "System/MathUtils.hpp"
 #include "System/ResetGX.hpp"
-#include "System/8000AC48.hpp"
+#include "System/GameRender.hpp"
 
 // Other Scene related stuff
 #include "System/Scenes/SceneManager.hpp"
@@ -212,7 +212,7 @@ namespace SceneManager {
             fn_80009580();
 
             if (sSceneMgr.mState == 2 && lbl_804D80AC == 0 && lbl_804D80A8 == 0) {
-                fn_8000ADCC();
+                swapPerFrameBuffer();
                 sSceneMgr.mSceneID = sCurrScene->mUpdateFn();
             }
 
@@ -250,13 +250,13 @@ namespace SceneManager {
 
             randomReset();
             setCurHeapGroupId(0xC);
-            fn_8000AD48();
+            initPerFrameBuffer();
             setCurHeapGroupId(0x1A);
             startBackgroundTask(sCurrScene->mInitFn);
             fn_800083B4(0x1E);
             fn_8000B610();
             sCurrScene->mDestroyFn();
-            fn_8000ADA0();
+            freePerFrameBuffer();
             sCurrScene = sSceneTable[sCurrSceneId];
             freeHeapGroups(0x1A);
         } while (true);

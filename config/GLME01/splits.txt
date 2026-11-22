@@ -90,7 +90,7 @@ System/8000A0D0.cpp:
 	.text       start:0x8000A0D0 end:0x8000AC48
 	.sdata2     start:0x804D9978 end:0x804D9998
 
-System/8000AC48.cpp:
+System/GameRender.cpp:
 	.text       start:0x8000AC48 end:0x8000AED8
 	.bss        start:0x803A3A80 end:0x803A3A98
 	.sdata      start:0x804CFF90 end:0x804CFF98
