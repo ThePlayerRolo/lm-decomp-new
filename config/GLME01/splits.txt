@@ -102,7 +102,7 @@ System/ButtonCombo.cpp:
 	.data       start:0x8021DA80 end:0x8021DAE0
 	.bss        start:0x803A3A98 end:0x803A3AE0
 
-System/8000B014.cpp:
+System/DepthClear.cpp:
 	.text       start:0x8000B014 end:0x8000B328
 	.data       start:0x8021DAE0 end:0x8021DB20
 	.sdata2     start:0x804D99A8 end:0x804D99C8
