@@ -96,7 +96,7 @@ System/8000AC48.cpp:
 	.sdata      start:0x804CFF90 end:0x804CFF98
 	.sdata2     start:0x804D9998 end:0x804D99A8
 
-System/8000AED8.cpp:
+System/ButtonCombo.cpp:
 	.text       start:0x8000AED8 end:0x8000B014
 	.ctors      start:0x8020BACC end:0x8020BAD0
 	.data       start:0x8021DA80 end:0x8021DAE0

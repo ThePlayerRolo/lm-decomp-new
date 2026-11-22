@@ -1,4 +1,3 @@
-#include "dolphin/os/OSError.h"
 #include <JSystem/JUtility/JUTException.hpp>
 #include <JSystem/JUtility/JUTConsole.hpp>
 #include <JSystem/JUtility/JUTDirectFile.hpp>
@@ -6,6 +5,8 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <dolphin/os/OSError.h>
 #include <dolphin/gx.h>
 #include <dolphin/os.h>
 #include <dolphin/vi.h>
@@ -214,58 +215,46 @@ void JUTException::showStack(OSContext* context)
 {
 	u32 i;
 	u32* stackPointer;
-    int height;
 
     mDirectPrint->erase(0x19, 0x19, 0x10e, 0xb4);
 	mDirectPrint->drawString_f(54,25, "Address:      Back Chain    LR Save\n");
 
-	for (i = 0, height = 0, stackPointer = (u32*)context->gpr[1];
-	     (stackPointer != nullptr) && (stackPointer != (u32*)0xFFFFFFFF)
-	     && (i++ < 0x10);) {
-
-        u16 actual_height = height + 33;
-
-        mDirectPrint->drawString_f(0x2E, actual_height, "0x%08x:   0x%08x    0x%08x\n", stackPointer,
+	for (i = 0, stackPointer = (u32*)context->gpr[1]; (stackPointer != nullptr) && 
+		(stackPointer != (u32*)0xFFFFFFFF) && (i++ < 0x10);) {
+        mDirectPrint->drawString_f(0x2E, i * 10 + 33, "0x%08x:   0x%08x    0x%08x\n", stackPointer,
 		                  stackPointer[0], stackPointer[1]);
-        height += 10;
-        stackPointer = (u32 *)*stackPointer;
 	}
 }
 
-void JUTException::showMainInfo(u16 error, OSContext* context, u32 dsisr,
-                                u32 dar)
-{
-
-    switch (error) {
-        case OS_ERROR_DSI:
-            mDirectPrint->erase(25, 20, 270, 54);
-            mDirectPrint->drawString_f(30, 25, "CONTEXT:%08X  (%s EXCEPTION)", context,
-                            sCpuExpName[error]);
-            mDirectPrint->drawString_f(30, 40, " SRR0:%08X  SRR1:%08X", context->srr0,
-	                  context->srr1);
+void JUTException::showMainInfo(s32 page, u16 error, OSContext* pContext, u32 dsisr, u32 dar) {
+    switch (page) {
+		case 1:
+			mDirectPrint->erase(25, 20, 270, 54);
+            mDirectPrint->drawString_f(30, 25, "CONTEXT:%08X  (%s EXCEPTION)", pContext, sCpuExpName[error]);
+            mDirectPrint->drawString_f(30, 40, " SRR0:%08X  SRR1:%08X", pContext->srr0, pContext->srr1);
             mDirectPrint->drawString_f(30, 50, "DSISR:%08X   DAR:%08X", dsisr, dar);
-            showFloat(context);
+			showGPR(pContext);
+			break;
+        case 2:
+            mDirectPrint->erase(25, 20, 270, 54);
+            mDirectPrint->drawString_f(30, 25, "CONTEXT:%08X  (%s EXCEPTION)", pContext, sCpuExpName[error]);
+            mDirectPrint->drawString_f(30, 40, " SRR0:%08X  SRR1:%08X", pContext->srr0, pContext->srr1);
+            mDirectPrint->drawString_f(30, 50, "DSISR:%08X   DAR:%08X", dsisr, dar);
+            showFloat(pContext);
+			mDirectPrint->drawString_f(30, 50, " MSR:%08XH   FPSCR:%08XH", msr, &fpscr);
+			break;
+		case 3:
+			showStack(pContext);
+			break;
     }
-
-
-	sConsole->print_f("CONTEXT:%08X  (%s EXCEPTION)", context,
-	                  sCpuExpName[error]);
-	sConsole->print_f(" SRR0:%08X  SRR1:%08X", context->srr0,
-	                  context->srr1);
-	sConsole->print_f("DSISR:%08X   DAR:%08X", dsisr, dar);
-
 }
 
-void JUTException::showGPR(OSContext* context)
-{
-    int height = 0;
-
+void JUTException::showGPR(OSContext* context) {
     mDirectPrint->erase(25, 75, 270, 130);
 
-	for (int i = 0, height = 80; i < 10; i++, height += 10) {
-		mDirectPrint->drawString_f(30, height, "R%02d:%08XH  R%02d:%08XH  R%02d:%08XH", i,
-		                  context->gpr[i], i + 11, context->gpr[i + 11], i + 22,
-		                  context->gpr[i + 22]);
+	for (int i = 0; i < 10; i++) {
+		mDirectPrint->drawString_f(30, i * 10 + 80, "R%02d:%08XH  R%02d:%08XH  R%02d:%08XH", i,
+		    context->gpr[i], i + 11, context->gpr[i + 11], i + 22, context->gpr[i + 22]);
 	}
 	mDirectPrint->drawString_f(30, 180, "R%02d:%08XH  R%02d:%08XH", 10, context->gpr[10], 21,
 	                  context->gpr[21]);
@@ -325,7 +314,7 @@ void JUTException::printContext(OSError error, OSContext* context, u32 dsisr,
 	}
 
     mDirectPrint->erase(25, 20, 270, 54);
-    showMainInfo(error, context, dsisr, dar);
+    showMainInfo(0, error, context, dsisr, dar);
 }
 
 void JUTException::waitTime(s32 timeout_ms)

@@ -828,7 +828,7 @@ config.libs = [
         Object(NonMatching, "System/ResetGX.cpp"),
         Object(NonMatching, "System/8000A0D0.cpp", extra_cflags=["-fp_contract off"]),
         Object(NonMatching, "System/8000AC48.cpp"),
-        Object(NonMatching, "System/8000AED8.cpp"),
+        Object(NonMatching, "System/ButtonCombo.cpp"),
         Object(NonMatching, "System/8000B014.cpp"),
 
         # System/Scenes

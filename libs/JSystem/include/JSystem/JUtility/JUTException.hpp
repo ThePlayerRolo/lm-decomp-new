@@ -58,7 +58,7 @@ public:
 	void showFloatSub(u16, u16, int, f32);
 	void showFloat(OSContext*);
 	void showStack(OSContext*);
-	void showMainInfo(u16, OSContext*, u32, u32);
+	void showMainInfo(s32, u16, OSContext*, u32, u32);
 	void showGPR(OSContext*);
 	bool showMapInfo_subroutine(u32, bool);
 	void showGPRMap(OSContext*);
