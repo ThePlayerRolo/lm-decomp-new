@@ -186,7 +186,7 @@ namespace SceneManager {
                 fn_8000B370();
             }
 
-            fn_800081A8(&lbl_803A3810);
+            lbl_803A3810.fn_800081A8();
             setDVDStatus();
 
             switch (sSceneMgr.mState) {
@@ -198,7 +198,7 @@ namespace SceneManager {
                     }
                     break;
                 case SM_STATE_1:
-                    if (lbl_803A3810._0 != 1) {
+                    if (lbl_803A3810.getState() != 1) {
                         fn_800083A4(2);
                         sSceneMgr.mState = SM_STATE_2;
                         setCurHeapGroupId(0x16);
@@ -216,7 +216,7 @@ namespace SceneManager {
                 sSceneMgr.mSceneID = sCurrScene->mUpdateFn();
             }
 
-            fn_8000812C(&lbl_803A3810);
+            lbl_803A3810.fn_8000812C();
             if (BootScene::sBootReady != 0) {
                 fn_8018865C();
             }
@@ -227,7 +227,7 @@ namespace SceneManager {
 
             endFrame();
             if (sSceneMgr.mState != SM_STATE_0) {
-                fn_800080DC(&lbl_803A3810);
+                lbl_803A3810.fn_800080DC();
             }
 
             if (lbl_804D80A8 != 0) {
