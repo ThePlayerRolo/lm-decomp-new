@@ -91,7 +91,7 @@ namespace Koga {
         BOOL fn_800E5B88(); // Requires that fn_800AD39C and its resulting struct/class be decompiled more.
         s32 fn_800E5BF8(const char*); // I think this depends on MoveObj, which probably need more details from here.
         s32 fn_800E5D18(const char*); // Requires some lbl to be decompiled: lbl_80363B88
-        static int fn_800E5E60(int);  // Requires some lbl to be decompiled: lbl_80363B50
+        static s32 fn_800E5E60(s32);
         void fn_800E5E78(const char*);
 
     public:

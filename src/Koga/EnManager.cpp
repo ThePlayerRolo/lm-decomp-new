@@ -267,6 +267,15 @@ namespace Koga {
         temp->fn_800E9B44();
     }
 
+    s32 EnManager::fn_800E5E60(s32 idx) {
+        static s32 lbl_80363B50[4] = {
+            58, 20, 24, 1
+        };
+
+        return lbl_80363B50[idx];
+    }
+
+
     // https://decomp.me/scratch/3EURE
     void EnManager::fn_800E5E78(const char* pCreateName) {
         unkEnManager2* it = _804.getFirstMember();
