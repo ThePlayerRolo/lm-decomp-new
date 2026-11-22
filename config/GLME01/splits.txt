@@ -1153,7 +1153,7 @@ JSystem/JUtility/JUTException.cpp:
 	.text       start:0x801D833C end:0x801D9604
 	.data       start:0x80394308 end:0x803945C8
 	.bss        start:0x804CB130 end:0x804CB148
-	.sdata      start:0x804D7E70 end:0x804D7E98
+	.sdata      start:0x804D7E70 end:0x804D7EA0
 	.sbss       start:0x804D9570 end:0x804D9588
 	.sdata2     start:0x804DD6D8 end:0x804DD6E0
 
