@@ -661,7 +661,7 @@ Sato/SaEnKoopaTelesa.cpp:
 	.sdata      start:0x804D5840 end:0x804D5918
 	.sdata2     start:0x804DC210 end:0x804DC258
 
-Sato/801278B4.cpp:
+Sato/DustBase.cpp:
 	.text       start:0x801278B4 end:0x8012DB68
 	.ctors      start:0x8020BCC0 end:0x8020BCC4
 	.rodata     start:0x8020CBA8 end:0x8020CCA0

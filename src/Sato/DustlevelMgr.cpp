@@ -3,35 +3,35 @@
 #include "Sato/saGrainControl.hpp"
 #include "dolphin/mtx.h"
 
-u16* fn_8001CEAC(void*, u32);
-void fn_80127C08(Unk90*);
+u16* fn_8001CEAC(u32, u32);
+void fn_80127C08();
 
-void Unk90::fn_8012fc50() {
+void Dust::fn_8012fc50() {
     if (_458 != 0) return;
     fn_8012E350();
 
-    Unk90* current = _3d8->_140;
-    if (current != _3d8) {
+    DustUnk2* current = _220.mHead->mNext;
+    if (current != _220.mHead) {
         do {
-            Unk90* next = current->_140;
+            DustUnk2* next = current->mNext;
             if ((*fn_8001CEAC(current->_30, 0) & 1) == 0) {
-                current->_3d = 0;
+                current->_3D = 0;
             }
-            
+
             if (fn_8012F9C8(current) == 1) {
-                current = current->_140;
+                current = current->mNext;
             } else {
                 current = next;
             }
-        }   while (current != _3d8);
+        } while (current != _220.mHead);
     }
 
-    fn_80127C08(this);
+    fn_80127C08();
 }
 
 u32 DustlevelMgr::fn_801300B8() {
     u32 result = 0;
-    Vec* unk = *_90->_450;
+    Vec* unk = _90->_450->mPos;
     DustlevelControl* control = mControlList.mHead->mNext;
     DustlevelParam* head = control->mParams.mHead;
 

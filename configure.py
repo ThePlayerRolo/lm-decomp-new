@@ -752,6 +752,7 @@ config.libs = [
         Object(NonMatching, "Sato/SaEnDust.cpp"),
         Object(NonMatching, "Sato/SaEnCandle.cpp"),
         Object(NonMatching, "Sato/SaEnKoopaTelesa.cpp"),
+        Object(NonMatching, "Sato/DustBase.cpp"),
         Object(NonMatching, "Sato/SaEnDancer2.cpp"),
         Object(NonMatching, "Sato/DustlevelMgr.cpp"),
         Object(NonMatching, "Sato/SaEnGenUtility.cpp"),
