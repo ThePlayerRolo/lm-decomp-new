@@ -1,6 +1,7 @@
 #include <dolphin/os/OSMessage.h>
 
 #include "System/DiscFile.hpp"
+#include "JSystem/JKernel/JKRMemArchive.hpp"
 #include "System/Yay0.hpp"
 #include "System/DiscThread.hpp"
 #include "System/Scenes/SceneManager.hpp"
@@ -248,9 +249,10 @@ u8* openCompressedArchiveAsync(const char* pFileName, DiscFileCallback pCallback
     }
     sDiscFileQueue.mCurrFileInfo->mDecompBuffer = pArchiveBuffer;
     u8 oldGroupId = setCurHeapGroupId(sDiscFileQueue.mCurrFileInfo->mHeapGroupID);
-    void* ret = allocDiscFile(0x68, 4);
+    void* buffer = allocDiscFile(0x68, 4);
+    JKRMemArchive* ret = reinterpret_cast<JKRMemArchive*>(buffer);
     setCurHeapGroupId(oldGroupId);
-    sDiscFileQueue.mCurrFileInfo->mArchive = reinterpret_cast<JKRMemArchive*>(ret);
+    sDiscFileQueue.mCurrFileInfo->mArchive = ret;
     sDiscFileQueue.mCurrFileInfo->mPostLoadFunc = decompressAndMountDiscArchive;
     sDiscFileQueue.mCurrFileInfo->mCallback = pCallback;
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = pCallbackArg;
