@@ -22,10 +22,10 @@ namespace TitleScene {
     static void destroy();
 
     // Unsure of typings
-    static s32 lbl_804d8130;
-    static s32 lbl_804d8134;
-    static s32 lbl_804d8138;
-    static s32 lbl_804d813C;
+    static s32 lbl_804D8130;
+    static s32 lbl_804D8134;
+    static s32 lbl_804D8138;
+    static BOOL lbl_804D813C;
 
     Scene sTitleScene = {
         "TITLE",
@@ -41,7 +41,7 @@ namespace TitleScene {
     }
 
     void init() {
-        lbl_804d8138 = 60;
+        lbl_804D8138 = 60;
         SceneManager::lbl_804D80AC = 0;
 
         s32 gameHeapFree = getGameHeapFreeSize();
@@ -58,9 +58,9 @@ namespace TitleScene {
         freeMem(newMem);
         setLuigiAppearPoint(0);
         fn_80188760(TITLE_SCENE_UNK1, nullptr);
-        lbl_804d8134 = 1800;
-        if (lbl_804d8130 != 0) {
-            lbl_804d8130 = 2;
+        lbl_804D8134 = 1800;
+        if (lbl_804D8130 != 0) {
+            lbl_804D8130 = 2;
         }
 
         setCurHeapGroupId(2);
@@ -74,24 +74,24 @@ namespace TitleScene {
     }
 
     SceneID update() {
-        switch (lbl_804d8130) {
+        switch (lbl_804D8130) {
             case 0:
                 startBackgroundTask(fn_8000EC98);
-                lbl_804d8130 = 1;
+                lbl_804D8130 = 1;
                 break;
             case 1:
                 fn_8003AE54();
                 if (pollBackgroundTaskComplete() == 1) {
-                    lbl_804d8130 = 2;
+                    lbl_804D8130 = 2;
                 }
                 break;
             case 2:
                 if (sGamePad->testTrigger(JUTGamePad::START | JUTGamePad::A)) {
-                    lbl_804d813C = 1;
+                    lbl_804D813C = 1;
                 }
 
-                if (lbl_804d813C != 0 && lbl_804d8138 <= 0) {
-                    lbl_804d8130 = 3;
+                if (lbl_804D813C != 0 && lbl_804D8138 <= 0) {
+                    lbl_804D8130 = 3;
                     OpeningScene::sNextSceneID = SCENE_MAIN_GAME;
                     fn_8018A2A0(0x3802);
                     SceneManager::fn_8000B334(3);
@@ -99,16 +99,16 @@ namespace TitleScene {
                     break;
                 }
 
-                if (fn_8003AE54() != 0 && lbl_804d8138 != 0) {
-                        lbl_804d8138--;
+                if (fn_8003AE54() != 0 && lbl_804D8138 != 0) {
+                        lbl_804D8138--;
                 }
                 break;
             case 3:
                 break;
         }
 
-        lbl_804d8134--;
-        if (lbl_804d8134 != 0) {
+        lbl_804D8134--;
+        if (lbl_804D8134 != 0) {
             return SCENE_TITLE;
         }
 

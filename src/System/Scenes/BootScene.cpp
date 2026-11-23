@@ -68,7 +68,7 @@ namespace BootScene {
     // needs to be here for position
     const char* ninLogoFileName = "/ninlogo.pcm";
 
-    s32 sBootReady;
+    BOOL sBootReady;
     static BootSceneState sBootSceneState;
     static u16 lbl_804D8118;
     static f32 lbl_804D811C;

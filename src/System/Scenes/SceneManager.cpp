@@ -67,14 +67,14 @@ namespace SceneManager {
     static void fn_8000B4A0(); // Unsure of return type/args
     static void fn_8000B610(); // Unsure of return type/args
     
-    s32 lbl_804D8088;
+    BOOL lbl_804D8088;
     static s32 lbl_804D808C;
     s64 lbl_804D8090;
     u64 lbl_804D8098;
     SceneID sCurrSceneId;
     s32 lbl_804D80A4;
-    static s32 lbl_804D80A8;
-    s32 lbl_804D80AC;
+    static BOOL lbl_804D80A8;
+    BOOL lbl_804D80AC;
     s32 lbl_804D80B0;
     static s32 lbl_804D80B4;
     static s32 lbl_804D80B8;

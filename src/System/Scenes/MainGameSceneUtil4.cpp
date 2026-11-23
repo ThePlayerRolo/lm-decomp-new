@@ -14,7 +14,7 @@
 
 namespace MainGameScene {
     static s32 lbl_804D80E8;
-    static s32 lbl_804D80EC;
+    static BOOL lbl_804D80EC;
 
     void fn_8000CC18() {
         lbl_804D8438 = 0;
@@ -61,7 +61,7 @@ namespace MainGameScene {
     }
     
     void fn_8000CD60() {
-        static s32 lbl_804D80F0 = 0;
+        static BOOL lbl_804D80F0 = 0;
 
         if (lbl_804D80C4 != 6) {
             return;
@@ -82,7 +82,7 @@ namespace MainGameScene {
     }
 
     void fn_8000CDE0() {
-        static s32 lbl_804D80F8 = 0;
+        static BOOL lbl_804D80F8 = 0;
 
         if (lbl_804D80C4 != 7) {
             return;

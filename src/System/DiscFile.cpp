@@ -31,7 +31,7 @@ static void decompressAndMountDiscArchive(void*, DiscFileInfo*);
 
 static DiscFileInfo sFileInfoRing[MAX_FILE_INFO_ARR];
 static DiscFileQueue sDiscFileQueue;
-s32 sFileDataError;
+BOOL sFileDataError;
 
 void* allocDiscFile(u32 size, s32 align) {
     return allocMem(size, align);

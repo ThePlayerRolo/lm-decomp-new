@@ -7,7 +7,7 @@ namespace BootScene {
     u8* getStaticDataArr();
 
     extern Scene sBootScene;
-    extern s32 sBootReady;
+    extern BOOL sBootReady;
 };
 
 #endif

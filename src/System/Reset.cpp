@@ -48,30 +48,30 @@ void createResetThread(ResetThread* pThread) {
     OSResumeThread(&pThread->mThread);
 }
 
-s32 checkResetPressed() {
+BOOL checkResetPressed() {
     static u32 heldFrames = 0;
-    static s32 resetRequested = 0;
+    static BOOL resetRequested = 0;
 
     if (!sGamePad->testButton(JUTGamePad::START)) {
         resetRequested = 0;
         heldFrames = 0;
-        return false;
+        return FALSE;
     }
     
     if (!sGamePad->testButton(JUTGamePad::B)) {
         resetRequested = 0;
         heldFrames = 0;
-        return false;
+        return FALSE;
     }
     
     if (!sGamePad->testButton(JUTGamePad::X)) {
         resetRequested = 0;
         heldFrames = 0;
-        return false;
+        return FALSE;
     }
     
     if (resetRequested != 0) {
-        return false;
+        return FALSE;
     }
 
     heldFrames += 1;
@@ -83,7 +83,7 @@ s32 checkResetPressed() {
     resetRequested = 1;
     heldFrames = 0;
     sResetState = RESET_STATE_REQUESTED;
-    return true;
+    return TRUE;
 }
 
 void updateReset() {

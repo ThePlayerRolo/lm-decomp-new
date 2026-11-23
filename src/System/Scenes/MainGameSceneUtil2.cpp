@@ -9,7 +9,7 @@
 #include "System/800080DC.hpp"
 
 namespace MainGameScene {
-    s32 lbl_804D80D8;
+    static BOOL lbl_804D80D8;
 
     s32 fn_8000C784(void*, s32 param_1) {
         if (lbl_804D80C4 == 0 && SceneManager::lbl_804D8088 == 0 && 
