@@ -5,7 +5,7 @@
 dummy_float_data()
 
 namespace Koga {
-    void drawCylinder(const Vec& rTranslation, f32 width, f32 height, const GXColor& rColor) {
+    void drawCylinder(const Vec& rTranslation, f32 width, f32 height, GXColor color) {
         FORCE_DONT_INLINE;
 
         Mtx objectMtx;
@@ -22,7 +22,6 @@ namespace Koga {
         PSMTXConcat(objectMtx, rotation, objectMtx);
         GXLoadPosMtxImm(objectMtx, 0);
         GXSetCurrentMtx(0);
-        GXColor color = rColor;
         setSimpleTevSettings(color, true);
         GXDrawCylinder(32);
     }
@@ -68,22 +67,18 @@ namespace Koga {
     }
 
     void SimpleModeler::draw() {
-        for (SphereInfo* sphere = mSpheres.getFirstMember(); sphere != mSpheres.getMaxIter(); sphere++) {
-            GXColor color = sphere->mColor;
-            drawSimpleSphere(sphere->mSize, sphere->mTranslation, color, 1);
+        for (SphereInfo* sphere = mSpheres.getArray(); sphere != mSpheres.getLastMember(); sphere++) {
+            drawSimpleSphere(sphere->mSize, sphere->mTranslation, sphere->mColor, 1);
         }
 
         for (CylinderInfo* cylinder = mCylinders.getFirstMember(); cylinder != mCylinders.getMaxIter(); cylinder++) {
-            GXColor color = cylinder->mColor;
-            drawCylinder(cylinder->mTranslation, cylinder->mWidth, cylinder->mHeight, color);
+            drawCylinder(cylinder->mTranslation, cylinder->mWidth, cylinder->mHeight, cylinder->mColor);
         }
 
         for (CubeInfo* cube = mCubes.getFirstMember(); cube != mCubes.getMaxIter(); cube++) {
             Mtx cubeMtx;
             PSMTXCopy(cube->mMtx, cubeMtx);
-            GXColor color = cube->mColor;
-
-            drawSimpleCube(cube->mMtx, color);
+            drawSimpleCube(cube->mMtx, cube->mColor);
         }
 
         mSpheres.resetSize();

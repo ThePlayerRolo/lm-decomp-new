@@ -6,7 +6,7 @@ void fn_8005A550();  // some function related to initing gx settings
 void fn_800952D8(Mtx mtx, Quaternion* rQuat);
 void fn_800966E4(Mtx mtx, f32 scale);
 
-void setSimpleTevSettings(const GXColor& rTevColor, bool param_2) {
+void setSimpleTevSettings(GXColor tevColor, bool param_2) {
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_NONE, GX_AF_NONE);
     GXSetChanCtrl(GX_COLOR1A1, FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_NONE, GX_AF_NONE);
@@ -18,7 +18,7 @@ void setSimpleTevSettings(const GXColor& rTevColor, bool param_2) {
     GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_A0);
     GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, TRUE, GX_TEVPREV);
 
-    if (rTevColor.a == 255) {
+    if (tevColor.a == 255) {
         GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_SET);
         GXSetZMode(TRUE, GX_LESS, TRUE);
     } else {
@@ -30,27 +30,23 @@ void setSimpleTevSettings(const GXColor& rTevColor, bool param_2) {
         GXSetZMode(TRUE, GX_LESS, FALSE);
     }
 
-    GXSetTevColor(GX_TEVREG0, rTevColor);
+    GXSetTevColor(GX_TEVREG0, tevColor);
 }
 
-// https://decomp.me/scratch/kFc84
-void drawSimpleLine(const Vec& rPoint1, const Vec& rPoint2, u8 lineWidth, const GXColor& rColor) {
-    GXColor color;
-    color = rColor;
-
+void drawSimpleLine(const Vec& rPoint1, const Vec& rPoint2, u8 lineWidth, GXColor color) {
     setSimpleTevSettings(color, true);
     GXLoadPosMtxImm(lbl_803A3820._18C, 3);
     GXSetCurrentMtx(3);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
-    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_CLR_RGBA, GX_F32, 0);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_CLR_RGBA, GX_F32, FALSE);
     GXSetLineWidth(lineWidth, GX_TO_ZERO);
     GXBegin(GX_LINES, GX_VTXFMT0, 2);
     GXPosition3f32(rPoint1.x, rPoint1.y, rPoint1.z);
     GXPosition3f32(rPoint2.x, rPoint2.y, rPoint2.z);
 }
 
-void drawSimpleSphere(f32 size, const Vec& rTranslation, const GXColor& rColor, u32 depth) {
+void drawSimpleSphere(f32 size, const Vec& rTranslation, GXColor color, u32 depth) {
     Mtx sphereMtx;
 
     fn_8005A550();
@@ -61,12 +57,11 @@ void drawSimpleSphere(f32 size, const Vec& rTranslation, const GXColor& rColor, 
     PSMTXConcat(lbl_803A3820._18C, sphereMtx, sphereMtx);
     GXLoadPosMtxImm(sphereMtx, 3);
     GXSetCurrentMtx(3);
-    GXColor color = rColor;
     setSimpleTevSettings(color, true);
     GXDrawSphere1(depth);
 }
 
-void drawSimpleCubeQuat(const Vec& rTranslation, const Vec& rScale, const GXColor& rColor, Quaternion* pQuat) {
+void drawSimpleCubeQuat(const Vec& rTranslation, const Vec& rScale, GXColor color, Quaternion* pQuat) {
     Mtx objectMtx;
     Mtx quatMtx;
 
@@ -80,11 +75,10 @@ void drawSimpleCubeQuat(const Vec& rTranslation, const Vec& rScale, const GXColo
         PSMTXConcat(quatMtx, objectMtx, objectMtx);
     }
 
-    GXColor color = rColor;
     drawSimpleCube(objectMtx, color);
 }
 
-void drawSimpleCube(Mtx objectMtx, const GXColor& rColor) {
+void drawSimpleCube(Mtx objectMtx, GXColor rColor) {
     Mtx cubeMtx;
     PSMTXCopy(objectMtx, cubeMtx);
     fn_800966E4(cubeMtx, 0.86602539f);
@@ -92,28 +86,38 @@ void drawSimpleCube(Mtx objectMtx, const GXColor& rColor) {
     fn_8005A550();
     GXLoadPosMtxImm(cubeMtx, 3);
     GXSetCurrentMtx(3);
-    GXColor color = rColor;
-    setSimpleTevSettings(color, true);
+    setSimpleTevSettings(rColor, true);
     GXDrawCube();
 }
 
-void drawSimpleCylinder(const Vec& rTrans, f32 width, f32 height, const GXColor& rColor) {
+void drawSimpleCylinder(const Vec& rTrans, f32 width, f32 height, GXColor color) {
     Mtx cylinderMtx;
     fn_8000A40C(width, width, height / 2.0f, rTrans.x, rTrans.y + height / 2.0f, rTrans.z, cylinderMtx, 0x4000, 0, 0);
     PSMTXConcat(lbl_803A3820._18C, cylinderMtx, cylinderMtx);
     fn_8005A550();
     GXLoadPosMtxImm(cylinderMtx, 3);
     GXSetCurrentMtx(3);
-    GXColor color = rColor;
     setSimpleTevSettings(color, true);
     GXDrawCylinder(32);
 }
 
-// https://decomp.me/scratch/jiP35
+// https://decomp.me/scratch/0122d
 void drawSimpleDebugAxes(f32 distance, Mtx mtx) {
     GXColor red = {255, 0, 0, 255};
     GXColor green = {0, 255, 0, 255};
     GXColor blue = {0, 0, 255, 255};
+
+    const Vec zeroVec = { 0.0f, 0.0f, 0.0f };
+
+    Vec center;
+    Vec zPosition;
+    Vec yPosition;
+    Vec xPosition;
+
+    center = zeroVec;
+    zPosition = zeroVec;
+    yPosition = zeroVec;
+    xPosition = zeroVec;
 
     f32 local_64 = mtx[0][0];
     f32 local_60 = mtx[1][0];
@@ -127,11 +131,6 @@ void drawSimpleDebugAxes(f32 distance, Mtx mtx) {
     f32 local_88 = mtx[0][3];
     f32 local_84 = mtx[1][3];
     f32 local_80 = mtx[2][3];
-
-    Vec center;
-    Vec zPosition;
-    Vec yPosition;
-    Vec xPosition;
 
     center.x = local_88;
     center.y = local_84;

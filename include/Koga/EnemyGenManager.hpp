@@ -28,7 +28,7 @@ public:
     void fn_800C2560();
     EnZako* fn_800C25F0(s32, s32); // Need to validate arg / return type.
     ToolDataRef fn_800C2784();
-    Koga::ToolData* getGenPath();
+    Koga::ToolData* initGenPath();
     s32 fn_800C2830(const char*);
      // Need to validate arg / return type.
     void fn_800C287C(EnThought*);
@@ -43,6 +43,12 @@ public:
             getStrategy()->update();
         }
     }
+
+    inline ToolDataRef getToolDataRef() {
+        ToolDataRef ref = fn_800C2784();
+        return ref;
+    }
+
     inline bool isSameGenerator(const ToolDataRef& key) {
         ToolDataRef ref = fn_800C2784();
         return ref.isSameEntry(key);

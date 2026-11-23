@@ -31,6 +31,8 @@ void S3DModel::init(Info* param_1, s32 param_2) {
     }
 
     _14 = ppVar2;
+
+
 }
 
 

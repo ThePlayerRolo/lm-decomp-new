@@ -1,6 +1,5 @@
 #include "Ajioka/Generators/AGeHideSeek.hpp"
 #include "Koga/GeneratorEvent.hpp"
-#include "Koga/EnemyGenManager.hpp"
 #include "Sato/EnThought.hpp"
 #include "Unsorted/AssortedEnManager.hpp"
 #include "Unsorted/InGameFlagsUtil.hpp"
@@ -113,12 +112,12 @@ bool AGeHideSeek::state_0_Init() {
     mEnabledFlag = FLAG_TWIN_HIDE_SEEK_ENABLED;
     _19 = 0;
 
-    Koga::ToolData* path = static_cast<EnemyGenerator*>(mpUserData)->getGenPath();
-    ToolDataRef data = static_cast<EnemyGenerator*>(mpUserData)->fn_800C2784();
+    getGenerator()->initGenPath();
+    ToolDataRef data = getGenerator()->getToolDataRef();
 
-    data.getToolData()->getValue(data.mEntryIndex, "pos_x", &mGeneratorPos.x);
-    data.getToolData()->getValue(data.mEntryIndex, "pos_y", &mGeneratorPos.y);
-    data.getToolData()->getValue(data.mEntryIndex, "pos_z", &mGeneratorPos.z);
+    data.mToolData->getValue(data.mEntryIndex, "pos_x", &mGeneratorPos.x);
+    data.mToolData->getValue(data.mEntryIndex, "pos_y", &mGeneratorPos.y);
+    data.mToolData->getValue(data.mEntryIndex, "pos_z", &mGeneratorPos.z);
 
     for (int i =  0; i < 7; i++) {
         _30[i] = nullptr;

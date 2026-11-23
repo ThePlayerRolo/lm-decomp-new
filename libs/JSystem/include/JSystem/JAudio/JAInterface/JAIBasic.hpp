@@ -1,7 +1,7 @@
 #ifndef JAIBASIC_HPP
 #define JAIBASIC_HPP
 
-#include "jaudio/audiostruct.h"
+#include <jaudio/audiostruct.h>
 #include <JSystem/JAudio/JAInterface/JAIData.hpp>
 #include <dolphin/mtx.h>
 #include <JSystem/JKernel/JKRSolidHeap.hpp>

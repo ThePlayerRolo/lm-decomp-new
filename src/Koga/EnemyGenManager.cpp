@@ -84,7 +84,7 @@ ToolDataRef EnemyGenerator::fn_800C2784() {
     return ref;
 }
 
-Koga::ToolData* EnemyGenerator::getGenPath() {
+Koga::ToolData* EnemyGenerator::initGenPath() {
     if (!mGenPath.getJMapData()) {
         ToolDataRef ref;
         ref.setToolData(_808);
