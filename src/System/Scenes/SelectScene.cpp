@@ -23,7 +23,7 @@ namespace SelectScene {
     };
 
     void fn_8000B8D8(MainGameSceneHelper* param_1) {
-        param_1->_0 = 0;
+        param_1->mRequestPending = FALSE;
         OSInitMessageQueue(&param_1->mMsgQueue, &param_1->mMsgSend, 1);
     }
 

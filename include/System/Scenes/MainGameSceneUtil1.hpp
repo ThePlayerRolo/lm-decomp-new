@@ -7,7 +7,7 @@
 struct MainGameSceneHelper {
     inline MainGameSceneHelper();
 
-    /* 0x00 */ BOOL _0;
+    /* 0x00 */ BOOL mRequestPending;
     /* 0x04 */ OSMessageQueue mMsgQueue;
     /* 0x24 */ OSMessage mMsgSend;
     /* 0x28 */ OSMessage mMsgReceive;

@@ -32,7 +32,7 @@ namespace MainGameScene {
     void fn_8000C36C(void* param_1, s32 param_2) {
         if (MainGameScene::lbl_804D80C4 == 0) {
             lbl_804D80D4 = param_2;
-            if (lbl_803A3B10._0 == 0) {
+            if (lbl_803A3B10.mRequestPending == FALSE) {
                 OSSendMessage(&lbl_803A3B10.mMsgQueue, param_1, OS_MESSAGE_NOBLOCK);
             }
         }
@@ -58,7 +58,7 @@ namespace MainGameScene {
                     lbl_804D80D0 = 0;
                     fn_8015FD68(&lbl_803D990C);
                     fn_8007220C();
-                    lbl_803A3B10._0 = 1;
+                    lbl_803A3B10.mRequestPending = TRUE;
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace MainGameScene {
             setFrameRateDivisor(FRAME_INTERVAL_30FPS);
 
             lbl_804D80D0 = 0;
-            lbl_803A3B10._0 = 0;
+            lbl_803A3B10.mRequestPending = FALSE;
             fn_8015FD80(lbl_803D990C, &lbl_803A3B10);
 
             if (sUnusedHeap != nullptr) {
