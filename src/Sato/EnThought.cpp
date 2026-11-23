@@ -2,6 +2,7 @@
 #include "Sato/EnThought.hpp"
 #include "Koga/EnManager.hpp"
 #include "Koga/ToolData.hpp"
+#include "Koga/EnemyGenManager.hpp"
 #include "Sato/EnemyStrategy.hpp"
 #include "Sato/IncludeStrategy.hpp"
 #include "Koga/UnkUtil.hpp"
@@ -213,4 +214,13 @@ EnemyStrategy* EnThought::fn_800C1B8C() {
 
 void EnThought::fn_800C1B9C() {
     return;
+}
+
+void EnThought::fn_800C0EBC() {
+    if (getGenerator() != nullptr) {
+        getGenerator()->fn_800C287C(this);
+    }
+
+    s32 unk_38 = getCharacter()->_38;
+    getManager()->fn_800E59D4(unk_38);
 }

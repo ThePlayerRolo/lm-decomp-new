@@ -35,7 +35,7 @@ public:
 class EnThought0x14 {
     /* 0x00 */ void* unk_0; /* an object */
     /* 0x04 */ void* unk_4; /* a number */
-    /* 0x08 */ f32 unk_8[3]; // Possibly the TVec3F said below 
+    /* 0x08 */ f32 unk_8[3]; // Possibly the TVec3F said below
 
     // These are called via Array::callAll fn_800C17EC most likely, and functors rather than virtuals.
     void vt_28_ptmf(); // fn_800BEF3C
@@ -61,11 +61,11 @@ public:
     void reset(); //  fn_800BF0CC lmao golden function
     void setToolDataRef(Koga::ToolData*, s32);
     ToolDataRef getToolDataRef() const;
-
     bool getPosition(JGeometry::TVec3f*);
     bool getDirectionNormalized(u16*, u16*, u16*);
 
     s32 fn_800C0E48(f32);
+    void fn_800C0EBC();
     static bool fn_800C0F08(EnemyStrategy*, Koga::CharacterEvent*);
 
     void fn_800C17EC();
@@ -81,16 +81,21 @@ public:
     void fn_800C1BA0(); // Sets the EnemyStrategy to nullptr?
 
     inline MoveObjAlphaControl getAlphaControl() { return mAlphaControl; }
+
+    inline EnemyGenerator* getGenerator() { return mGenerator; }
     inline void setGenerator(EnemyGenerator* pGenerator) { mGenerator = pGenerator; }
 
     inline Character* getCharacter() const { return _808; }
-    inline bool isValid() const { 
-        return mpToolData != nullptr && 
-        mEntryIdx >= 0; 
+
+    inline Koga::EnManager* getManager() { return _80C; }
+
+    inline bool isValid() const {
+        return mpToolData != nullptr &&
+        mEntryIdx >= 0;
     }
 
     // Object that holds at least 0xE8 data. In the reset, it's calling fn_80067C30 which is in MoveObj split. Probably an entity
-    /* 0x808 */ Character* _808; 
+    /* 0x808 */ Character* _808;
     /* 0x80C */ Koga::EnManager* _80C;
     /* 0x810 */ EnemyGenerator* mGenerator;
     /* 0x814 */ void* _814;
