@@ -3,6 +3,9 @@
 
 #include <types.h>
 
+#define FLAG_TWIN_HIDE_SEEK_HID 65 // Activates when the twins tell you to come back inside, however it is never actually used in the final game.
+#define FLAG_TWIN_HIDE_SEEK_ENABLED 170;
+
 u8 getFlagValue(u8);
 void setFlagOn(u8);
 void setFlagOff(u8);

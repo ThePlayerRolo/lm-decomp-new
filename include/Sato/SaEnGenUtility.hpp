@@ -5,9 +5,8 @@
 #include "Koga/Observer.hpp"
 #include "Sato/EnemyStrategy.hpp"
 
-struct GeneratorEvent;
+class GeneratorEvent;
 
-// The first void is GeneratorEvent
 class SaEnGenUtility: public EnemyStrategy, public Koga::Observer<GeneratorEvent, void> {
 public:
     SaEnGenUtility();

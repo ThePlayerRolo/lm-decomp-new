@@ -5,7 +5,6 @@
 dummy_float_data()
 
 namespace Koga {
-    // float reg swap https://decomp.me/scratch/uPCzj
     void drawCylinder(const Vec& rTranslation, f32 width, f32 height, const GXColor& rColor) {
         FORCE_DONT_INLINE;
 
@@ -14,8 +13,8 @@ namespace Koga {
         Mtx scale;
         Mtx rotation;
 
-        MTXTrans(translation, rTranslation.x, rTranslation.y + height * 0.5f, rTranslation.z);
-        MTXScale(scale, width, height * 0.5f, width);
+        MTXTrans(translation, rTranslation.x, rTranslation.y + height / 2.0f, rTranslation.z);
+        MTXScale(scale, width, height / 2.0f, width);
         MTXRotRad(rotation, 'x', DEG_TO_RAD(90.0f));
 
         PSMTXConcat(lbl_803A3820._18C, translation, objectMtx);

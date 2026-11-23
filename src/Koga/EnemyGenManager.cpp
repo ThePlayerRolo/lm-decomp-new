@@ -1,6 +1,6 @@
 #include <string.h>
 #include <dolphin/macros.h>
-
+#include "Koga/GeneratorEvent.hpp"
 #include "Koga/EnemyGenManager.hpp"
 #include "Koga/EnManager.hpp"
 #include "Koga/GameModeUtil.hpp"
@@ -9,6 +9,7 @@
 #include "Koga/ToolData.hpp"
 #include "Sato/EnemyStrategy.hpp"
 #include "Sato/EnZako.hpp"
+#include "Sato/SaEnGenUtility.hpp"
 #include "macros.h"
 
 dummy_float_data()
@@ -21,7 +22,7 @@ void EnemyGenerator::fn_800C2500() {
    _808 = nullptr;
    _80C = 0;
    _810 = 0;
-   mGenPath.reset(); 
+   mGenPath.reset();
    _820.resetSize();
    _870 = 0;
    destroyStrategy();
@@ -71,7 +72,7 @@ EnZako* EnemyGenerator::fn_800C25F0(s32 param_1, s32 param_2) {
 
     EnThought* enChar = _810->fn_800E5A80(sVal);
     EnZako* eZako = dynamic_cast<EnZako*>(enChar);
-    eZako->set810(this);
+    eZako->setGenerator(this);
     _820.addMember(&eZako);
     _860++;
     return eZako;
@@ -83,7 +84,7 @@ ToolDataRef EnemyGenerator::fn_800C2784() {
     return ref;
 }
 
-Koga::ToolData* EnemyGenerator::fn_800C2798() {
+Koga::ToolData* EnemyGenerator::getGenPath() {
     if (!mGenPath.getJMapData()) {
         ToolDataRef ref;
         ref.setToolData(_808);
@@ -92,7 +93,7 @@ Koga::ToolData* EnemyGenerator::fn_800C2798() {
         bool isValid = ref.getToolData() != nullptr && ref.getEntryIndex() >= 0;
 
         if (isValid && ref.getToolData()->getValue(ref.getEntryIndex(), "path_name", &pathName) && pathName != nullptr) {
-            mGenPath.attach(reinterpret_cast<Koga::ToolData::JMapData*>(Koga::GameModeUtil::getPathResource(pathName)));   
+            mGenPath.attach(reinterpret_cast<Koga::ToolData::JMapData*>(Koga::GameModeUtil::getPathResource(pathName)));
         }
     }
 
@@ -107,6 +108,24 @@ s32 EnemyGenerator::fn_800C2830(const char* pKeyName) {
     ref.setEntryIndex(_80C);
     ref.getToolData()->getValue(ref.getEntryIndex(), pKeyName, &out);
     return out;
+}
+
+void EnemyGenerator::fn_800C287C(EnThought* pThought) {
+    EnZako* zako = dynamic_cast<EnZako*>(pThought);
+
+    EnZako** iter;
+    for (iter = _820.getArray(); iter !=_820.getLastMember() && *iter != zako; iter++) {
+    }
+
+    _820.eraseMember(iter);
+
+    Koga::Observer<GeneratorEvent, void>* observer = dynamic_cast<Koga::Observer<GeneratorEvent, void>*>(getStrategy());
+    if (observer) {
+        GeneratorEvent msg;
+        msg.mMessage = GeneratorEvent::MESSAGE_0;
+        msg.mThought = zako;
+        observer->receiveMessage(&msg);
+    }
 }
 
 namespace Koga {
@@ -125,7 +144,6 @@ namespace Koga {
         const char* entryName;
         const char* genType;
         ToolDataRef localRef = *pRef;
-        
         if (!localRef.getToolData()->getValue(localRef.getEntryIndex(), "name", &entryName)) {
             return false;
         }
@@ -159,9 +177,8 @@ namespace Koga {
             tData->getValue(currIdx, "pos_y", &freeGen->mPos.y);
             tData->getValue(currIdx, "pos_z", &freeGen->mPos.z);
 
-            freeGen->getStrategy()->init();   
+            freeGen->getStrategy()->init();
         }
-        
         return true;
     }
 
@@ -175,7 +192,7 @@ namespace Koga {
         if (!pData->getValue(entryIdx, "name", &isGenerator)) {
             return false;
         }
-        
+
         if (strcmp(isGenerator, "generator") != 0) {
             return false;
         }
@@ -199,11 +216,11 @@ namespace Koga {
         Koga::ToolData* pData = pRef->getToolData();
         s32 entryIdx = pRef->getEntryIndex();
         const char* isGenerator;
-        
+
         if (!pData->getValue(entryIdx, "name", &isGenerator)) {
             return false;
         }
-        
+
         if (strcmp(isGenerator, "generator") != 0) {
             return false;
         }
@@ -228,7 +245,7 @@ namespace Koga {
         if (_8 == 0) {
             return;
         }
-        
+
         for (EnemyGenerator* curr = begin(); curr != end(); curr++) {
             if (curr->getStrategy() != nullptr) {
                 curr->updateStrategy();

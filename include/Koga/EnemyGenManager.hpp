@@ -28,10 +28,10 @@ public:
     void fn_800C2560();
     EnZako* fn_800C25F0(s32, s32); // Need to validate arg / return type.
     ToolDataRef fn_800C2784();
-    Koga::ToolData* fn_800C2798();
+    Koga::ToolData* getGenPath();
     s32 fn_800C2830(const char*);
      // Need to validate arg / return type.
-    void fn_800C287C(void*); // dynamic casts to EnZako and Koga::Observer<GeneratorEvent, void>
+    void fn_800C287C(EnThought*);
     EnemyStrategy* getGenStrategy();
 
     inline void updateStrategy() {

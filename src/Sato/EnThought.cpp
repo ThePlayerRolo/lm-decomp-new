@@ -67,7 +67,7 @@ void EnThought::reset() {
     EnemyStrategy* strategy;
     void* var3;
 
-    _810 = 0;
+    mGenerator = nullptr;
     _814 = 0;
     _818 = 0;
     _928 = 0;

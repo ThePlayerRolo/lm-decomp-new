@@ -18,6 +18,7 @@ namespace Koga {
 }
 
 class EnemyStrategy;
+class EnemyGenerator;
 
 class MoveObjAlphaControl : public Koga::ValueControl<int> {
 public:
@@ -80,7 +81,7 @@ public:
     void fn_800C1BA0(); // Sets the EnemyStrategy to nullptr?
 
     inline MoveObjAlphaControl getAlphaControl() { return mAlphaControl; }
-    inline void set810(void* vVal) { _810 = vVal; }
+    inline void setGenerator(EnemyGenerator* pGenerator) { mGenerator = pGenerator; }
 
     inline Character* getCharacter() const { return _808; }
     inline bool isValid() const { 
@@ -91,7 +92,7 @@ public:
     // Object that holds at least 0xE8 data. In the reset, it's calling fn_80067C30 which is in MoveObj split. Probably an entity
     /* 0x808 */ Character* _808; 
     /* 0x80C */ Koga::EnManager* _80C;
-    /* 0x810 */ void* _810;
+    /* 0x810 */ EnemyGenerator* mGenerator;
     /* 0x814 */ void* _814;
     /* 0x818 */ void* _818;
     /* 0x81c */ void* _81c;
