@@ -4,7 +4,7 @@
 #include "Koga/Message.hpp"
 #include "Sato/DustBase.hpp"
 #include "Sato/saGrainControl.hpp"
-#include "dolphin/mtx.h"
+#include <dolphin/mtx.h>
 #include "Unsorted/globals.hpp"
 
 class Dust : public DustBase {
@@ -24,7 +24,7 @@ public:
     void fn_8012E350();
     void fn_8012fc50();
 
-    static Unk98 sGrainParams[5];
+    static GrainParam sGrainParams[5];
 
     friend class DustlevelMgr;
 private:
@@ -32,7 +32,7 @@ private:
     /* 0x459 */ bool _459;
     /* 0x45c */ f32 _45C;
     /* 0x460 */ f32 _460;
-    /* 0x464 */ Unk98* _464;
+    /* 0x464 */ GrainParam* _464;
     /* 0x468 */ Vec* _468;
     /* 0x46C */ Vec* _46C;
     /* 0x470 */ f32 _470;
@@ -57,6 +57,7 @@ struct DustlevelControl {
     /* 0x28 */ DustlevelControl* mNext;
 };
 
+// Param 2 is step dust
 class DustlevelMgr : public MessageReceiver, public saGrainControl<DustlevelControl, DustlevelParam>  {
 public:
     DustlevelMgr() {

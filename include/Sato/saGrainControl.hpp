@@ -1,7 +1,7 @@
 #ifndef SA_GRAIN_CONTROL
 #define SA_GRAIN_CONTROL
 
-#include "dolphin/types.h"
+#include <dolphin/types.h>
 
 template <typename T>
 struct saGrainList {

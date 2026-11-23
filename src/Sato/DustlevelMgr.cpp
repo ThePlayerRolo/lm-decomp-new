@@ -1,7 +1,7 @@
 #include "Sato/DustlevelMgr.hpp"
 #include "Koga/GameModeUtil.hpp"
 #include "Sato/saGrainControl.hpp"
-#include "dolphin/mtx.h"
+#include <dolphin/mtx.h>
 
 u16* fn_8001CEAC(u32, u32);
 void fn_80127C08();

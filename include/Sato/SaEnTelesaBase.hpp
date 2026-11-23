@@ -1,7 +1,7 @@
 #ifndef SA_EN_TELESA_BASE_HPP
 #define SA_EN_TELESA_BASE_HPP
 
-#include "JSystem/JORReflexible.hpp"
+#include <JSystem/JORReflexible.hpp>
 #include "Sato/SaEnGenUtility.hpp"
 
 class SaEnTelesaBase : public SaEnZakoUtility, public JORReflexible {
