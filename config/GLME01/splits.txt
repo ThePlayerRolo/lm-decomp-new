@@ -201,7 +201,8 @@ Unsorted/RailInfoUtil.cpp:
 
 Unsorted/SimpleDraw.cpp:
 	.text       start:0x80093C5C end:0x80094F94
-	.sdata2     start:0x804DAEF0 end:0x804DAEF8
+	.rodata     start:0x8020C420 end:0x8020C430
+	.sdata2     start:0x804DAEF0 end:0x804DAF08
 
 Koga/GameModeUtil.cpp:
 	.text       start:0x800B9D1C end:0x800B9F7C

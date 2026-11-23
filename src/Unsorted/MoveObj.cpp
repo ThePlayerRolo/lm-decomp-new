@@ -39,11 +39,11 @@ void MoveObj::fn_80067CB0(f32 var1, f32 var2, f32 var3) {
 }
 
 u16 MoveObj::fn_80067D3C(u16 val) {
-    return ActorData::checkFlags(_3C, val);
+    return ActorData::checkFlags(get_3C(), val);
 }
 
 bool MoveObj::fn_800681E8(const char* name) {
-    s32 index = fn_8006A4E8(_3C, name);
+    s32 index = fn_8006A4E8(get_3C(), name);
 
     if (index == -1) {
         return false;

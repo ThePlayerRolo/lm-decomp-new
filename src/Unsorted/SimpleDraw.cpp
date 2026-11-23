@@ -2,7 +2,7 @@
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "Unsorted/80008418.hpp"
 
-void fn_8005A550(); // some function related to initing gx settings
+void fn_8005A550();  // some function related to initing gx settings
 void fn_800952D8(Mtx mtx, Quaternion* rQuat);
 void fn_800966E4(Mtx mtx, f32 scale);
 
@@ -84,7 +84,6 @@ void drawSimpleCubeQuat(const Vec& rTranslation, const Vec& rScale, const GXColo
     drawSimpleCube(objectMtx, color);
 }
 
-
 void drawSimpleCube(Mtx objectMtx, const GXColor& rColor) {
     Mtx cubeMtx;
     PSMTXCopy(objectMtx, cubeMtx);
@@ -100,7 +99,7 @@ void drawSimpleCube(Mtx objectMtx, const GXColor& rColor) {
 
 void drawSimpleCylinder(const Vec& rTrans, f32 width, f32 height, const GXColor& rColor) {
     Mtx cylinderMtx;
-    fn_8000A40C(width, width, height * 0.5f, rTrans.x, rTrans.y + height * 0.5f, rTrans.z, cylinderMtx, 0x4000, 0, 0);
+    fn_8000A40C(width, width, height / 2.0f, rTrans.x, rTrans.y + height / 2.0f, rTrans.z, cylinderMtx, 0x4000, 0, 0);
     PSMTXConcat(lbl_803A3820._18C, cylinderMtx, cylinderMtx);
     fn_8005A550();
     GXLoadPosMtxImm(cylinderMtx, 3);
@@ -108,4 +107,82 @@ void drawSimpleCylinder(const Vec& rTrans, f32 width, f32 height, const GXColor&
     GXColor color = rColor;
     setSimpleTevSettings(color, true);
     GXDrawCylinder(32);
+}
+
+// https://decomp.me/scratch/jiP35
+void drawSimpleDebugAxes(f32 distance, Mtx mtx) {
+    GXColor red = {255, 0, 0, 255};
+    GXColor green = {0, 255, 0, 255};
+    GXColor blue = {0, 0, 255, 255};
+
+    f32 local_64 = mtx[0][0];
+    f32 local_60 = mtx[1][0];
+    f32 local_5c = mtx[2][0];
+    f32 local_70 = mtx[0][1];
+    f32 local_6c = mtx[1][1];
+    f32 local_68 = mtx[2][1];
+    f32 local_7c = mtx[0][2];
+    f32 local_78 = mtx[1][2];
+    f32 local_74 = mtx[2][2];
+    f32 local_88 = mtx[0][3];
+    f32 local_84 = mtx[1][3];
+    f32 local_80 = mtx[2][3];
+
+    Vec center;
+    Vec zPosition;
+    Vec yPosition;
+    Vec xPosition;
+
+    center.x = local_88;
+    center.y = local_84;
+    center.z = local_80;
+
+    zPosition.x = local_7c;
+    zPosition.y = local_78;
+    zPosition.z = local_74;
+    yPosition.x = local_70;
+    yPosition.y = local_6c;
+    yPosition.z = local_68;
+    xPosition.x = local_64;
+    xPosition.y = local_60;
+    xPosition.z = local_5c;
+
+    PSVECScale(&xPosition, &xPosition, distance);
+    PSVECAdd(&center, &xPosition, &xPosition);
+    setSimpleTevSettings(red, true);
+    GXLoadPosMtxImm(lbl_803A3820._18C, 3);
+    GXSetCurrentMtx(3);
+    GXClearVtxDesc();
+    GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_CLR_RGBA, GX_F32, FALSE);
+    GXSetLineWidth(24, GX_TO_ZERO);
+    GXBegin(GX_LINES, GX_VTXFMT0, 2);
+    GXPosition3f32(center.x, center.y, center.z);
+    GXPosition3f32(xPosition.x, xPosition.y, xPosition.z);
+
+    PSVECScale(&yPosition, &yPosition, distance);
+    PSVECAdd(&center, &yPosition, &yPosition);
+    setSimpleTevSettings(green, true);
+    GXLoadPosMtxImm(lbl_803A3820._18C, 3);
+    GXSetCurrentMtx(3);
+    GXClearVtxDesc();
+    GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_CLR_RGBA, GX_F32, FALSE);
+    GXSetLineWidth(24, GX_TO_ZERO);
+    GXBegin(GX_LINES, GX_VTXFMT0, 2);
+    GXPosition3f32(center.x, center.y, center.z);
+    GXPosition3f32(yPosition.x, yPosition.y, yPosition.z);
+
+    PSVECScale(&zPosition, &zPosition, distance);
+    PSVECAdd(&center, &zPosition, &zPosition);
+    setSimpleTevSettings(blue, true);
+    GXLoadPosMtxImm(lbl_803A3820._18C, 3);
+    GXSetCurrentMtx(3);
+    GXClearVtxDesc();
+    GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_CLR_RGBA, GX_F32, FALSE);
+    GXSetLineWidth(24, GX_TO_ZERO);
+    GXBegin(GX_LINES, GX_VTXFMT0, 2);
+    GXPosition3f32(center.x, center.y, center.z);
+    GXPosition3f32(zPosition.x, zPosition.y, zPosition.z);
 }
