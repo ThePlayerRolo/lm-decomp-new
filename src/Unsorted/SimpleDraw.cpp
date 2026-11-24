@@ -44,6 +44,7 @@ void drawSimpleLine(const Vec& rPoint1, const Vec& rPoint2, u8 lineWidth, GXColo
     GXBegin(GX_LINES, GX_VTXFMT0, 2);
     GXPosition3f32(rPoint1.x, rPoint1.y, rPoint1.z);
     GXPosition3f32(rPoint2.x, rPoint2.y, rPoint2.z);
+    GXEnd();
 }
 
 void drawSimpleSphere(f32 size, const Vec& rTranslation, GXColor color, u32 depth) {
@@ -155,9 +156,11 @@ void drawSimpleDebugAxes(f32 distance, Mtx mtx) {
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_CLR_RGBA, GX_F32, FALSE);
     GXSetLineWidth(24, GX_TO_ZERO);
+
     GXBegin(GX_LINES, GX_VTXFMT0, 2);
     GXPosition3f32(center.x, center.y, center.z);
     GXPosition3f32(xPosition.x, xPosition.y, xPosition.z);
+    GXEnd();
 
     PSVECScale(&yPosition, &yPosition, distance);
     PSVECAdd(&center, &yPosition, &yPosition);
@@ -168,9 +171,11 @@ void drawSimpleDebugAxes(f32 distance, Mtx mtx) {
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_CLR_RGBA, GX_F32, FALSE);
     GXSetLineWidth(24, GX_TO_ZERO);
+
     GXBegin(GX_LINES, GX_VTXFMT0, 2);
     GXPosition3f32(center.x, center.y, center.z);
     GXPosition3f32(yPosition.x, yPosition.y, yPosition.z);
+    GXEnd();
 
     PSVECScale(&zPosition, &zPosition, distance);
     PSVECAdd(&center, &zPosition, &zPosition);
@@ -181,7 +186,9 @@ void drawSimpleDebugAxes(f32 distance, Mtx mtx) {
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_CLR_RGBA, GX_F32, FALSE);
     GXSetLineWidth(24, GX_TO_ZERO);
+
     GXBegin(GX_LINES, GX_VTXFMT0, 2);
     GXPosition3f32(center.x, center.y, center.z);
     GXPosition3f32(zPosition.x, zPosition.y, zPosition.z);
+    GXEnd();
 }

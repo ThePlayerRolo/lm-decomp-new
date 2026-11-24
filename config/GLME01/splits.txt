@@ -146,9 +146,6 @@ System/Scenes/EndingScene.cpp:
 	.sbss       start:0x804D8100 end:0x804D8110
 	.sdata2     start:0x804D99E8 end:0x804D9A08
 
-Unsorted/aramStaticData.cpp:
-	.bss        start:0x803D34C8 end:0x803D3540
-
 System/Scenes/BootScene.cpp:
 	.text       start:0x8000E46C end:0x8000EC98
 	.data       start:0x8021DFC0 end:0x802FF0A8
@@ -165,9 +162,15 @@ System/Scenes/MovieScene.cpp:
 	.text       start:0x8000EF58 end:0x8000F094
 	.data       start:0x802FF0D0 end:0x802FF108
 
-Unsorted/J2DTexture_k.cpp:
+Unsorted/ScreenTransition.cpp:
 	.text       start:0x80039464 end:0x8003A430
 	.ctors      start:0x8020BAE8 end:0x8020BAEC
+	.data       start:0x80304468 end:0x80304528
+	.bss        start:0x803CE0D0 end:0x803CE278
+	.sdata      start:0x804D0488 end:0x804D04A8
+
+Unsorted/aramStaticData.cpp:
+	.bss        start:0x803D34C8 end:0x803D3540
 
 System/Scenes/TitleScreenPane.cpp:
 	.text       start:0x8003A430 end:0x8003AF2C

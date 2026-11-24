@@ -2,11 +2,11 @@
 #include "JSystem/JKernel/JKRHeap.hpp"
 #include <dolphin/os.h>
 
-S3DModel::S3DModel(Info* param_1, s32 param_2) {
+S3DModel::S3DModel(S3DModelInfo* param_1, s32 param_2) {
     init(param_1, param_2);
 }
 
-void S3DModel::init(Info* param_1, s32 param_2) {
+void S3DModel::init(S3DModelInfo* param_1, s32 param_2) {
     _0 = 0;
     _4 = param_1;
 
