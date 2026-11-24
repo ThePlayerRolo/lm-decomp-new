@@ -101,7 +101,7 @@ void ScreenTransition::switchToNextTransition() {
     mNext = SCREEN_TRANSITION_NONE;
 }
 
-// https://decomp.me/scratch/rAuA1
+// https://decomp.me/scratch/AABHI
 bool ScreenTransition::fn_80039770() {
     if (_198 > 0) {
         _198--;
@@ -116,7 +116,7 @@ bool ScreenTransition::fn_80039770() {
                     if (mCurrentFrame >= mLength) {
                         mCurrentFrame = mLength;
                         _8 = 3;
-                        return 1;
+                        return true;
                     }
                     break;
                 case 2:
@@ -125,7 +125,7 @@ bool ScreenTransition::fn_80039770() {
                     if (mCurrentFrame <= 0) {
                         mCurrentFrame = 0;
                         mCurrent = SCREEN_TRANSITION_NONE;
-                        return 1;
+                        return true;
                     }
                     break;
             }
@@ -138,7 +138,7 @@ bool ScreenTransition::fn_80039770() {
                         mCurrentFrame = mLength;
                         _8 = 3;
                     }
-                    return 1;
+                    return true;
                 case 2:
                     mCurrentFrame += LMGetVIMessageQueueUnk4();
 
@@ -146,7 +146,7 @@ bool ScreenTransition::fn_80039770() {
                         mCurrentFrame = mLength;
                         mCurrent = SCREEN_TRANSITION_NONE;
                     }
-                    return 1;
+                    return true;
             }
             break;
         case SCREEN_TRANSITION_5:
@@ -157,7 +157,7 @@ bool ScreenTransition::fn_80039770() {
                         mCurrentFrame = mLength;
                         _8 = 3;
                     }
-                    return 1;
+                    return true;
                 case 2:
                     mCurrentFrame -= LMGetVIMessageQueueUnk4();
 
@@ -165,7 +165,7 @@ bool ScreenTransition::fn_80039770() {
                         mCurrentFrame = 0;
                         mCurrent = SCREEN_TRANSITION_NONE;
                     }
-                    return 1;
+                    return true;
             }
             break;
         case SCREEN_TRANSITION_6:
@@ -175,7 +175,7 @@ bool ScreenTransition::fn_80039770() {
                     if (mCurrentFrame > 1) {
                         _8 = 3;
                     }
-                    return 1;
+                    return true;
                 case 2:
                     mCurrentFrame -= LMGetVIMessageQueueUnk4() * 10;
 
@@ -183,7 +183,7 @@ bool ScreenTransition::fn_80039770() {
                         mCurrentFrame = 0;
                         mCurrent = SCREEN_TRANSITION_NONE;
                     }
-                    return 1;
+                    return true;
                 case 3:
                     mCurrentFrame = 255;
                     break;
@@ -198,14 +198,14 @@ bool ScreenTransition::fn_80039770() {
                         mCurrentFrame = 0;
                         mCurrent = SCREEN_TRANSITION_NONE;
                     }
-                    return 1;
+                    return true;
                 case 2:
                     mCurrentFrame += LMGetVIMessageQueueUnk4();
                     if (mCurrentFrame > mLength) {
                         mCurrentFrame = mLength;
                         _8 = 3;
                     }
-                    return 1;
+                    return true;
             }
         case SCREEN_TRANSITION_NONE:
         case SCREEN_TRANSITION_BLACK_FADE:
@@ -213,7 +213,7 @@ bool ScreenTransition::fn_80039770() {
             break;
     }
 
-    return 0;
+    return false;
 }
 
 
