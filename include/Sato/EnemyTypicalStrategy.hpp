@@ -10,7 +10,7 @@ class EnemyTypicalStrategy: public EnemyStrategyDecorator,
                             public Koga::CharacterEventObserver {
 
 public:
-    EnemyTypicalStrategy();
+    EnemyTypicalStrategy() {};
     /* 0x08 */ virtual ~EnemyTypicalStrategy() { };
 
     /* 0x38 */ virtual bool onFishingBegin(Koga::CharacterEvent* msg);
