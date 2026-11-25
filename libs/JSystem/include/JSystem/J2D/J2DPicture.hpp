@@ -71,6 +71,11 @@ public:
 		return idx < mTextureNum ? mTextures[idx] : nullptr;
 	}
 
+	bool isValidTexture(u8 idx) const
+	{
+		return idx < mTextureNum;
+	}
+
 	void setCornerColor(JUtility::TColor c0, JUtility::TColor c1,
 	                    JUtility::TColor c2, JUtility::TColor c3)
 	{

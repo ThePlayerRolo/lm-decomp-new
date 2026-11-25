@@ -1,4 +1,4 @@
-#include "Unsorted/ScreenTransition.hpp"
+#include "System/Scenes/ScreenTransition.hpp"
 #include "Unsorted/80008418.hpp"
 #include "Unsorted/LMDisplayUtil.hpp"
 #include <JSystem/J2D/J2DOrthoGraph.hpp>
@@ -216,11 +216,10 @@ bool ScreenTransition::fn_80039770() {
     return false;
 }
 
-
 // https://decomp.me/scratch/M8BWa
 void ScreenTransition::drawScreenQuad(s32 x, s32 y, s32 w, s32 h) {
-    s32 pointBottom = y + h;
     s32 pointRight = x + w;
+    s32 pointBottom = y + h;
 
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -230,19 +229,19 @@ void ScreenTransition::drawScreenQuad(s32 x, s32 y, s32 w, s32 h) {
 
     GXPosition3s16(x, y, -10);
     GXColor1u32(0xFFFFFFFF); // white
-    GXTexCoord2s16(0, 0);
+    GXTexCoord2u16(0x0000, 0x0000);
 
     GXPosition3s16(pointRight, y, -10);
     GXColor1u32(0xFFFFFFFF); // white
-    GXTexCoord2s16(0x8000, 0);
+    GXTexCoord2u16(0x8000, 0x0000);
 
     GXPosition3s16(pointRight, pointBottom, -10);
     GXColor1u32(0xFFFFFFFF); // white
-    GXTexCoord2s16(0x8000, 0x8000);
+    GXTexCoord2u16(0x8000, 0x8000);
 
     GXPosition3s16(x, pointBottom, -10);
     GXColor1u32(0xFFFFFFFF); // white
-    GXTexCoord2s16(0, 0x8000);
+    GXTexCoord2u16(0x0000, 0x8000);
 
     GXEnd();
 }
@@ -313,13 +312,13 @@ void ScreenTransition::draw(GXTexObj* pScreenTexture) {
             case 1:
                 break;
             case 3:
-                mTexture.draw(0, 0, mTexture.mTextures[0]->getWidth(), mTexture.mTextures[0]->getHeight());
+                mTexture.draw_8003B0E8(0, 0, mTexture.mTextures[0]->getWidth(), mTexture.mTextures[0]->getHeight());
                 break;
             case 4:
                 break;
             case 2:
                 GXSetChanMatColor(GX_COLOR0A0, JUtility::TColor(255, 255, 255, mCurrentFrame));
-                mTexture.draw(0, 0, 640, 480);
+                mTexture.draw_8003B0E8(0, 0, 640, 480);
                 break;
         };
         break;

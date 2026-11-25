@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Unsorted/J2DTexture_k.hpp"
+#include "System/Scenes/J2DTexture_k.hpp"
 
 enum ScreenTransitionType {
     /* 0x0 */ SCREEN_TRANSITION_NONE,

@@ -836,7 +836,8 @@ config.libs = [
         Object(NonMatching, "System/Scenes/MovieScene.cpp"),
 
         # Unsorted
-        Object(NonMatching, "Unsorted/ScreenTransition.cpp"),
+        Object(NonMatching, "System/Scenes/ScreenTransition.cpp"),
+        Object(NonMatching, "System/Scenes/J2DTexture_k.cpp"),
         Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
         Object(NonMatching, "Unsorted/80005EB8.cpp"),
         Object(NonMatching, "Unsorted/MoveObj.cpp"),
