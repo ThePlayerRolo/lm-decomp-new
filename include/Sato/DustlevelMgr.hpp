@@ -1,11 +1,12 @@
 #ifndef DUST_LEVEL_MGR
 #define DUST_LEVEL_MGR
 
+#include <dolphin/mtx.h>
+
 #include "Koga/Message.hpp"
 #include "Sato/DustBase.hpp"
 #include "Sato/saGrainControl.hpp"
-#include <dolphin/mtx.h>
-#include "Unsorted/globals.hpp"
+#include "System/ResetGX.hpp"
 
 class Dust : public DustBase {
 public:
