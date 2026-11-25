@@ -14,7 +14,7 @@
 #include "Koga/800E634C.hpp"
 #include "Unsorted/Character.hpp"
 #include "System/Scenes/SceneManager.hpp"
-
+#include "Unsorted/Player.hpp"
 
 namespace Koga {
     // https://decomp.me/scratch/fWEep
@@ -50,7 +50,7 @@ namespace Koga {
             AppearPointSlot* appearPoint = &_E08[j];
             EnThought* temp4 = fn_800E5A14(nullptr);
             currElm->fn_800E9A0C(temp4);
-            Character* someObj = currElm->fn_800E9C5C();
+            Character* someObj = currElm->getCharacter();
             appearPoint->_0 = someObj->_38; // also gets _38 from this?;
             EnThought* pThought = currElm->_0;
             pThought->setToolDataRef(appearPoint->_4, appearPoint->_8);
@@ -109,10 +109,10 @@ namespace Koga {
 
             out = 0;
             pCharacterInfo->getValue(luigiAppearPoint, "appear_point", &out);
-            if (out == expectedPoint) { 
+            if (out == expectedPoint) {
                 return luigiAppearPoint;
             }
-            
+
             luigiAppearPoint++;
         }
     }
@@ -176,8 +176,12 @@ namespace Koga {
         return _E08[appearSlotIndex]._0;
     }
 
-    // Based on ObjDiff, this seems to do some copy constructor stuff but the TVec3f struct seems to give me a lot of issues in this class
-    // Also no-inline temproarily because it spills into the other function.
+    Player* EnManager::getPlayer(s32 param_1) {
+        MoveObj* player = fn_800E5634(param_1);
+
+        return dynamic_cast<Player*>(player);
+    }
+
     s32 EnManager::fn_800E5660(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* out, f32 param_2) {
         JGeometry::TVec3f localOut;
         s32 result = fn_800E5784(pParam_1, &localOut);
@@ -202,7 +206,7 @@ namespace Koga {
         if (maxAppear == 1 && out == nullptr) {
             return 0;
         }
-        
+
         for (int i = 0; i < maxAppear; i++) {
             Vec* tVar;
             if (_E44 != 0) {
@@ -241,7 +245,7 @@ namespace Koga {
             temp->_0->fn_800C19CC(param_2);
         }
 
-        Character* tempObj = temp->fn_800E9C5C();
+        Character* tempObj = temp->getCharacter();
         return tempObj->_38;
     }
 
@@ -262,6 +266,15 @@ namespace Koga {
         unkEnManager1* temp = &_4[idx];
         temp->fn_800E9B44();
     }
+
+    s32 EnManager::fn_800E5E60(s32 idx) {
+        static s32 lbl_80363B50[4] = {
+            58, 20, 24, 1
+        };
+
+        return lbl_80363B50[idx];
+    }
+
 
     // https://decomp.me/scratch/3EURE
     void EnManager::fn_800E5E78(const char* pCreateName) {
@@ -329,7 +342,7 @@ u32 unkEnManager2::fn_800E601C() {
 // https://decomp.me/scratch/cfVnh
 const char* unkEnManager2::getCreateName() {
     const char* create_name = nullptr;
-    
+
     if (fn_800E6134().isValid()) {
         ToolDataRef vRef = fn_800E6134();
         vRef.mToolData->getValue(vRef.mEntryIndex, "create_name", &create_name);

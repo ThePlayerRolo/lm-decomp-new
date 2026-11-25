@@ -2,6 +2,7 @@
 
 #include "Koga/800E9568.hpp"
 #include "Koga/800E634C.hpp"
+#include "Koga/CharacterEventObserver.hpp"
 #include "Koga/EnManager.hpp"
 #include "Koga/GameModeUtil.hpp"
 #include "Koga/MissionMode.hpp"
@@ -27,10 +28,10 @@ BOOL fn_800E95C0(s32 expectedPoint, JGeometry::TVec3f* pParam_1, u16* out) {
     s32 entryIndex = appearEntry->getEntryIndex();
     bool bPointFound = false;
 
-    if (!appearEntry->isValid()) { //if (pCharInfo != nullptr && 0 <= entryIndex) { //if (appearEntry.isValid()) { 
+    if (!appearEntry->isValid()) { //if (pCharInfo != nullptr && 0 <= entryIndex) { //if (appearEntry.isValid()) {
         return false;
     }
-    
+
     pCharInfo->getValue(entryIndex, "pos_x", &pParam_1->x);
     pCharInfo->getValue(entryIndex, "pos_y", &pParam_1->y);
     pCharInfo->getValue(entryIndex, "pos_z", &pParam_1->z);
@@ -56,8 +57,8 @@ s32 fn_800E971C(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* pParam_2) {
     return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5784(pParam_1, pParam_2);
 }
 
-void* fn_800E9750(s32 param_1) {
-    return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5600(param_1);
+Player* getPlayer(s32 param_1) {
+    return Koga::MissionMode::getMissionMode()->getEnManager()->getPlayer(param_1);
 }
 
 s32 fn_800E977C(s32 param_1, s32 param_2) {
@@ -81,12 +82,12 @@ Character* fn_800E97DC(char* param_1) {
         const char* codeName;
 
         if (mRef.isValid() && !mRef.getToolData()->getValue(mRef.getEntryIndex(), "CodeName", &codeName)) {
-                Character* pChar = currElm->fn_800E9C5C();
+                Character* pChar = currElm->getCharacter();
                 temp2 = Koga::EnTypesManager::fn_800DAAF8(pChar->get_3C());
         }
 
         if (strcmp(temp2, param_1) == 0) {
-            return currElm->fn_800E9C5C(); 
+            return currElm->getCharacter();
         }
     }
 
@@ -131,7 +132,7 @@ bool unkEnManager1::fn_800E9A58(s32 param_1) {
     mState = CHARSTATE_1;
     _C = 0;
     bool temp = _0->fn_800C15E0(param_1);
-    
+
     if (temp == 0) {
         return false;
     }
@@ -147,7 +148,7 @@ void unkEnManager1::fn_800E9ACC() {
     mState = CHARSTATE_1;
     _0->fn_800C17EC();
     JGeometry::TVec3f defaultPos = JGeometry::TVec3f(-32000.0f);
-    fn_800E9C5C()->fn_80067CB0(defaultPos.x, defaultPos.y, defaultPos.z);
+    getCharacter()->fn_80067CB0(defaultPos.x, defaultPos.y, defaultPos.z);
 }
 
 void unkEnManager1::fn_800E9B44() {
@@ -156,12 +157,12 @@ void unkEnManager1::fn_800E9B44() {
     }
 }
 
-Character* unkEnManager1::fn_800E9C5C() {
+Character* unkEnManager1::getCharacter() {
     if (_0 == nullptr) {
         return nullptr;
     }
 
-    return _0->getCharacter();   
+    return _0->getCharacter();
 }
 
 void unkEnManager1::fn_800E9CDC() {
@@ -189,4 +190,13 @@ void unkEnManager1::fn_800E9CDC() {
         cTemp->_E3 = -1;
         cTemp->_E7 = -1;
     }
+}
+
+void unkEnManager1::fn_800E9B74() {
+    if (mState != CHARSTATE_2) return;
+    Character* character = getCharacter();
+}
+
+bool unkEnManager1::fn_800E9C38(Koga::CharacterEvent* pEvent) {
+    return EnThought::fn_800C0F08((EnemyStrategy*)_0, pEvent);
 }

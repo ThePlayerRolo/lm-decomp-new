@@ -47,6 +47,7 @@ s32 Jac_RegisterExtFastOpen(char* ext);
 s32 Jac_RegisterFastOpen(char* file);
 BOOL Jac_DVDOpen(char* name, DVDFileInfo* info);
 BOOL Jac_CheckFile(char* name);
+s32 Jac_LoadFile(char* file, u8* p2);
 void DVDT_Pause();
 void DVDT_UnPause();
 /////////////////////////////////////////////////////

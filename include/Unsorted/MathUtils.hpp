@@ -17,4 +17,8 @@ u16 atan2BAM(f32 firstAxis, f32 secondAxis);
 Vec lineIntersectWithPlane(Vec* f2, Vec* f3, Vec* f4, Vec* f5);
 s32 getClosestPointOnLine(Vec* f1, Vec* f2, Vec* f3, f32* f4, Vec* f5);
 
+inline s32 randomIntModulate(s32 val) {
+    return randomInt() % val;
+}
+
 #endif

@@ -146,9 +146,6 @@ System/Scenes/EndingScene.cpp:
 	.sbss       start:0x804D8100 end:0x804D8110
 	.sdata2     start:0x804D99E8 end:0x804D9A08
 
-Unsorted/aramStaticData.cpp:
-	.bss        start:0x803D34C8 end:0x803D3540
-
 System/Scenes/BootScene.cpp:
 	.text       start:0x8000E46C end:0x8000EC98
 	.data       start:0x8021DFC0 end:0x802FF0A8
@@ -165,9 +162,22 @@ System/Scenes/MovieScene.cpp:
 	.text       start:0x8000EF58 end:0x8000F094
 	.data       start:0x802FF0D0 end:0x802FF108
 
+System/Scenes/ScreenTransition.cpp:
+	.text       start:0x80039464 end:0x8003A430
+	.ctors      start:0x8020BAE8 end:0x8020BAEC
+	.data       start:0x80304468 end:0x80304528
+	.bss        start:0x803CE0D0 end:0x803CE278
+	.sdata      start:0x804D0488 end:0x804D04A8
+
+Unsorted/aramStaticData.cpp:
+	.bss        start:0x803D34C8 end:0x803D3540
+
 System/Scenes/TitleScreenPane.cpp:
 	.text       start:0x8003A430 end:0x8003AF2C
 	.ctors      start:0x8020BAEC end:0x8020BAF0
+
+System/Scenes/J2DTexture_k.cpp:
+	.text       start:0x8003AF2C end:0x8003C820
 
 Unsorted/s3dmodel.cpp:
 	.text       start:0x80058368 end:0x80058850
@@ -199,6 +209,11 @@ Unsorted/ActorData.cpp:
 Unsorted/RailInfoUtil.cpp:
 	.text       start:0x80092568 end:0x8009359C
 
+Unsorted/SimpleDraw.cpp:
+	.text       start:0x80093C5C end:0x80094F94
+	.rodata     start:0x8020C420 end:0x8020C430
+	.sdata2     start:0x804DAEF0 end:0x804DAF08
+
 Koga/GameModeUtil.cpp:
 	.text       start:0x800B9D1C end:0x800B9F7C
 
@@ -227,9 +242,10 @@ Koga/MissionMode.cpp:
 	.sdata2     start:0x804DB628 end:0x804DB630
 
 Koga/SimpleModeler.cpp:
-	.text       start:0x800BB54C end:0x800BBA78
+	.text       start:0x800BB464 end:0x800BBA78
 	.data       start:0x80359F98 end:0x80359FD0
 	.sdata      start:0x804D2D10 end:0x804D2D18
+	.sdata2     start:0x804DB638 end:0x804DB640
 
 Koga/MapCol.cpp:
 	.text       start:0x800BBA78 end:0x800BC9FC
@@ -663,9 +679,25 @@ Sato/SaEnGenUtility.cpp:
 JSystem/JAudio/JAInterface/JAIBasic.cpp:
 	.text       start:0x8018E680 end:0x80190E68
 	.ctors      start:0x8020BDA0 end:0x8020BDA4
+	.data       start:0x8038F028 end:0x8038F1E0
 	.bss        start:0x803F0248 end:0x803F0260
 	.sbss       start:0x804D9270 end:0x804D9280
 	.sdata2     start:0x804DD1A0 end:0x804DD1B8
+
+JSystem/JAudio/JAInterface/JAIData.cpp:
+	.text       start:0x80195248 end:0x80196BB0
+	.sdata2     start:0x804DD228 end:0x804DD240
+
+JSystem/JAudio/JAInterface/JAISystemInterface.cpp:
+	.text       start:0x80196BB0 end:0x801974C0
+	.ctors      start:0x8020BDA4 end:0x8020BDA8
+
+JSystem/JAudio/JAInterface/JAIEntrySequence.cpp:
+	.text       start:0x8019754C end:0x80197810
+
+JSystem/JAudio/JAInterface/JAISound.cpp:
+	.text       start:0x80197C14 end:0x8019B424
+	.sdata2     start:0x804DD250 end:0x804DD2C0
 
 JSystem/JAudio/JAInterface/JAIAnimation.cpp:
 	.text       start:0x8019B424 end:0x8019BE00
