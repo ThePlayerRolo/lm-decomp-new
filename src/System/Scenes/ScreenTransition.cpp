@@ -1,10 +1,11 @@
-#include "System/Scenes/ScreenTransition.hpp"
-#include "Unsorted/80008418.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
 #include <JSystem/J2D/J2DOrthoGraph.hpp>
 #include <JSystem/JUtility/JUTColor.hpp>
 #include <JSystem/JUtility/JUTTexture.hpp>
 #include <dolphin/gx.h>
+
+#include "System/Scenes/ScreenTransition.hpp"
+#include "System/80008418.hpp"
+#include "System/DisplayUtil.hpp"
 
 dummy_float_data();
 
@@ -112,7 +113,7 @@ bool ScreenTransition::fn_80039770() {
         case SCREEN_TRANSITION_FADE:
             switch (_8) {
                 case 1:
-                    mCurrentFrame += LMGetVIMessageQueueUnk4();
+                    mCurrentFrame += getFrameRateDivisor();
                     if (mCurrentFrame >= mLength) {
                         mCurrentFrame = mLength;
                         _8 = 3;
@@ -120,7 +121,7 @@ bool ScreenTransition::fn_80039770() {
                     }
                     break;
                 case 2:
-                    mCurrentFrame -= LMGetVIMessageQueueUnk4();
+                    mCurrentFrame -= getFrameRateDivisor();
 
                     if (mCurrentFrame <= 0) {
                         mCurrentFrame = 0;
@@ -133,14 +134,14 @@ bool ScreenTransition::fn_80039770() {
         case SCREEN_TRANSITION_SIDEWIPE:
             switch (_8) {
                 case 1:
-                    mCurrentFrame += LMGetVIMessageQueueUnk4();
+                    mCurrentFrame += getFrameRateDivisor();
                     if (mCurrentFrame >= mLength) {
                         mCurrentFrame = mLength;
                         _8 = 3;
                     }
                     return true;
                 case 2:
-                    mCurrentFrame += LMGetVIMessageQueueUnk4();
+                    mCurrentFrame += getFrameRateDivisor();
 
                     if (mCurrentFrame > mLength) {
                         mCurrentFrame = mLength;
@@ -152,14 +153,14 @@ bool ScreenTransition::fn_80039770() {
         case SCREEN_TRANSITION_5:
             switch (_8) {
                 case 1:
-                    mCurrentFrame += LMGetVIMessageQueueUnk4();
+                    mCurrentFrame += getFrameRateDivisor();
                     if (mCurrentFrame > mLength) {
                         mCurrentFrame = mLength;
                         _8 = 3;
                     }
                     return true;
                 case 2:
-                    mCurrentFrame -= LMGetVIMessageQueueUnk4();
+                    mCurrentFrame -= getFrameRateDivisor();
 
                     if (mCurrentFrame < 1) {
                         mCurrentFrame = 0;
@@ -177,7 +178,7 @@ bool ScreenTransition::fn_80039770() {
                     }
                     return true;
                 case 2:
-                    mCurrentFrame -= LMGetVIMessageQueueUnk4() * 10;
+                    mCurrentFrame -= getFrameRateDivisor() * 10;
 
                     if (mCurrentFrame < 1) {
                         mCurrentFrame = 0;
@@ -192,7 +193,7 @@ bool ScreenTransition::fn_80039770() {
         case SCREEN_TRANSITION_BLACK:
             switch (_8) {
                 case 1:
-                    mCurrentFrame -= LMGetVIMessageQueueUnk4();
+                    mCurrentFrame -= getFrameRateDivisor();
 
                     if (mCurrentFrame < 1) {
                         mCurrentFrame = 0;
@@ -200,7 +201,7 @@ bool ScreenTransition::fn_80039770() {
                     }
                     return true;
                 case 2:
-                    mCurrentFrame += LMGetVIMessageQueueUnk4();
+                    mCurrentFrame += getFrameRateDivisor();
                     if (mCurrentFrame > mLength) {
                         mCurrentFrame = mLength;
                         _8 = 3;
@@ -249,7 +250,7 @@ void ScreenTransition::drawScreenQuad(s32 x, s32 y, s32 w, s32 h) {
 void ScreenTransition::drawScreen(GXTexObj* pScreenTexture) {
     if (pScreenTexture == nullptr) return;
 
-    LMDefaultOrthoView();
+    defaultOrthoView();
     GXLoadTexObj(pScreenTexture, GX_TEXMAP0);
     GXSetNumTevStages(1);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
@@ -285,7 +286,7 @@ inline void ScreenTransition::drawSideWipe() {
 
 // https://decomp.me/scratch/0eced
 void ScreenTransition::draw(GXTexObj* pScreenTexture) {
-    LMDefaultOrthoView();
+    defaultOrthoView();
     switch (mCurrent) {
     case SCREEN_TRANSITION_FADE:
         if (_8 == 1) {
@@ -324,7 +325,7 @@ void ScreenTransition::draw(GXTexObj* pScreenTexture) {
         break;
     case SCREEN_TRANSITION_5:
         drawGraph1();
-        LMDefaultOrthoView();
+        defaultOrthoView();
         GXLoadTexObj(pScreenTexture, GX_TEXMAP0);
         GXSetNumTevStages(1);
         GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
@@ -365,7 +366,7 @@ void ScreenTransition::draw(GXTexObj* pScreenTexture) {
         break;
     case SCREEN_TRANSITION_BLACK:
         drawGraph1();
-        LMDefaultOrthoView();
+        defaultOrthoView();
         GXLoadTexObj(pScreenTexture, GX_TEXMAP0);
         GXSetNumTevStages(1);
         GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
@@ -384,5 +385,5 @@ void ScreenTransition::draw(GXTexObj* pScreenTexture) {
         break;
     }
 
-    fn_80008654(&lbl_803A3820);
+    lbl_803A3820.fn_80008654();
 }
