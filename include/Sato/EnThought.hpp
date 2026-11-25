@@ -94,7 +94,7 @@ public:
         mEntryIdx >= 0;
     }
 
-    // Object that holds at least 0xE8 data. In the reset, it's calling fn_80067C30 which is in MoveObj split. Probably an entity
+    // Object that holds at least 0xE8 data. In the reset, it's calling setVelocity which is in MoveObj split. Probably an entity
     /* 0x808 */ Character* _808;
     /* 0x80C */ Koga::EnManager* _80C;
     /* 0x810 */ EnemyGenerator* mGenerator;

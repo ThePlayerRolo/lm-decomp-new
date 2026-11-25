@@ -20,13 +20,13 @@ MoveObj::~MoveObj() {
     delete mModel;
 }
 
-void MoveObj::fn_80067C30(const Vec* vec) {
-    _6C = *vec;
-    _68 = VECMag(&_6C);
-    _78 = _6C;
+void MoveObj::setVelocity(const JGeometry::TVec3f& rVelocity) {
+    mVelocity = rVelocity;
+    mSpeed = mVelocity.length();
+    mNormalizedVelocity = mVelocity;
 
-    if (_68 > 0.000001f) {
-        PSVECNormalize(&_78, &_78);
+    if (mSpeed > 0.000001f) {
+        mNormalizedVelocity.normalize();
     }
 }
 

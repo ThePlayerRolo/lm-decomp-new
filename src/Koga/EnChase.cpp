@@ -43,7 +43,7 @@ bool EnCircleMove::state_0_Init() {
 
 bool EnCircleMove::state_0_Behavior() {
     EnZako* zako = getZako();
-    Vec vec = getZako()->getCharacter()->_6C;
+    Vec vec = getZako()->getCharacter()->mVelocity;
 
     fn_800E6D24(getZako(), zako->get_950());
 

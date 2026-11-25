@@ -121,7 +121,7 @@ void EnThought::reset() {
         character->_8A = 0;
         character->_8C = 0;
         character->_8E = 0;
-        character->fn_80067C30(&gZeroVec);
+        character->setVelocity(*(JGeometry::TVec3f*)&gZeroVec);
         ToolDataRef ref = getToolDataRef();
         if (ref.isValid()) {
             u8 invisible = 0;

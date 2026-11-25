@@ -15,19 +15,19 @@ static const Koga::CharacterEvent::Message message = Koga::CharacterEvent::MESSA
 static EnemyStrategyState enemyStrategyStates[3] = {
     {
         0,
-        (EnemyStrategyStateFn)&EnReplace::state_0000_Init, 
+        (EnemyStrategyStateFn)&EnReplace::state_0000_Init,
         (EnemyStrategyStateFn)&EnReplace::state_0000_Behavior
     },
 
     {
-        1, 
-        (EnemyStrategyStateFn)&EnReplace::state_0010_Init, 
+        1,
+        (EnemyStrategyStateFn)&EnReplace::state_0010_Init,
         (EnemyStrategyStateFn)&EnReplace::state_0010_Behavior
     },
 
     {
-        256, 
-        (EnemyStrategyStateFn)&EnReplace::state_0100_Init, 
+        256,
+        (EnemyStrategyStateFn)&EnReplace::state_0100_Init,
         (EnemyStrategyStateFn)&EnReplace::state_0100_Behavior
     },
 };
@@ -44,7 +44,7 @@ inline EnemyStrategyState* findState(u16 index) {
 
 void EnReplace::doBehavior() {
     EnemyStrategyState* state = findState(mCurrentState);
-    
+
     if (state != nullptr) {
         (this->*state->mBehaviorFunc)();
     }
@@ -52,7 +52,7 @@ void EnReplace::doBehavior() {
 
 void EnReplace::doBehaviorInit() {
     EnemyStrategyState* state = findState(mCurrentState);
-    
+
     if (state != nullptr) {
         (this->*state->mBehaviorInitFunc)();
     }
@@ -69,8 +69,8 @@ bool EnReplace::state_0000_Init() {
     return true;
 }
 
-bool EnReplace::state_0000_Behavior() { 
-    getZako()->getCharacter()->fn_80067C30(&gZeroVec);
+bool EnReplace::state_0000_Behavior() {
+    getZako()->getCharacter()->setVelocity(*(JGeometry::TVec3f*)&gZeroVec);
 
     Character* character = getZako()->getCharacter();
 

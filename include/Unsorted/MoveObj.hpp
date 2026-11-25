@@ -22,19 +22,21 @@ public:
     void fn_800E7628();
     bool fn_800E7650();
 
-    
+
     inline s32 get_38() const { return _38; }
     inline s32 get_3C() const { return _3C; }
+    inline const JGeometry::TVec3f & getPosition() { return _44; }
+    inline void set_8A(u16 angle) { _8A = angle; }
 
-    void fn_80067C30(const Vec*);
+    void setVelocity(const JGeometry::TVec3f& rVelocity);
     void fn_80067CB0(f32 var1, f32 var2, f32 var3); //This may be protected but TU 800E9568 calls it, may need to do something different.
 
-protected:    
+protected:
     u16 fn_80067D3C(u16);
     void fn_80067F84();
     bool fn_800681E8(const char*);
     void fn_80068238(s32);
-    void fn_80068268(s32, JGeometry::TVec3<f32>&);
+    void fn_80068268(s32, JGeometry::TVec3f&);
     void fn_800682DC(s16);
     void fn_800685B0();
 
@@ -49,12 +51,12 @@ public:
     /* 0x038 */ s32 _38;
     /* 0x03C */ s32 _3C;
     /* 0x040 */ s32 _40;
-    /* 0x044 */ JGeometry::TVec3<f32> _44;
-    /* 0x050 */ JGeometry::TVec3<f32> _50;
-    /* 0x05c */ JGeometry::TVec3<f32> _5C;
-    /* 0x068 */ f32 _68;
-    /* 0x06C */ Vec _6C;
-    /* 0x078 */ Vec _78;
+    /* 0x044 */ JGeometry::TVec3f _44;
+    /* 0x050 */ JGeometry::TVec3f _50;
+    /* 0x05c */ JGeometry::TVec3f _5C;
+    /* 0x068 */ f32 mSpeed;
+    /* 0x06C */ JGeometry::TVec3f mVelocity;
+    /* 0x078 */ JGeometry::TVec3f mNormalizedVelocity;
     /* 0x084 */ u16 _84;
     /* 0x086 */ u16 _86;
     /* 0x088 */ u16 _88;
@@ -62,11 +64,11 @@ public:
     /* 0x08C */ u16 _8C;
     /* 0x08E */ u16 _8E;
 
-    /* 0x090 */ Vec _90; // set the same value on all 3 axes in AEnEBone. Scale ? 
+    /* 0x090 */ JGeometry::TVec3f mScale;
     /* 0x09C */ u8 _9C[0xB0 - 0x9C];
     /* 0x0B0 */ s16 _B0;
     /* 0x0B4 */ u32 _B4;
-    
+
     /* 0x0B8 */ u32 _B8;
     /* 0x0BC */ u32 _BC;
     /* 0x0C0 */ u32 _C0;
@@ -83,7 +85,7 @@ public:
     /* 0x0E5 */ bool _E5;
     /* 0x0E6 */ bool _E6;
     /* 0x0E7 */ u8 _E7;
-    
+
     /* 0x0E8 */ u8 _E8;
     /* 0x0EC */ u32 _EC;
     /* 0x0F0 */ u32 _F0;
@@ -91,8 +93,8 @@ public:
     /* 0x0F8 */ s16 _F8;
     /* 0x0FA */ s16 _FA;
     /* 0x0FC */ u8 _FC;
-    /* 0x100 */ JGeometry::TVec3<f32> _100;
-    /* 0x10C */ JGeometry::TVec3<f32> _10C;
+    /* 0x100 */ JGeometry::TVec3f _100;
+    /* 0x10C */ JGeometry::TVec3f _10C;
     /* 0x118 */ u8 _118[0x53C - 0x118];
 
     /* 0x53C */ JAIAnimeSound mAnimeSound;

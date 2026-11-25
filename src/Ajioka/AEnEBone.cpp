@@ -12,20 +12,20 @@ enemies_float_data()
 
 static EnemyStrategyState enemiesStates[3] = {
     {
-        STRAT_STATE_0, 
-        (EnemyStrategyStateFn)&AEnEBone::state_0_Init, 
+        STRAT_STATE_0,
+        (EnemyStrategyStateFn)&AEnEBone::state_0_Init,
         (EnemyStrategyStateFn)&AEnEBone::state_0_Behavior
     },
 
     {
-        STRAT_STATE_1, 
-        (EnemyStrategyStateFn)&AEnEBone::state_1_Init, 
+        STRAT_STATE_1,
+        (EnemyStrategyStateFn)&AEnEBone::state_1_Init,
         (EnemyStrategyStateFn)&AEnEBone::state_1_Behavior
     },
 
     {
-        STRAT_STATE_2, 
-        (EnemyStrategyStateFn)&AEnEBone::state_2_Init, 
+        STRAT_STATE_2,
+        (EnemyStrategyStateFn)&AEnEBone::state_2_Init,
         (EnemyStrategyStateFn)&AEnEBone::state_2_Behavior
     },
 };
@@ -72,22 +72,21 @@ bool AEnEBone::state_0_Behavior() {
 
 bool AEnEBone::state_1_Init() {
     EnZako* zako = getZako();
-    Vec velocity;
-    PSVECSubtract(&pos, (Vec*)&zako->getCharacter()->_44, &velocity);
+    JGeometry::TVec3f velocity;
 
-    f32 vx = velocity.x / flyFramesDuration;
-    velocity.x = vx;
+    velocity.subPS(pos, zako->getCharacter()->_44);
+
+    velocity.x /= flyFramesDuration;
 
     f32 vy = velocity.y / flyFramesDuration;
     f32 h = 0.5f * (flyGravity * flyFramesDuration);
     velocity.y = vy + h;
 
-    f32 vz = velocity.z / flyFramesDuration;
-    velocity.z = vz;
+    velocity.z /= flyFramesDuration;
 
-    zako->getCharacter()->fn_80067C30(&velocity);
+    zako->getCharacter()->setVelocity(velocity);
     s16 angle = atan2BAM(velocity.z, velocity.x);
-    zako->getCharacter()->_8A = angle;
+    zako->getCharacter()->set_8A(angle);
 
     zako->fn_800BFB98("FLYC", 0);
 
@@ -96,10 +95,10 @@ bool AEnEBone::state_1_Init() {
 
 bool AEnEBone::state_1_Behavior() {
     EnZako* zako = getZako();
-    Vec vel = zako->getCharacter()->_6C;
-    f32 vy = vel.y - flyGravity;
-    vel.y = vy;
-    zako->getCharacter()->fn_80067C30(&vel);
+    JGeometry::TVec3f vel(zako->getCharacter()->mVelocity);
+    vel.y -= flyGravity;
+
+    zako->getCharacter()->setVelocity(vel);
 
     f32 timer = mTimer;
     f32 frames = flyFramesDuration;
@@ -107,12 +106,13 @@ bool AEnEBone::state_1_Behavior() {
     f32 v2 = v1 / frames;
 
     Character* chr = zako->getCharacter();
+
     f32 z = v2;
     f32 y = v2;
     f32 x = v2;
-    chr->_90.z = z;
-    chr->_90.y = y;
-    chr->_90.x = x;
+    chr->mScale.z = z;
+    chr->mScale.y = y;
+    chr->mScale.x = x;
 
     if (mTimer >= flyFramesDuration) {
         setNextState(2);
@@ -129,7 +129,7 @@ bool AEnEBone::state_2_Init() {
 }
 
 bool AEnEBone::state_2_Behavior() {
-    getZako()->getCharacter()->fn_80067C30(&gZeroVec);
+    getZako()->getCharacter()->setVelocity(gZeroVec);
 
     return true;
 }

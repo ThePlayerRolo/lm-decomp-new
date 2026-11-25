@@ -131,6 +131,10 @@ public:
 		z = fst.z - snd.z;
 	}
 
+	void subPS(const Vec& a, const TVec3& b) {
+		PSVECSubtract(&a, &b, this);
+	}
+
 	void mul(const TVec3& b)
 	{
 		x *= b.x;
@@ -255,7 +259,7 @@ public:
 
 	f32 squared() const { return dot(*this); }
 
-	f32 length() const { return TUtil<f32>::sqrt(squared()); }
+	f32 length() const { return VECMag(*this); }
 
 	// @fabricated
 	f32 length2() const { return length(); }
@@ -264,7 +268,7 @@ public:
 
 	void setLength(f32 length) { setLength(*this, length); }
 
-	void normalize() { setLength(*this, TUtil<f32>::one()); }
+	void normalize() { PSVECNormalize(this, this); }
 
 	void normalize(const TVec3& other) { setLength(other, TUtil<f32>::one()); }
 
