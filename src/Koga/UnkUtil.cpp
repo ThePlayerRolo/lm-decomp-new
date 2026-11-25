@@ -1,5 +1,5 @@
 #include "Koga/UnkUtil.hpp"
-#include "Unsorted/80009638.hpp"
+#include "Unsorted/MathUtils.hpp"
 
 // This is the same implementation as ToolData::hashString yet it seems to be seperated here?
 u32 hashStringSeperate(const char* key) {
@@ -24,8 +24,7 @@ s32 normalizeAngle(f64 x) {
 }
 
 f32 fn_800BA380() {
-    //TODO use MathUtils now and maybe combine this function call there?
-    return fn_80009638C_Modulate(10000) / 9999.0f;
+    return randomIntModulate(10000) / 9999.0f;
 }
 
 // https://decomp.me/scratch/MlUyC

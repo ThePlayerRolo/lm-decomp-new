@@ -484,6 +484,10 @@ config.libs = [
     JSystem([
 
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAIBasic.cpp"),
+        Object(NonMatching, "JSystem/JAudio/JAInterface/JAIData.cpp"),
+        Object(NonMatching, "JSystem/JAudio/JAInterface/JAISystemInterface.cpp", extra_cflags=["-sym on"]),
+        Object(NonMatching, "JSystem/JAudio/JAInterface/JAIEntrySequence.cpp"),
+        Object(NonMatching, "JSystem/JAudio/JAInterface/JAISound.cpp"),
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAIAnimation.cpp"),
 
         # 2D
@@ -847,10 +851,13 @@ config.libs = [
         Object(NonMatching, "System/Scenes/MovieScene.cpp"),
 
         # Unsorted
+        Object(NonMatching, "System/Scenes/ScreenTransition.cpp"),
+        Object(NonMatching, "System/Scenes/J2DTexture_k.cpp"),
         Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
         Object(NonMatching, "Unsorted/MoveObj.cpp"),
         Object(NonMatching, "Unsorted/Character.cpp"),
         Object(NonMatching, "Unsorted/RailInfoUtil.cpp"),
+        Object(NonMatching, "Unsorted/SimpleDraw.cpp"),
         Object(NonMatching, "Unsorted/800627D8.cpp"),
         Object(NonMatching, "Unsorted/s3dmodel.cpp"),
         Object(NonMatching, "Unsorted/ActorData.cpp"),

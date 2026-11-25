@@ -5,8 +5,7 @@
 #include "Koga/ToolData.hpp"
 #include "Sato/EnThought.hpp"
 #include "Unsorted/ActorData.hpp"
-#include "dolphin/macros.h"
-#include "types.h"
+#include "Unsorted/MathUtils.hpp"
 #include "Koga/800E82D8.hpp"
 
 // Does not match due to some ToolData inline shenanigans. Seems to match more as a u32 input though than u8
@@ -78,9 +77,9 @@ ToolDataRef fn_800E84CC(s32 param_1) {
         vRef.reset();
         return ToolDataRef(&vRef);
     }
+    int randValue = randomInt();
 
-    // Calls upon fn_80009638() to get some value, which is probably the below fieldIdx
-    int fieldIdx = 0;
+    int fieldIdx = randValue - (randValue / itemAppear->getDataEntryNum());
     fn_800E8D1C(itemAppear->getStringValue(entryIdx, fieldIdx));
     return vRef;
 }

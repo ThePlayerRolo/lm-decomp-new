@@ -160,6 +160,7 @@ public:
 	static f32 seDistancepitchMax;
 	static u16 seDefaultFx;
 	static u32 interfaceHeapSize;
+	static u32 motherHeapSize;
 	static char* audioResPath;
 	static f32 minDistanceVolume;
 };

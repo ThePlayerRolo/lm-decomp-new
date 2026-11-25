@@ -1,8 +1,10 @@
 #ifndef A_GE_HIDE_SEEK_HPP
 #define A_GE_HIDE_SEEK_HPP
 
+#include <JSystem/JGeometry/JGVec3.hpp>
 #include "Koga/Observer.hpp"
 #include "Sato/EnemyStrategy.hpp"
+#include "Koga/EnemyGenManager.hpp"
 
 struct GeneratorEvent;
 
@@ -33,6 +35,18 @@ public:
     bool state_5_Behavior();
     bool state_6_Init();
     bool state_6_Behavior();
+
+
+    inline EnemyGenerator* getGenerator() {
+        return static_cast<EnemyGenerator*>(mpUserData);
+    }
+
+    /* 0x18 */ u8 mEnabledFlag;
+    /* 0x19 */ u8 _19;
+    /* 0x1A */ u8 _1A[0x24 - 0x1A];
+    /* 0x24 */ JGeometry::TVec3f mGeneratorPos;
+    /* 0x30 */ EnemyStrategy* _30[7];
+
 };
 
 #endif

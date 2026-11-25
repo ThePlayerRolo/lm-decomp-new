@@ -3,17 +3,10 @@
 
 JAIAnimeSound::JAIAnimeSound()
 {
-	unk60 = 0;
-	unk64 = 0;
-	unk68 = 0;
-	unk6C = 0;
 	for (u8 i = 0; i < 8; ++i) {
 		mSlots[i].mSound     = nullptr;
 		mSlots[i].mIsPlaying = false;
 	}
-
-	for (u8 i = 0; i < 2; ++i)
-		unk70[i] = nullptr;
 
 	mDataCounter = 0;
 	mLoopCount   = 0;

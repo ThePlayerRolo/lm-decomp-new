@@ -1,44 +1,31 @@
 #ifndef SIMPLE_MODELER_H_
 #define SIMPLE_MODELER_H_
 
-#include <types.h>
-
-class unkSimpleModeler1 {
-public:
-    unkSimpleModeler1();
-    ~unkSimpleModeler1();
-
-    // TODO figure out what this data is
-    /* 0x0 - 0x27C */ u8 _0[0x280];
-    /* 0x280 */ s32 _280; //Some Counter or ptr?
-};
-
-class unkSimpleModeler2 {
-public:
-    unkSimpleModeler2();
-    ~unkSimpleModeler2();
-    void fn_800BB9E4(void*); // TODO validate void* argument
-
-    // TODO figure out what this data is
-    /* 0x80 - 0x2FC */ u8 _0[0x300];
-    /* 0x300 */ s32 _300; //Some Counter or ptr?
-};
-
-class unkSimpleModeler3 {
-public:
-    unkSimpleModeler3();
-    ~unkSimpleModeler3();
-    // Some sort constructor or copy elements?
-    void fn_800BB918(void*); // TODO validate void* argument
-
-    // TODO figure out what this data is
-    /* 0x0 - 0x67C */ u8 _FC[0x680];
-    /* 0x680 */ s32 _680; //Some Counter or ptr?
-};
+#include "MR/Array.hpp"
+#include <dolphin/gx.h>
+#include <JSystem/JGeometry/JGVec3.hpp>
 
 namespace Koga {
     class SimpleModeler {
     public:
+        struct SphereInfo {
+            /* 0x00 */ Vec mTranslation;
+            /* 0x0C */ f32 mSize;
+            /* 0x10 */ GXColor mColor;
+        };
+
+        struct CylinderInfo {
+            /* 0x00 */ Vec mTranslation;
+            /* 0x0C */ f32 mWidth;
+            /* 0x10 */ f32 mHeight;
+            /* 0x14 */ GXColor mColor;
+        };
+
+        struct CubeInfo {
+            /* 0x00 */ Mtx mMtx;
+            /* 0x30 */ GXColor mColor;
+        };
+
         SimpleModeler() {}
 
         //https://decomp.me/scratch/ILg4C
@@ -50,18 +37,17 @@ namespace Koga {
         static void deleteSimpleModeler();
         static SimpleModeler* getCurSimpleModeler() { return sCurSimpleModeler; }
 
-        // TODO validate these arguments, especially the void*'s
-        bool fn_800BB6A4(f32, f32, void*, void*);
+        bool addCylinder(const Vec& rTranslation, f32 width, f32 height, const GXColor& rColor);
+        bool addCube(Mtx, const GXColor& rColor);
 
-        bool fn_800BB70C(); //Seems to be some Matrix copying or something similar of unkSimpleModeler3. Missing Args
         void draw(); //Draws the models of each class in a loop.
 
         SimpleModeler* fn_800BB88C();
-        void fn_800BB8BC();
+        void setInitialized();
     public:
-        /* 0x4 */ unkSimpleModeler1 mUnk1;
-        /* 0x288 */ unkSimpleModeler2 mUnk2;
-        /* 0x58C */ unkSimpleModeler3 mUnk3;
+        /* 0x004 */ MR::AssignableArray<SphereInfo, 32> mSpheres;
+        /* 0x288 */ MR::AssignableArray<CylinderInfo, 32> mCylinders;
+        /* 0x58C */ MR::AssignableArray<CubeInfo, 32> mCubes;
 
         static SimpleModeler* sCurSimpleModeler;
         static int sSimpleModelerInitialized;

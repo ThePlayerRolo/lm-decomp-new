@@ -401,9 +401,9 @@ const char* ActorData::getActorName(s32 idx) {
     return ActorData::sActorData[idx].mActorName;
 }
 
-u16 ActorData::checkFlags(s32 idx, s32 param_2) {
+u16 ActorData::checkFlags(s32 idx, u16 flag) {
     ActorData* pData = &ActorData::sActorData[idx];
-    return pData->mFlags & param_2;
+    return pData->mFlags & flag;
 }
 
 ActorData* ActorData::getActorData(s32 idx) {

@@ -6,7 +6,8 @@
 #include <types.h>
 #include <dolphin/mtx.h>
 
-// 0xe3, 0xe7
+class S3DModel;
+
 class MoveObj {
 public:
     MoveObj();
@@ -37,36 +38,33 @@ protected:
     void fn_800682DC(s16);
     void fn_800685B0();
 
-    // Maybe header defined
-    void fn_80068DAC(s16, s16, s16);
-
 public:
     inline void setE3andE7() {
-        _E3 = false;
-        _E7 = false;
+        _E3 = 0;
+        _E7 = 0;
     }
 
-    /* 0x004 */ u8 _4[0x34];
+    /* 0x004 */ S3DModel* mModel;
+    /* 0x008 */ u8 _8[0x30];
     /* 0x038 */ s32 _38;
     /* 0x03C */ s32 _3C;
     /* 0x040 */ s32 _40;
-
     /* 0x044 */ JGeometry::TVec3<f32> _44;
     /* 0x050 */ JGeometry::TVec3<f32> _50;
     /* 0x05c */ JGeometry::TVec3<f32> _5C;
     /* 0x068 */ f32 _68;
     /* 0x06C */ Vec _6C;
     /* 0x078 */ Vec _78;
-    /* 0x084 */ s16 _84;
-    /* 0x086 */ s16 _86;
-    /* 0x088 */ s16 _88;
-    /* 0x08A */ s16 _8A;
-    /* 0x08C */ s16 _8C;
-    /* 0x08E */ s16 _8E;
+    /* 0x084 */ u16 _84;
+    /* 0x086 */ u16 _86;
+    /* 0x088 */ u16 _88;
+    /* 0x08A */ u16 _8A;
+    /* 0x08C */ u16 _8C;
+    /* 0x08E */ u16 _8E;
 
     /* 0x090 */ Vec _90; // set the same value on all 3 axes in AEnEBone. Scale ? 
-    /* 0x09C */ u8 _9C[0xB4 - 0x9C];
-
+    /* 0x09C */ u8 _9C[0xB0 - 0x9C];
+    /* 0x0B0 */ s16 _B0;
     /* 0x0B4 */ u32 _B4;
     
     /* 0x0B8 */ u32 _B8;
@@ -86,7 +84,7 @@ public:
     /* 0x0E6 */ bool _E6;
     /* 0x0E7 */ u8 _E7;
     
-    /* 0x0E8 */ u32 _E8;
+    /* 0x0E8 */ u8 _E8;
     /* 0x0EC */ u32 _EC;
     /* 0x0F0 */ u32 _F0;
     /* 0x0F4 */ u32 _F4;
@@ -101,7 +99,7 @@ public:
 
     /* 0x5D4 */ u8 _5D4[0x788 - 0x5d4];
 
-    /* 0x788 */ u8 _size; // TEMP ! USED JUST FOR MY CALCULATION FOR THE SIZE TO NOT DESTROY EVERYTHING
+    /* 0x788 */ s32 _788;
 };
 
 #endif
