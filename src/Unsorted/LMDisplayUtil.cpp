@@ -1,11 +1,12 @@
-#include "Unsorted/LMDisplayUtil.hpp"
-#include "Unsorted/80005EB8.hpp"
-#include "Unsorted/GamePad.hpp"
 #include <JSystem/JKernel/JKRExpHeap.hpp>
 #include <JSystem/JUtility/JUTDirectPrint.hpp>
 #include <dolphin/gx.h>
 #include <dolphin/os.h>
 #include <dolphin/vi.h>
+
+#include "Unsorted/LMDisplayUtil.hpp"
+#include "System/Memory.hpp"
+#include "Unsorted/GamePad.hpp"
 
 // externs
 extern void fn_80047444(s32);
@@ -113,7 +114,7 @@ void LMInitDisplayInternal(LMVISettings* dst) {
     dst->_2 = true;
     dst->_3 = 0;
     sMainFrameBuffer = nullptr;
-    lbl_804D8014->changeGroupID(groupID);
+    sSystemHeap->changeGroupID(groupID);
 
     u32 frameBufferSize = 0x96000;
     if (lbl_804D803C == nullptr) {
@@ -151,7 +152,7 @@ void LMInitDisplayInternal(LMVISettings* dst) {
     // Temp to match stack, its possible they used this for debugging
     VIRetraceCallback cb = VISetPostRetraceCallback(postRetraceCallback);
 
-    lbl_804D8014->changeGroupID(26);
+    sSystemHeap->changeGroupID(26);
 }
 
 void postRetraceCallback(u32 retraceCount) {

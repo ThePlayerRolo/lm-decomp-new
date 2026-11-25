@@ -14,11 +14,9 @@
 #include "Koga/ToolData.hpp"
 
 #include "System/DiscFile.hpp"
+#include "System/Scenes/MainGameScene.hpp"
 
 dummy_float_data()
-
-//TODO: Remove these
-extern int sCurMapNo;
 
 namespace Koga {
 
@@ -74,7 +72,7 @@ namespace Koga {
     void MissionMode::init() {
         char mapName[128];
 
-        sprintf(mapName, "%s%d.szp", "/Map/map", sCurMapNo);
+        sprintf(mapName, "%s%d.szp", "/Map/map", MainGameScene::sCurMapNo);
         mMapArchive = reinterpret_cast<JKRArchive*>(openCompressedArchive(mapName, nullptr));
 
         mEnMgr->loadCharacterInfo(mMapArchive);

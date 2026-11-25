@@ -9,6 +9,7 @@ extract:
     - symbol: staticdata_usa_arc
       binary: staticdata_usa.arc
       header: staticdata_usa_arc.inc
+      header_type: raw
 
     - symbol: lbl_80306560
       binary: lbl_80306560.bfn

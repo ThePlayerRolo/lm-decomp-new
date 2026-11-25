@@ -1,6 +1,9 @@
 
+#include "Koga/800E634C.hpp"
 #include "Koga/EnCircleMove.hpp"
 #include "Koga/EnChase.hpp"
+#include "Sato/EnZako.hpp"
+#include "Unsorted/MathUtils.hpp"
 #include "macros.h"
 
 dummy_float_data()
@@ -32,14 +35,35 @@ void EnCircleMove::doBehaviorInit() {
 }
 
 bool EnCircleMove::state_0_Init() {
+    _18 = 1.0f;
+    _1C = fn_800E6C5C(mpZako);
+    _20 = 12.0f;
     return true;
 }
 
 bool EnCircleMove::state_0_Behavior() {
+    EnZako* zako = getZako();
+    Vec vec = getZako()->getCharacter()->_6C;
+
+    fn_800E6D24(getZako(), zako->get_950());
+
+    f32 vecXOld = vec.x;
+    f32 vecYOld = vec.y;
+
+    zako->getCharacter()->_8A = atan2BAM(vecXOld, vecYOld);
+
+    if (zako->getCharacter()->_B0 != -1) {
+        _18 *= -1.0f;
+
+        vec.z = 0.0f;
+        vec.y = 0.0f;
+
+    }
+
     return true;
 }
 
-EnChase::EnChase() {
+EnChase::EnChase(f32) : mCircleMove() {
 
 }
 

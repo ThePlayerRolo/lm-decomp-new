@@ -2,13 +2,13 @@
 #include "Koga/JmpMessage.hpp"
 #include "Koga/ToolData.hpp"
 
+#include "System/Scenes/SceneManager.hpp"
 #include "Unsorted/InGameFlagsUtil.hpp"
 
 #include <JSystem/JGeometry/JGVec3.hpp>
 
 dummy_float_data()
 
-extern int lbl_804D80B0;
 extern void fn_800620F4(int);
 extern void fn_800624BC(int);
 extern bool fn_801883F8(int);
@@ -72,7 +72,7 @@ BOOL JmpMessageSender::fn_800EAA00(const char* param_1, s32 param_2) {
 }
 
 void JmpMessageSender::vt_0C() {
-    for (int i = 0; i > lbl_804D80B0 + 1; i++) {
+    for (int i = 0; i < SceneManager::lbl_804D80B0 + 1; i++) {
 
     }
 }

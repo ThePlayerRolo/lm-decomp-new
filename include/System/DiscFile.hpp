@@ -47,7 +47,7 @@ u8* getDiscFileFileBuffer(DiscFileInfo*);
 s32 getDiscFileLength(DiscFileInfo*);
 JKRMemArchive* getDiscFileArchiveBuffer(DiscFileInfo*);
 
-s32 checkDiscFileCurUnk0();
+bool isDiscLoadPending();
 s32 getDiscFileAllocDirection();
 void setDVDStatus();
 void closeDiscFile(OSMessage, DiscFileInfo*);

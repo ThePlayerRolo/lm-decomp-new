@@ -3,6 +3,8 @@
 #include "Unsorted/character.hpp"
 #include "dolphin/mtx.h"
 #include "macros.h"
+#include "Unsorted/ActorData.hpp"
+#include "Unsorted/s3dmodel.hpp"
 
 dummy_float_data();
 enemies_float_data();
@@ -11,11 +13,11 @@ s32 fn_8006A4E8(s32, const char*);
 void fn_8013DCD8(Vec*, Vec*, Vec*, s32);
 
 MoveObj::MoveObj() {
-    _size = true;
+    _788 = 0;
 }
 
 MoveObj::~MoveObj() {
-    
+    delete mModel;
 }
 
 void MoveObj::fn_80067C30(const Vec* vec) {
@@ -37,11 +39,11 @@ void MoveObj::fn_80067CB0(f32 var1, f32 var2, f32 var3) {
 }
 
 u16 MoveObj::fn_80067D3C(u16 val) {
-    return Character::fn_8006A3BC(_3C, val);
+    return ActorData::checkFlags(get_3C(), val);
 }
 
 bool MoveObj::fn_800681E8(const char* name) {
-    s32 index = fn_8006A4E8(_3C, name);
+    s32 index = fn_8006A4E8(get_3C(), name);
 
     if (index == -1) {
         return false;
@@ -59,6 +61,7 @@ void MoveObj::fn_80068238(s32 index) {
     }
 }
 
+// Note: seems to be called whenever a ghost is about to sucked into the poltergust
 void MoveObj::fn_80068268(s32 val, JGeometry::TVec3<f32>& vec) {
     if ((_40 & 0x80000) != 0) {
         return;
@@ -66,14 +69,13 @@ void MoveObj::fn_80068268(s32 val, JGeometry::TVec3<f32>& vec) {
 
     _100 = vec;
 
-    // FIXME
-    if (_4[0]) {
+    if (mModel != nullptr) {
         _40 |= 0x80000;
         fn_8013DCD8(_10C, _100, _44, val);
     }
 }
 
-void MoveObj::fn_80068DAC(s16 x, s16 y, s16 z) {
+void MoveObj::vt_0C(u16 x, u16 y, u16 z) {
     _86 = x;
     _84 = x;
     _8A = y;

@@ -14,6 +14,7 @@
 class EnemyStrategy;
 class EnThought;
 class JKRArchive;
+class Player;
 
 namespace Koga {
     class EnManager;
@@ -39,7 +40,7 @@ public:
     unkEnManager2();
     unkEnManager2(const ToolDataRef&);
 
-    u32 fn_800E601C(); 
+    u32 fn_800E601C();
     const char* getCreateName();
     ToolDataRef fn_800E6134();
 
@@ -68,12 +69,12 @@ namespace Koga {
         void fn_800E52BC(ToolData*);
         u32 findLuigiAppearIndex(ToolData*, u32);
         ToolDataRef* fn_800E5488(s32);
-        
+
         Vec* fn_800E5564(s32);
         u32 fn_800E55AC(s32);
         s32 fn_800E55F0(s32); // Gets _0 member from AppearSlot
-        void* fn_800E5600(s32); // Dynamicaly casts Player to MoveObj 
-        void* fn_800E5634(s32); // Helper function to get a player object from fn_80069130 (by taking in _E08[param_1]._0?)
+        Player* getPlayer(s32);
+        Player* fn_800E5634(s32); // Helper function to get a player object from fn_80069130 (by taking in _E08[param_1]._0?)
 
         s32 fn_800E5660(JGeometry::TVec3f*, JGeometry::TVec3f*, f32);
         s32 fn_800E56E4(JGeometry::TVec3f*, JGeometry::TVec3f*);
@@ -90,11 +91,8 @@ namespace Koga {
         BOOL fn_800E5B88(); // Requires that fn_800AD39C and its resulting struct/class be decompiled more.
         s32 fn_800E5BF8(const char*); // I think this depends on MoveObj, which probably need more details from here.
         s32 fn_800E5D18(const char*); // Requires some lbl to be decompiled: lbl_80363B88
-        static int fn_800E5E60(int);  // Requires some lbl to be decompiled: lbl_80363B50
+        static s32 fn_800E5E60(s32);
         void fn_800E5E78(const char*);
-
-        inline s32 getAppearSlotIndex() { return sAppearPointSlotIndex; }
-        inline s32 getMaxAppearSlotIndex() { return sAppearPointSlotIndex + 1; }
 
     public:
         /* 0x004 */ MR::FixedArray<unkEnManager1, 0x80> _4;
@@ -102,8 +100,6 @@ namespace Koga {
         /* 0xE08 */ AppearPointSlot _E08[2];
         /* 0xE40 */ Koga::ToolData* mInfoTable;
         /* 0xE44 */ u8 _E44;
-
-        static s32 sAppearPointSlotIndex;
     };
 };
 

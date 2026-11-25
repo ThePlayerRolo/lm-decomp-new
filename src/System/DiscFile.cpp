@@ -3,9 +3,10 @@
 #include "System/DiscFile.hpp"
 #include "System/Yay0.hpp"
 #include "System/DiscThread.hpp"
+#include "System/Scenes/SceneManager.hpp"
 #include "System/UnknownSystemCalls.hpp"
+#include "System/Memory.hpp"
 #include "Unsorted/GamePad.hpp"
-#include "Unsorted/80005EB8.hpp"
 
 // Possibly Fabricated.
 struct DiscUnk {
@@ -33,7 +34,7 @@ static DiscFileQueue sDiscFileQueue;
 s32 sFileDataError;
 
 void* allocDiscFile(u32 size, s32 align) {
-    return fn_80006080(size, align);
+    return allocMem(size, align);
 }
 
 DiscFileInfo* getDiscFileInfoRing() {
@@ -50,39 +51,39 @@ void updateDiscDriveStatus(DiscFileQueue* pQueue) {
     switch (driveStatus) {
     case DVD_STATE_FATAL_ERROR:
         sGamePad->stopMotor();
-        lbl_804D80AC = 1;
+        SceneManager::lbl_804D80AC = 1;
         break;
     case DVD_STATE_END:
-        lbl_804D80AC = 0;
+        SceneManager::lbl_804D80AC = 0;
         break;
     case DVD_STATE_BUSY:
         if (DVDCheckDisk() != 0) {
-            lbl_804D80AC = 0;
+            SceneManager::lbl_804D80AC = 0;
         } else {
             driveStatus = DVD_STATE_COVER_CLOSED;
             sGamePad->stopMotor();
-            lbl_804D80AC = 1;
+            SceneManager::lbl_804D80AC = 1;
         }
         break;
     case DVD_STATE_COVER_CLOSED:
         sGamePad->stopMotor();
-        lbl_804D80AC = 1;
+        SceneManager::lbl_804D80AC = 1;
         break;
     case DVD_STATE_NO_DISK:
         sGamePad->stopMotor();
-        lbl_804D80AC = 1;
+        SceneManager::lbl_804D80AC = 1;
         break;
     case DVD_STATE_COVER_OPEN:
         sGamePad->stopMotor();
-        lbl_804D80AC = 1;
+        SceneManager::lbl_804D80AC = 1;
         break;
     case DVD_STATE_WRONG_DISK:
         sGamePad->stopMotor();
-        lbl_804D80AC = 1;
+        SceneManager::lbl_804D80AC = 1;
         break;
     case DVD_STATE_RETRY:
         sGamePad->stopMotor();
-        lbl_804D80AC = 1;
+        SceneManager::lbl_804D80AC = 1;
         break;
     }
     fn_800473F8(driveStatus);
@@ -246,9 +247,9 @@ u8* openCompressedArchiveAsync(const char* pFileName, DiscFileCallback pCallback
         sDiscFileQueue.mCurrFileInfo->mBufferBreakFlag = MBF_0;
     }
     sDiscFileQueue.mCurrFileInfo->mDecompBuffer = pArchiveBuffer;
-    u8 oldGroupId = fn_800061B8(sDiscFileQueue.mCurrFileInfo->mHeapGroupID);
+    u8 oldGroupId = setCurHeapGroupId(sDiscFileQueue.mCurrFileInfo->mHeapGroupID);
     void* ret = allocDiscFile(0x68, 4);
-    fn_800061B8(oldGroupId);
+    setCurHeapGroupId(oldGroupId);
     sDiscFileQueue.mCurrFileInfo->mArchive = reinterpret_cast<JKRMemArchive*>(ret);
     sDiscFileQueue.mCurrFileInfo->mPostLoadFunc = decompressAndMountDiscArchive;
     sDiscFileQueue.mCurrFileInfo->mCallback = pCallback;
@@ -312,9 +313,9 @@ u8* openArchiveAsync(const char* pFileName, DiscFileCallback pCallback, u8* pBuf
 
     sDiscFileQueue.mCurrFileInfo->mDecompBuffer = nullptr;
 
-    u8 oldGroupId = fn_800061B8(sDiscFileQueue.mCurrFileInfo->mHeapGroupID);
+    u8 oldGroupId = setCurHeapGroupId(sDiscFileQueue.mCurrFileInfo->mHeapGroupID);
     void* ret = allocDiscFile(0x68, 4);
-    fn_800061B8(oldGroupId);
+    setCurHeapGroupId(oldGroupId);
 
     sDiscFileQueue.mCurrFileInfo->mArchive = reinterpret_cast<JKRMemArchive*>(ret);
     sDiscFileQueue.mCurrFileInfo->mPostLoadFunc = mountDiscArchive;
@@ -344,8 +345,8 @@ JKRMemArchive* getDiscFileArchiveBuffer(DiscFileInfo* pInfo) {
     return pInfo->mArchive;
 }
 
-s32 checkDiscFileCurUnk0() {
-    return sDiscFileQueue.mNumPendingFiles != 0;
+bool isDiscLoadPending() {
+    return sDiscFileQueue.mNumPendingFiles;
 }
 
 s32 getDiscFileAllocDirection() {
@@ -391,7 +392,7 @@ void decompressDiscFile(void* param_1, DiscFileInfo* pInfo) {
     size = getYay0ArcSize(src);
 
     if (pInfo->mDecompBuffer == 0) {
-        fn_800061B8(pInfo->mHeapGroupID);
+        setCurHeapGroupId(pInfo->mHeapGroupID);
         pInfo->mDecompBuffer = reinterpret_cast<u8*>(allocDiscFile(size, 0x20));
     }
     u8* temp = pInfo->mDecompBuffer;

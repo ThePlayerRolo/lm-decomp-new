@@ -27,6 +27,7 @@ void DspSyncCountClear(int count);
 int DspSyncCountCheck();
 void StopAudioThread();
 void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags);
+void SetAudioThreadPriority(u8 pri_1, u8 pri_2, u8 pri_3);
 
 ///////////////////////////////////////////////////////
 

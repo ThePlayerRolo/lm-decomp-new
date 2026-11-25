@@ -8,7 +8,7 @@ class unk_lbl_803A3820 {
 
 public:
     /* 0x000 */ u8 pad[0x18C];
-    /* 0x18C */ Mtx _18C;
+    /* 0x18C */ Mtx _18C; // Could be the view mtx
     /* 0x1BC */ u8 pad2[0x260 - 0x1BC];
 };
 

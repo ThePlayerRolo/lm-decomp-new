@@ -12,6 +12,7 @@ namespace Koga {
 
 class EnThought;
 class Character;
+class Player;
 
 enum CharacterState {
     /* 0 */ DEFAULT_CHARSTATE,
@@ -38,7 +39,7 @@ public:
     bool fn_800E9C38(Koga::CharacterEvent*);
 
     bool fn_800E9C78();
-    Character* fn_800E9C5C();
+    Character* getCharacter();
     void fn_800E9CDC(); // Something to do with invisible Character.
     void* fn_800E9F90();
 };
@@ -56,7 +57,7 @@ BOOL fn_800E95C0(s32, JGeometry::TVec3f*, u16*);
 s32 fn_800E96B8(JGeometry::TVec3f*, JGeometry::TVec3f*, f32);
 s32 fn_800E96E8(JGeometry::TVec3f*, JGeometry::TVec3f*);
 s32 fn_800E971C(JGeometry::TVec3f*, JGeometry::TVec3f*);
-void* fn_800E9750(s32); // Probably returns MoveObj or something similar?
+Player* getPlayer(s32);
 s32 fn_800E977C(s32, s32);
 void fn_800E97B0(s32);
 Character* fn_800E97DC(char*); // Gets something from ToolData by CodeName

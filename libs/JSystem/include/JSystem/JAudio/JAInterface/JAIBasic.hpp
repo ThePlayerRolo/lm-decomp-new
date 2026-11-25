@@ -1,6 +1,7 @@
 #ifndef JAIBASIC_HPP
 #define JAIBASIC_HPP
 
+#include <jaudio/audiostruct.h>
 #include <JSystem/JAudio/JAInterface/JAIData.hpp>
 #include <dolphin/mtx.h>
 #include <JSystem/JKernel/JKRSolidHeap.hpp>
@@ -45,7 +46,7 @@ class JAISoundTable;
 
 class JAIBasic {
 public:
-	/* 0x0 */ JAIData* unk0;
+	/* 0x0 */ JAIData* mData;
 	/* 0x4 */ s32 val;
 	/* 0x8 */ // vt
 public:
@@ -65,7 +66,7 @@ public:
 	virtual void checkNextFrameSe();
 	virtual void loadGroupWave(s32 param1, s32 param2);
 
-	void initDriver(JKRSolidHeap* heap, u32 param1, u8 param2);
+	void initDriver(JKRSolidHeap* heap, u32 param1, u32 param2, u8 param4);
 	void initInterface(u8 param);
 	void initInterfaceMain();
 	void initHeap();
@@ -167,7 +168,7 @@ public:
 	u32 routeToTrack(u32 param);
 	void allocStreamBuffer(void* buffer, s32 size);
 	void deallocStreamBuffer();
-	int loadArcSeqData(u32 param, bool flag);
+	int loadArcSeqData(u32 param);
 	void setSeqMuteFromSeStart(JAISound* sound);
 	void clearSeqMuteFromSeStop(JAISound* sound);
 	void checkSeMovePara();
@@ -196,7 +197,7 @@ public:
 	/* 0x11 */ u8 unk11;
 	/* 0x12 */ u8 unk12;
 	/* 0x13 */ u8 unk13;
-	/* 0x14 */ u8 unk14;
+	/* 0x14 */ u8 mSoundOutputMode;
 	/* 0x15 */ u8 unk15;
 	/* 0x16 */ char unk16[2];
 	/* 0x18 */ u8* unk18;
@@ -265,6 +266,8 @@ public:
 	/* 0x88 */ u8 unk88;
 	/* 0x8C */ JAISound* unk8C[2];
 	/* 0x94 */ u16 unk94;
+	/* 0x9C */ ALHeap* mInterfaceHeap;
+	/* 0xA0 */ jaheap_* mMotherHeap;
 	// TODO: some of the fields might actually be
 	// from a derived class, MSound.
 };

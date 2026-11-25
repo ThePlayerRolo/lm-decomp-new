@@ -31,8 +31,8 @@ void fn_800E6948(JGeometry::TVec3f*, Koga::ToolData*);
 void fn_800E6A3C(JGeometry::TVec3f*, Koga::ToolData*, s32); // Could be ToolDataRef?
 void fn_800E6AB8(JGeometry::TVec3f*, Koga::ToolData*, f32);
 
-void fn_800E6C5C();
-void fn_800E6D24();
+f32 fn_800E6C5C(EnThought* pThought);
+void fn_800E6D24(EnThought* pThought, s32);
 void fn_800E6DE4();
 bool fn_800E6ED0(EnThought*);
 void fn_800E6FCC();
@@ -46,7 +46,6 @@ bool fn_800E71D4(JGeometry::TVec3f*, s32);
 bool fn_800E7280(s32);
 void fn_800E730C();
 void fn_800E7378();
-void fn_800E7414();
 void* fn_800E7510(void*, void*);
 void fn_800E75B8(JGeometry::TVec3f*, void*);
 void fn_800E760C(void*);
