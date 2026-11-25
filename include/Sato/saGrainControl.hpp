@@ -29,7 +29,6 @@ public:
     saGrainList<Control> mControlList2;
 };
 
-#pragma opt_unroll_loops off // idk why i need to remove this optimization, maybe when something else will be decompiled
 template<typename Control, typename Param>
 void saGrainControl<Control, Param>::init(u16 paramCount, u16 controlCount) {
     Param* param = mParams;
@@ -42,17 +41,14 @@ void saGrainControl<Control, Param>::init(u16 paramCount, u16 controlCount) {
     mControlList.mHead = &mControlList.mSentinel;
     mControlList.mHead->mNext = control;
     control->mPrev = mControlList.mHead;
-    for (u16 i = 0; i < controlCount; i++) {
+    for (u16 i = 0; i < controlCount; i++, control++) {
         control->mParams.init();
-        control++;
     }
 
     control = mControls;
-    for (u8 i = 0; i < controlCount - 1; i++) {
+    for (u8 i = 0; i < controlCount - 1; i++, control++, nextControl++) {
         control->mNext = nextControl;
         nextControl->mPrev = control;
-        control++;
-        nextControl++;
     }
     control->mNext = mControlList.mHead;
     mControlList.mHead->mPrev = control;
@@ -60,11 +56,9 @@ void saGrainControl<Control, Param>::init(u16 paramCount, u16 controlCount) {
     mListParam.mHead = &mListParam.mSentinel;
     mListParam.mHead->mNext = param;
     param->mPrev = mListParam.mHead;
-    for (u16 i = 0; i < paramCount - 1; i++) {
+    for (u16 i = 0; i < paramCount - 1; i++, param++, nextParam++) {
         param->mNext = nextParam;
         nextParam->mPrev = param;
-        param++;
-        nextParam++;
     }
     param->mNext = mListParam.mHead;
     mListParam.mHead->mPrev = param;
