@@ -51,24 +51,24 @@ void ScreenTransitionCtrl::draw() {
             sScreenTransition.switchTransition(mType, mLength);
             setDoubleBuffered(false);
             sLastFrameCopy = getPrevMainFrameBuffer();
-            GXSetTexCopySrc(0x0, 0x0, 0x280, 0x1E0);
-            GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGB565, GX_FALSE);
+            GXSetTexCopySrc(0, 0, 640, 480);
+            GXSetTexCopyDst(640, 480, GX_TF_RGB565, GX_FALSE);
             GXSetCopyClamp(GX_CLAMP_ALL);
-            GXCopyTex(sLastFrameCopy, 0x0);
+            GXCopyTex(sLastFrameCopy, 0);
             GXPixModeSync();
-            GXInitTexObj(&texObj, sLastFrameCopy, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+            GXInitTexObj(&texObj, sLastFrameCopy, 640, 480, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
             GXInitTexObjLOD(&texObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
             mState = SCREEN_TRANSITION_OUT;
             sScreenTransition.draw(&texObj);
             break;
         case SCREEN_TRANSITION_OUT:
-            GXInitTexObj(&texObj, sLastFrameCopy, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+            GXInitTexObj(&texObj, sLastFrameCopy, 640, 480, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
             GXInitTexObjLOD(&texObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
             sScreenTransition.draw(&texObj);
             break;
         case SCREEN_TRANSITION_IN:
         case SCREEN_TRANSITION_DONE:
-            GXInitTexObj(&texObj, lbl_804D86BC, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+            GXInitTexObj(&texObj, lbl_804D86BC, 640, 480, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
             GXInitTexObjLOD(&texObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
             sScreenTransition.draw(&texObj);
             break;
