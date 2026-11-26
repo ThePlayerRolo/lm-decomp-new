@@ -11,7 +11,7 @@
 #include "System/BackgroundTask.hpp"
 #include "System/Memory.hpp"
 #include "System/DisplayUtil.hpp"
-#include "System/800080DC.hpp"
+#include "System/ScreenTransitionCtrl.hpp"
 #include "System/80009584.hpp"
 #include "System/MathUtils.hpp"
 #include "System/ResetGX.hpp"
@@ -132,7 +132,7 @@ namespace SceneManager {
             SceneManager::sCurrSceneId = val;
             lbl_804D8088 = 1;
             lbl_804D80A8 = 1;
-            fn_80008394();
+            ScreenTransitionCtrl::requestTransition();
         }
 
         if (fn_8018A8B4() == 2) {
@@ -169,7 +169,7 @@ namespace SceneManager {
             }
 
             sCurrSceneId = static_cast<SceneID>(reinterpret_cast<u32>(msg));
-            fn_80008394();
+            ScreenTransitionCtrl::requestTransition();
             lbl_804D80A8 = 1;
         }
     }
@@ -186,7 +186,7 @@ namespace SceneManager {
                 fn_8000B370();
             }
 
-            lbl_803A3810.fn_800081A8();
+            sScreenTransitionCtrl.draw();
             setDVDStatus();
 
             switch (sSceneMgr.mState) {
@@ -198,8 +198,8 @@ namespace SceneManager {
                     }
                     break;
                 case SM_STATE_1:
-                    if (lbl_803A3810.getState() != 1) {
-                        fn_800083A4(2);
+                    if (sScreenTransitionCtrl.getState() != 1) {
+                        ScreenTransitionCtrl::setTransitionType(SCREEN_TRANSITION_BLACK_FADE);
                         sSceneMgr.mState = SM_STATE_2;
                         setCurHeapGroupId(0x16);
                     }
@@ -216,7 +216,7 @@ namespace SceneManager {
                 sSceneMgr.mSceneID = sCurrScene->mUpdateFn();
             }
 
-            lbl_803A3810.fn_8000812C();
+            sScreenTransitionCtrl.update();
             if (BootScene::sBootReady != 0) {
                 fn_8018865C();
             }
@@ -227,7 +227,7 @@ namespace SceneManager {
 
             endFrame();
             if (sSceneMgr.mState != SM_STATE_0) {
-                lbl_803A3810.fn_800080DC();
+                sScreenTransitionCtrl.startTransitionIn();
             }
 
             if (lbl_804D80A8 != 0) {
@@ -253,7 +253,7 @@ namespace SceneManager {
             initPerFrameBuffer();
             setCurHeapGroupId(0x1A);
             startBackgroundTask(sCurrScene->mInitFn);
-            fn_800083B4(0x1E);
+            ScreenTransitionCtrl::setTransitionLength(30);
             fn_8000B610();
             sCurrScene->mDestroyFn();
             freePerFrameBuffer();

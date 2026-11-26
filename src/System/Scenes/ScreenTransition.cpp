@@ -14,7 +14,7 @@ static ScreenTransition sUnusedScreenTransition; // seems to be unused in the fi
 ScreenTransition::ScreenTransition() : mTexture() {
     mCurrent = SCREEN_TRANSITION_NONE;
     mNext = SCREEN_TRANSITION_NONE;
-    _8 = 0;
+    mPhase = 0;
     mCurrentFrame = 0;
     _10 = 0;
     _190 = 0;
@@ -23,13 +23,13 @@ ScreenTransition::ScreenTransition() : mTexture() {
     mColor.b = 0;
     mColor.a = 255;
     mLength = 30;
-    _198 = 0;
+    mDelayFrames = 0;
 }
 
 ScreenTransition::~ScreenTransition() { }
 
 void ScreenTransition::switchTransition(ScreenTransitionType nextTransition, s16 length) {
-    _8 = 1;
+    mPhase = SCREEN_PHASE_OUT;
 
     mNext = (nextTransition > SCREEN_TRANSITION_WHITE_FADE) ? SCREEN_TRANSITION_FADE : nextTransition;
 
@@ -37,11 +37,11 @@ void ScreenTransition::switchTransition(ScreenTransitionType nextTransition, s16
     mLength = length;
     setTransitionSettings();
     switchToNextTransition();
-    _198 = 0;
+    mDelayFrames = 0;
 }
 
-void ScreenTransition::fn_80039628() {
-    _8 = 2;
+void ScreenTransition::startTransitionIn() {
+    mPhase = SCREEN_PHASE_IN;
 
     switch (mCurrent) {
         case SCREEN_TRANSITION_BLACK:
@@ -57,7 +57,7 @@ void ScreenTransition::fn_80039628() {
         case SCREEN_TRANSITION_SIDEWIPE:
             mCurrentFrame = 0;
             break;
-        case SCREEN_TRANSITION_5:
+        case SCREEN_TRANSITION_ZOOM_ECHO:
         case SCREEN_TRANSITION_FADE:
             mCurrentFrame = mLength;
             break;
@@ -65,7 +65,7 @@ void ScreenTransition::fn_80039628() {
             mCurrentFrame = 255;
     }
 
-    _198 = 3;
+    mDelayFrames = 3;
     switchToNextTransition();
 }
 
@@ -103,110 +103,110 @@ void ScreenTransition::switchToNextTransition() {
 }
 
 // https://decomp.me/scratch/AABHI
-bool ScreenTransition::fn_80039770() {
-    if (_198 > 0) {
-        _198--;
-        return false;
+BOOL ScreenTransition::update() {
+    if (mDelayFrames > 0) {
+        mDelayFrames--;
+        return FALSE;
     }
 
     switch (mCurrent) {
         case SCREEN_TRANSITION_FADE:
-            switch (_8) {
-                case 1:
+            switch (mPhase) {
+                case SCREEN_PHASE_OUT:
                     mCurrentFrame += getFrameRateDivisor();
                     if (mCurrentFrame >= mLength) {
                         mCurrentFrame = mLength;
-                        _8 = 3;
-                        return true;
+                        mPhase = SCREEN_PHASE_DONE;
+                        return TRUE;
                     }
                     break;
-                case 2:
+                case SCREEN_PHASE_IN:
                     mCurrentFrame -= getFrameRateDivisor();
 
                     if (mCurrentFrame <= 0) {
                         mCurrentFrame = 0;
                         mCurrent = SCREEN_TRANSITION_NONE;
-                        return true;
+                        return TRUE;
                     }
                     break;
             }
             break;
         case SCREEN_TRANSITION_SIDEWIPE:
-            switch (_8) {
-                case 1:
+            switch (mPhase) {
+                case SCREEN_PHASE_OUT:
                     mCurrentFrame += getFrameRateDivisor();
                     if (mCurrentFrame >= mLength) {
                         mCurrentFrame = mLength;
-                        _8 = 3;
+                        mPhase = SCREEN_PHASE_DONE;
                     }
-                    return true;
-                case 2:
+                    return TRUE;
+                case SCREEN_PHASE_IN:
                     mCurrentFrame += getFrameRateDivisor();
 
                     if (mCurrentFrame > mLength) {
                         mCurrentFrame = mLength;
                         mCurrent = SCREEN_TRANSITION_NONE;
                     }
-                    return true;
+                    return TRUE;
             }
             break;
-        case SCREEN_TRANSITION_5:
-            switch (_8) {
-                case 1:
-                    mCurrentFrame += getFrameRateDivisor();
-                    if (mCurrentFrame > mLength) {
-                        mCurrentFrame = mLength;
-                        _8 = 3;
-                    }
-                    return true;
-                case 2:
-                    mCurrentFrame -= getFrameRateDivisor();
-
-                    if (mCurrentFrame < 1) {
-                        mCurrentFrame = 0;
-                        mCurrent = SCREEN_TRANSITION_NONE;
-                    }
-                    return true;
-            }
-            break;
-        case SCREEN_TRANSITION_6:
-            switch (_8) {
-                case 1:
+        case SCREEN_TRANSITION_IMAGE:
+            switch (mPhase) {
+                case SCREEN_PHASE_OUT:
                     mCurrentFrame++;
                     if (mCurrentFrame > 1) {
-                        _8 = 3;
+                        mPhase = SCREEN_PHASE_DONE;
                     }
-                    return true;
-                case 2:
+                    return TRUE;
+                case SCREEN_PHASE_IN:
                     mCurrentFrame -= getFrameRateDivisor() * 10;
 
                     if (mCurrentFrame < 1) {
                         mCurrentFrame = 0;
                         mCurrent = SCREEN_TRANSITION_NONE;
                     }
-                    return true;
-                case 3:
+                    return TRUE;
+                case SCREEN_PHASE_DONE:
                     mCurrentFrame = 255;
                     break;
             }
             break;
-        case SCREEN_TRANSITION_BLACK:
-            switch (_8) {
-                case 1:
+        case SCREEN_TRANSITION_ZOOM_ECHO:
+            switch (mPhase) {
+                case SCREEN_PHASE_OUT:
+                    mCurrentFrame += getFrameRateDivisor();
+                    if (mCurrentFrame > mLength) {
+                        mCurrentFrame = mLength;
+                        mPhase = SCREEN_PHASE_DONE;
+                    }
+                    return TRUE;
+                case SCREEN_PHASE_IN:
                     mCurrentFrame -= getFrameRateDivisor();
 
                     if (mCurrentFrame < 1) {
                         mCurrentFrame = 0;
                         mCurrent = SCREEN_TRANSITION_NONE;
                     }
-                    return true;
-                case 2:
+                    return TRUE;
+            }
+            break;
+        case SCREEN_TRANSITION_BLACK:
+            switch (mPhase) {
+                case SCREEN_PHASE_OUT:
+                    mCurrentFrame -= getFrameRateDivisor();
+
+                    if (mCurrentFrame < 1) {
+                        mCurrentFrame = 0;
+                        mCurrent = SCREEN_TRANSITION_NONE;
+                    }
+                    return TRUE;
+                case SCREEN_PHASE_IN:
                     mCurrentFrame += getFrameRateDivisor();
                     if (mCurrentFrame > mLength) {
                         mCurrentFrame = mLength;
-                        _8 = 3;
+                        mPhase = SCREEN_PHASE_DONE;
                     }
-                    return true;
+                    return TRUE;
             }
         case SCREEN_TRANSITION_NONE:
         case SCREEN_TRANSITION_BLACK_FADE:
@@ -214,7 +214,7 @@ bool ScreenTransition::fn_80039770() {
             break;
     }
 
-    return false;
+    return FALSE;
 }
 
 // https://decomp.me/scratch/M8BWa
@@ -277,7 +277,7 @@ inline void ScreenTransition::drawSideWipe() {
     J2DOrthoGraph sidewipe(0, 0, 640, 480);
     sidewipe.setPort();
 
-    if (_8 == 1) {
+    if (mPhase == SCREEN_PHASE_OUT) {
         J2DFillBox(0, 0, (mCurrentFrame * 640) / mLength, 480, JUtility::TColor(mColor.r, mColor.g, mColor.b, 255));
     } else {
         J2DFillBox((mCurrentFrame * 640) / mLength, 0, 640, 480, JUtility::TColor(mColor.r, mColor.g, mColor.b, 255));
@@ -289,41 +289,41 @@ void ScreenTransition::draw(GXTexObj* pScreenTexture) {
     defaultOrthoView();
     switch (mCurrent) {
     case SCREEN_TRANSITION_FADE:
-        if (_8 == 1) {
+        if (mPhase == SCREEN_PHASE_OUT) {
             drawScreen(pScreenTexture);
         }
 
         drawGraph1();
 
-        switch (_8) {
-            case 1:
+        switch (mPhase) {
+            case SCREEN_PHASE_OUT:
                 if (mCurrentFrame >= 255) {
                     mCurrent = SCREEN_TRANSITION_NONE;
                 }
                 break;
-            case 2:
+            case SCREEN_PHASE_IN:
                 break;
         }
         break;
     case SCREEN_TRANSITION_SIDEWIPE:
         drawSideWipe();
         break;
-    case SCREEN_TRANSITION_6:
-        switch (_8) {
-            case 1:
+    case SCREEN_TRANSITION_IMAGE:
+        switch (mPhase) {
+            case SCREEN_PHASE_OUT:
                 break;
-            case 3:
+            case SCREEN_PHASE_DONE:
                 mTexture.draw_8003B0E8(0, 0, mTexture.mTextures[0]->getWidth(), mTexture.mTextures[0]->getHeight());
                 break;
-            case 4:
+            case SCREEN_PHASE_UNK:
                 break;
-            case 2:
+            case SCREEN_PHASE_IN:
                 GXSetChanMatColor(GX_COLOR0A0, JUtility::TColor(255, 255, 255, mCurrentFrame));
                 mTexture.draw_8003B0E8(0, 0, 640, 480);
                 break;
         };
         break;
-    case SCREEN_TRANSITION_5:
+    case SCREEN_TRANSITION_ZOOM_ECHO: {
         drawGraph1();
         defaultOrthoView();
         GXLoadTexObj(pScreenTexture, GX_TEXMAP0);
@@ -354,17 +354,18 @@ void ScreenTransition::draw(GXTexObj* pScreenTexture) {
         GXSetChanMatColor(GX_COLOR0A0, matColor);
         drawScreenQuad(-((width2 - 640) / 2), -((height2 - 480) / 2), width2, height2);
 
-        switch (_8) {
-            case 2:
+        switch (mPhase) {
+            case SCREEN_PHASE_IN:
                 break;
-            case 1:
+            case SCREEN_PHASE_OUT:
                 if (mCurrentFrame >= mLength) {
                     mCurrent = SCREEN_TRANSITION_NONE;
                 }
                 break;
         }
         break;
-    case SCREEN_TRANSITION_BLACK:
+    }
+    case SCREEN_TRANSITION_BLACK: {
         drawGraph1();
         defaultOrthoView();
         GXLoadTexObj(pScreenTexture, GX_TEXMAP0);
@@ -379,6 +380,7 @@ void ScreenTransition::draw(GXTexObj* pScreenTexture) {
         GXSetChanMatColor(GX_COLOR0A0, JUtility::TColor(255, 255, 255, 255));
         drawScreenQuad(320 - (width / 2),  240 - (height / 2), width, height);
         break;
+    }
     case SCREEN_TRANSITION_NONE:
     case SCREEN_TRANSITION_BLACK_FADE:
     case SCREEN_TRANSITION_WHITE_FADE:

@@ -6,7 +6,7 @@
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "System/DisplayUtil.hpp"
-#include "System/800080DC.hpp"
+#include "System/ScreenTransitionCtrl.hpp"
 
 namespace MainGameScene {
     static BOOL lbl_804D80D8;
@@ -59,7 +59,7 @@ namespace MainGameScene {
     }
 
     bool fn_8000C8D8() {
-        if (lbl_803A3810.getState() != 0) {
+        if (sScreenTransitionCtrl.getState() != 0) {
             return false;
         }
 

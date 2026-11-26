@@ -4,7 +4,7 @@
 #include <dolphin/pad.h>
 
 #include "System/Reset.hpp"
-#include "System/800080DC.hpp"
+#include "System/ScreenTransitionCtrl.hpp"
 #include "System/DisplayUtil.hpp"
 #include "Unsorted/GamePad.hpp"
 #include "System/UnknownSystemCalls.hpp"
@@ -108,7 +108,7 @@ void updateReset() {
         case RESET_STATE_REQUESTED:
             JUTGamePad::recalibrate(PAD_CHAN0_BIT | PAD_CHAN1_BIT | PAD_CHAN2_BIT | PAD_CHAN3_BIT);
             sGamePad->stopMotor();
-            fn_800083A4(2);
+            ScreenTransitionCtrl::setTransitionType(SCREEN_TRANSITION_BLACK_FADE);
             fn_8018A78C(15);
             SceneManager::fn_8000B334(1);
             sResetState = RESET_STATE_RESETTING;

@@ -832,7 +832,7 @@ config.libs = [
         Object(NonMatching, "System/Yay0.cpp"),
         Object(Matching, "System/DataOnly.cpp"),
         Object(NonMatching, "System/DisplayUtil.cpp"),
-        Object(NonMatching, "System/800080DC.cpp"),
+        Object(NonMatching, "System/ScreenTransitionCtrl.cpp"),
         Object(NonMatching, "System/80008418.cpp"),
         Object(NonMatching, "System/80009584.cpp", extra_cflags=["-fp_contract off"]),
         Object(NonMatching, "System/MathUtils.cpp", extra_cflags=["-fp_contract off"]),
@@ -856,9 +856,9 @@ config.libs = [
         Object(NonMatching, "System/Scenes/StuffRollScene.cpp"),
         Object(NonMatching, "System/Scenes/EndingScene.cpp"),
         Object(NonMatching, "System/Scenes/MovieScene.cpp"),
+        Object(NonMatching, "System/Scenes/ScreenTransition.cpp"),
 
         # Unsorted
-        Object(NonMatching, "System/Scenes/ScreenTransition.cpp"),
         Object(NonMatching, "System/Scenes/J2DTexture_k.cpp"),
         Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
         Object(NonMatching, "Unsorted/MoveObj.cpp"),

@@ -57,7 +57,7 @@ System/DisplayUtil.cpp:
 	.sbss       start:0x804D8030 end:0x804D8070
 	.sdata2     start:0x804D9880 end:0x804D98A0
 
-System/800080DC.cpp:
+System/ScreenTransitionCtrl.cpp:
 	.text       start:0x800080DC end:0x80008418
 	.ctors      start:0x8020BAC4 end:0x8020BAC8
 	.bss        start:0x803A3668 end:0x803A3820
