@@ -5,7 +5,7 @@
 #include <dolphin/gx/GXPixel.h>
 #include <dolphin/gx/GXTev.h>
 
-#include "System/DepthClear.hpp"
+#include "System/ClearDepth.hpp"
 #include "System/80008418.hpp"
 #include "System/DisplayUtil.hpp"
 
