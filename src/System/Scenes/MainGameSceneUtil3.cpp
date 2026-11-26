@@ -25,10 +25,10 @@ namespace MainGameScene {
             return;
         }
 
-        if (fn_8000C8D8() && sGamePad->testTrigger(JUTGamePad::Z) && SceneManager::lbl_804D8098 <= 2) {
+        if (fn_8000C8D8() && sGamePad->testTrigger(JUTGamePad::Z) && SceneManager::sSceneFrameCount <= 2) {
             switch (MainGameScene::sCurMapNo) {
-                case 6:
-                case 2:
+                case MAP_GALLERY:
+                case MAP_MANSION:
                     void* temp = fn_800AD39C(0); //checks against the 0x55 byte
                     lbl_804D80C4 = 3;
                     lbl_804D8438 = 0;
@@ -102,7 +102,7 @@ namespace MainGameScene {
     
     void fn_8000CB78() {
         if (lbl_804D80E0 != 0 && lbl_804D80C4 == 3) {
-            SceneManager::lbl_804D8088 = 0;
+            SceneManager::sSceneChangePending = FALSE;
             lbl_804D80E0 = 0;
             lbl_804D80C4 = 0;
             lbl_804D8438 = 1;

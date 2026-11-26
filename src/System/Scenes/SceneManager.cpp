@@ -71,7 +71,7 @@ namespace SceneManager {
     s64 sTotalFrameCount; // Never reset
     u64 sSceneFrameCount; // Resets ever scene change
     SceneID sCurrSceneId;
-    s32 sNextMapNo;
+    MapNumber sNextMapNo;
     static BOOL sSceneEnd;
     BOOL sDiscErrorActive;
     s32 lbl_804D80B0;

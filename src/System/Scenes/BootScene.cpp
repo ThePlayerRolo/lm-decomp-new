@@ -205,7 +205,7 @@ namespace BootScene {
         nintendoLogoPicture->mBlack = sBlack;
         nintendoLogoPicture->mWhite = color;
         nintendoLogoPicture->draw(0, 0, 640, 480, false, false, false);
-        if (SceneManager::lbl_804D8098 >= 2) {
+        if (SceneManager::sTotalFrameCount >= 2) {
             setDisplayFlags(1);
         }
         if (sBootSceneState == BOOT_READY) {

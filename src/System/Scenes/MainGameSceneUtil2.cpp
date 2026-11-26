@@ -8,11 +8,12 @@
 #include "System/DisplayUtil.hpp"
 #include "System/ScreenTransitionCtrl.hpp"
 
+
 namespace MainGameScene {
     static BOOL lbl_804D80D8;
 
     s32 fn_8000C784(void*, s32 param_1) {
-        if (lbl_804D80C4 == 0 && SceneManager::lbl_804D8088 == 0 && 
+        if (lbl_804D80C4 == 0 && SceneManager::sSceneChangePending == FALSE && 
             sGamePad->testTrigger(JUTGamePad::START)) {
             
             lbl_804D80C4 = 1;
@@ -50,7 +51,7 @@ namespace MainGameScene {
     }
 
     void fn_8000C894() {
-        SceneManager::lbl_804D8088 = 0;
+        SceneManager::sSceneChangePending = FALSE;
         lbl_804D80C4 = 0;
         fn_8018A678(0);
         lbl_804D8438 = 1;
@@ -63,7 +64,7 @@ namespace MainGameScene {
             return false;
         }
 
-        if (SceneManager::lbl_804D8088 != 0) {
+        if (SceneManager::sSceneChangePending != FALSE) {
             return false;
         }
 

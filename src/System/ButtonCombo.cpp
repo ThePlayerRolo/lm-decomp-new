@@ -24,11 +24,11 @@ ButtonCombo::ButtonCombo(u32* pSequence) {
 }
 
 s32 ButtonCombo::update() {
-    if (mLastTick == SceneManager::lbl_804D8090) {
+    if (mLastTick == SceneManager::sTotalFrameCount) {
         return mIsActive;
     }
 
-    mLastTick = SceneManager::lbl_804D8090;
+    mLastTick = SceneManager::sTotalFrameCount;
 
     u32 triggerVal = sGamePad->testTrigger(JUTGamePad::ANY_INPUT);
     if (triggerVal == 0) {

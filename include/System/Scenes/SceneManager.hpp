@@ -2,6 +2,7 @@
 #define SCENE_MANAGER_HPP
 
 #include "System/Scenes/Scene.hpp"
+#include "System/Scenes/MapNumber.hpp"
 
 namespace SceneManager {
     u16 getFrameInterval();
@@ -12,8 +13,8 @@ namespace SceneManager {
     extern s64 sTotalFrameCount;
     extern u64 sSceneFrameCount;
     extern SceneID sCurrSceneId;
-    extern s32 lbl_804D80A4;
-    extern BOOL lbl_804D80AC;
+    extern MapNumber sNextMapNo;
+    extern BOOL sDiscErrorActive;
     extern s32 lbl_804D80B0; // Definitely not AppearPointSlot, will need to re-evaluate this.
 }
 

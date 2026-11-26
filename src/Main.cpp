@@ -47,7 +47,7 @@ void exceptionCallback(u16 error, OSContext* pContext, u32 dsisr, u32 dar) {
             break;
         }
 
-        SceneManager::lbl_804D8090++;
+        SceneManager::sTotalFrameCount++;
     }
 
     BOOL redraw = 1;

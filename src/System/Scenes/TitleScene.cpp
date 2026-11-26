@@ -42,7 +42,7 @@ namespace TitleScene {
 
     void init() {
         lbl_804D8138 = 60;
-        SceneManager::lbl_804D80AC = 0;
+        SceneManager::sDiscErrorActive = FALSE;
 
         s32 gameHeapFree = getGameHeapFreeSize();
         void* newMem = allocMem(0, 0x4);
@@ -94,7 +94,7 @@ namespace TitleScene {
                     lbl_804D8130 = 3;
                     OpeningScene::sNextSceneID = SCENE_MAIN_GAME;
                     fn_8018A2A0(0x3802);
-                    SceneManager::fn_8000B334(3);
+                    SceneManager::requestSceneChange(SCENE_SELECT);
                     applyProgressiveChoice();
                     break;
                 }
@@ -113,7 +113,7 @@ namespace TitleScene {
         }
 
         OpeningScene::sNextSceneID = SCENE_TITLE;
-        SceneManager::fn_8000B334(4);
+        SceneManager::requestSceneChange(SCENE_OPENING);
         return SCENE_TITLE;
     }
 

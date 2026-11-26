@@ -110,7 +110,7 @@ void updateReset() {
             sGamePad->stopMotor();
             ScreenTransitionCtrl::setTransitionType(SCREEN_TRANSITION_BLACK_FADE);
             fn_8018A78C(15);
-            SceneManager::fn_8000B334(1);
+            SceneManager::requestSceneChange(SCENE_TITLE);
             sResetState = RESET_STATE_RESETTING;
             break;
         case RESET_STATE_RESETTING:
