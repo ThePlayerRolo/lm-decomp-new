@@ -2,6 +2,7 @@
 #include <JSystem/JKernel/JKRExpHeap.hpp>
 #include <JSystem/JKernel/JKRMemArchive.hpp>
 #include <JSystem/J2D/J2DPicture.hpp>
+#include <JSystem/JUtility/JUTColor.hpp>
 #include <JSystem/J2D/J2DOrthoGraph.hpp>
 #include <dolphin/gx.h>
 
@@ -178,6 +179,9 @@ namespace BootScene {
         }
     }
 
+    static inline void setBlack(J2DPicture* pPic, JUtility::TColor tColor) { pPic->mBlack = tColor; }
+    static inline void setWhite(J2DPicture* pPic, JUtility::TColor tColor) { pPic->mWhite = tColor; }
+
     // problems but can't create a scratch because tu is too big lol
     void draw() {
         static s32 bootSceneFrameCount = 0;
@@ -202,8 +206,8 @@ namespace BootScene {
         J2DOrthoGraph graph(0, 0, 640, 480);
         graph.setPort();
         GXColor color = (GXColor){ 220, 0, 0, 255};
-        nintendoLogoPicture->mBlack = sBlack;
-        nintendoLogoPicture->mWhite = color;
+        setBlack(nintendoLogoPicture, sBlack);
+        setWhite(nintendoLogoPicture, color);
         nintendoLogoPicture->draw(0, 0, 640, 480, false, false, false);
         if (SceneManager::sTotalFrameCount >= 2) {
             setDisplayFlags(1);
