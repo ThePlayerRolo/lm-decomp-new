@@ -43,7 +43,7 @@ void ScreenTransitionCtrl::update() {
 }
 
 void ScreenTransitionCtrl::draw() {
-    GXTexObj gObj;
+    GXTexObj texObj;
     resetGXState();
 
     switch (mState) {
@@ -56,21 +56,21 @@ void ScreenTransitionCtrl::draw() {
             GXSetCopyClamp(static_cast<GXFBClamp>((GX_CLAMP_TOP | GX_CLAMP_BOTTOM)));
             GXCopyTex(sLastFrameCopy, 0x0);
             GXPixModeSync();
-            GXInitTexObj(&gObj, sLastFrameCopy, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
-            GXInitTexObjLOD(&gObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+            GXInitTexObj(&texObj, sLastFrameCopy, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+            GXInitTexObjLOD(&texObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
             mState = SCREEN_TRANSITION_OUT;
-            sScreenTransition.draw(&gObj);
+            sScreenTransition.draw(&texObj);
             break;
         case SCREEN_TRANSITION_OUT:
-            GXInitTexObj(&gObj, sLastFrameCopy, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
-            GXInitTexObjLOD(&gObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
-            sScreenTransition.draw(&gObj);
+            GXInitTexObj(&texObj, sLastFrameCopy, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+            GXInitTexObjLOD(&texObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+            sScreenTransition.draw(&texObj);
             break;
         case SCREEN_TRANSITION_IN:
         case SCREEN_TRANSITION_DONE:
-            GXInitTexObj(&gObj, lbl_804D86BC, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
-            GXInitTexObjLOD(&gObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
-            sScreenTransition.draw(&gObj);
+            GXInitTexObj(&texObj, lbl_804D86BC, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+            GXInitTexObjLOD(&texObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+            sScreenTransition.draw(&texObj);
             break;
     }
 }
@@ -79,10 +79,10 @@ void ScreenTransitionCtrl::requestTransition() {
     sScreenTransitionCtrl.setState(SCREEN_TRANSITION_REQUESTED);
 }
 
-void ScreenTransitionCtrl::setTransitionType(ScreenTransitionType param_1) {
-    sScreenTransitionCtrl.setType(param_1);
+void ScreenTransitionCtrl::setTransitionType(ScreenTransitionType type) {
+    sScreenTransitionCtrl.setType(type);
 }
 
-void ScreenTransitionCtrl::setTransitionLength(s32 param_1) {
-    sScreenTransitionCtrl.setLength(param_1);
+void ScreenTransitionCtrl::setTransitionLength(s32 length) {
+    sScreenTransitionCtrl.setLength(length);
 }

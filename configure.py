@@ -840,7 +840,7 @@ config.libs = [
         Object(NonMatching, "System/8000A0D0.cpp", extra_cflags=["-fp_contract off"]),
         Object(NonMatching, "System/GameRender.cpp"),
         Object(NonMatching, "System/ButtonCombo.cpp"),
-        Object(NonMatching, "System/DepthClear.cpp"),
+        Object(NonMatching, "System/ClearDepth.cpp"),
 
         # System/Scenes
         Object(NonMatching, "System/Scenes/SceneManager.cpp"),

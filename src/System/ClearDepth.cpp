@@ -29,12 +29,12 @@ static u8 sClearDepthTex[0x40] ATTRIBUTE_ALIGN(32) = {
     0xFF, 0xFF, 0xFF, 0xFF,
 };
 
-void drawZTextureQuad(u16 x, u16 y, u16 width, u16 height) {
-    GXTexObj gObj;
+void clearDepth(u16 x, u16 y, u16 width, u16 height) {
+    GXTexObj texObj;
 
-    GXInitTexObj(&gObj, sClearDepthTex, 4, 4, GX_TF_Z24X8, GX_CLAMP, GX_CLAMP, GX_FALSE);
-    GXInitTexObjLOD(&gObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
-    GXLoadTexObj(&gObj, GX_TEXMAP0);
+    GXInitTexObj(&texObj, sClearDepthTex, 4, 4, GX_TF_Z24X8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObjLOD(&texObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+    GXLoadTexObj(&texObj, GX_TEXMAP0);
 
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -63,7 +63,7 @@ void clearDepthRect(u16 x, u16 y, u16 width, u16 height) {
     GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
     GXSetZTexture(GX_ZT_REPLACE, GX_TF_Z24X8, 0);
 
-    drawZTextureQuad(x, y, width, height);
+    clearDepth(x, y, width, height);
 
     GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
     GXSetZTexture(GX_ZT_DISABLE, GX_TF_Z24X8, 0);
