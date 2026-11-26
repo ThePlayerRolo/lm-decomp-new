@@ -1,6 +1,7 @@
 #ifndef _80008418_HPP
 #define _80008418_HPP
 
+#include <JSystem/JUtility/JUTRect.hpp>
 #include <dolphin/mtx.h>
 #include <types.h>
 
@@ -24,10 +25,11 @@ public:
     /* 0x000 */ u8 pad[0x18C];
     /* 0x18C */ Mtx _18C; // View / Camera possibly?
     /* 0x1BC */ u8 pad2[0x1EC - 0x1BC];
-    /* 0x1EC */ u32 _1EC; // Referenced by 8000AE0C, could be a struct but unsure. X
-    /* 0x1F0 */ u32 _1F0; // Y
-    /* 0x1F4 */ u32 _1F4; // Width
-    /* 0x1F8 */ u32 _1F8; // Height
+    /* 0x1EC */ JUTRect mViewport;
+    // /* 0x1EC */ u32 _1EC; // Referenced by 8000AE0C, could be a struct but unsure. X
+    // /* 0x1F0 */ u32 _1F0; // Y
+    // /* 0x1F4 */ u32 _1F4; // Width
+    // /* 0x1F8 */ u32 _1F8; // Height
     /* 0x1FC */ u8 pad3[0x260 - 0x1FC];
 
 private:

@@ -35,10 +35,10 @@ void setViewPortCount(s32 count) {
 }
 
 void setViewPortScissor(u32 x, u32 y, u32 w, u32 h) {
-    lbl_803A3820._1EC = x;
-    lbl_803A3820._1F0 = y;
-    lbl_803A3820._1F4 = w;
-    lbl_803A3820._1F8 = h;
+    lbl_803A3820.mViewport.x1 = x;
+    lbl_803A3820.mViewport.y1 = y;
+    lbl_803A3820.mViewport.x2 = w;
+    lbl_803A3820.mViewport.y2 = h;
     setViewportJitter(x, y, w, h, 0.0f, 1.0f);
     GXSetScissor(x, y, w, h);
 }
