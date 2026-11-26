@@ -69,7 +69,7 @@ namespace SceneManager {
     
     BOOL sSceneChangePending;
     u64 sTotalFrameCount; // Never reset
-    u64 sSceneFrameCount; // Resets ever scene change
+    u64 sSceneFrameCount; // Resets every scene change
     SceneID sCurrSceneId;
     MapNumber sNextMapNo;
     static BOOL sSceneEnd;
