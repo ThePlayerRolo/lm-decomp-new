@@ -8,11 +8,12 @@
 #include "System/Scenes/SceneManager.hpp"
 
 #include "System/Memory.hpp"
-#include "Unsorted/800627D8.hpp"
-#include "Unsorted/BackgroundMusic.hpp"
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
 #include "System/DisplayUtil.hpp"
 #include "System/Reset.hpp"
+
+#include "Unsorted/800627D8.hpp"
+#include "Unsorted/BackgroundMusic.hpp"
 
 
 namespace TitleScene {

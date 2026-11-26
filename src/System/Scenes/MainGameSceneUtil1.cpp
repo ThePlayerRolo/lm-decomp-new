@@ -15,8 +15,7 @@
 #include "System/Scenes/SceneManager.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "System/Scenes/SelectScene.hpp"
-
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
 #include "macros.h"
 
 MainGameSceneHelper::MainGameSceneHelper() {

@@ -8,7 +8,7 @@
 #include "System/ButtonCombo.hpp"
 #include "System/DisplayUtil.hpp"
 #include "System/Scenes/SceneManager.hpp"
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
 
 #include "macros.h"
 

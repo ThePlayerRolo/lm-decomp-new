@@ -6,7 +6,7 @@
 #include "System/Reset.hpp"
 #include "System/ScreenTransitionCtrl.hpp"
 #include "System/DisplayUtil.hpp"
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
 #include "System/UnknownSystemCalls.hpp"
 #include "System/Scenes/SceneManager.hpp"
 

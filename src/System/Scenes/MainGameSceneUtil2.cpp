@@ -4,7 +4,7 @@
 #include "System/Scenes/SceneManager.hpp"
 #include "System/Scenes/MainGameSceneUtil2.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
 #include "System/DisplayUtil.hpp"
 #include "System/ScreenTransitionCtrl.hpp"
 

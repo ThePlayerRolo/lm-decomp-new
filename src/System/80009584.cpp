@@ -2,8 +2,8 @@
 #include <math.h>
 
 #include "System/80009584.hpp"
-#include "Unsorted/GamePad.hpp"
 
+JUTGamePad* sGamePad;
 
 void setDirectionalRepeat(s32 frameInterval) {
     sGamePad->setButtonRepeat(JUTGamePad::ANY_MAIN_STICK | JUTGamePad::ANY_CSTICK | JUTGamePad::PRESS_DPAD, 32 / frameInterval, 4 / frameInterval);

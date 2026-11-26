@@ -8,8 +8,7 @@
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "System/DataOnly.hpp"
 #include "System/DisplayUtil.hpp"
-
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
 
 
 namespace MainGameScene {

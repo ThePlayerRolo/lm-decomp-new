@@ -10,6 +10,8 @@ u32 lbl_80218210[2][4] = {
 };
 f32 lbl_80218230[] = { 0.0f, 1.0f };
 
+BOOL sFlipCullMode;
+
 void randomReset() {
     seed = 1;
 }

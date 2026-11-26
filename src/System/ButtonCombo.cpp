@@ -1,7 +1,7 @@
 #include <JSystem/JUtility/JUTGamePad.hpp>
 
 #include "System/Scenes/SceneManager.hpp"
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
 #include "System/ButtonCombo.hpp"
 
 #include "macros.h"

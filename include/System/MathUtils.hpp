@@ -10,6 +10,7 @@ extern f32 lbl_80218230[];
 extern f32 sinTable[1024];
 extern f32 cosTable[4096];
 extern u16 atanTable[1025];
+extern BOOL sFlipCullMode;
 
 void randomReset();
 u32 randomInt();

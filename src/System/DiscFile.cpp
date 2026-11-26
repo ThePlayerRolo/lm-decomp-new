@@ -7,7 +7,7 @@
 #include "System/Scenes/SceneManager.hpp"
 #include "System/UnknownSystemCalls.hpp"
 #include "System/Memory.hpp"
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
 
 // Possibly Fabricated.
 struct DiscUnk {
