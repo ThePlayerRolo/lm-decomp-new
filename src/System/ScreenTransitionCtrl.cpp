@@ -53,7 +53,7 @@ void ScreenTransitionCtrl::draw() {
             sLastFrameCopy = getPrevMainFrameBuffer();
             GXSetTexCopySrc(0x0, 0x0, 0x280, 0x1E0);
             GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGB565, GX_FALSE);
-            GXSetCopyClamp(static_cast<GXFBClamp>((GX_CLAMP_TOP | GX_CLAMP_BOTTOM)));
+            GXSetCopyClamp(GX_CLAMP_ALL);
             GXCopyTex(sLastFrameCopy, 0x0);
             GXPixModeSync();
             GXInitTexObj(&texObj, sLastFrameCopy, 0x280, 0x1E0, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
