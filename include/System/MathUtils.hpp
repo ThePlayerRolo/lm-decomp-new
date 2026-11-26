@@ -22,4 +22,9 @@ inline s32 randomIntModulate(s32 val) {
     return randomInt() % val;
 }
 
+// TODO determine if this TU owns this, if ResetGX owns this, whatever the case may be.
+// TODO declared here for now though, defined in ResetGX.cpp
+extern Mtx sDefaultMtx;
+extern Vec gZeroVec;
+
 #endif

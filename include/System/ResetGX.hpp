@@ -8,9 +8,6 @@ extern GXColor sReset;
 extern GXColor sWhite;
 extern GXColor sBlack;
 
-extern Mtx sDefaultMtx;
-extern Vec gZeroVec;
-
 void resetGXState();
 
 #endif

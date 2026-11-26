@@ -10,6 +10,7 @@
 #include "System/80009584.hpp"
 #include "System/UnknownSystemCalls.hpp"
 #include "System/ResetGX.hpp"
+#include "System/MathUtils.hpp"
 #include "macros.h"
 
 dummy_float_data()

@@ -6,7 +6,7 @@
 #include "Koga/Message.hpp"
 #include "Sato/DustBase.hpp"
 #include "Sato/saGrainControl.hpp"
-#include "System/ResetGX.hpp"
+#include "System/MathUtils.hpp"
 
 class Dust : public DustBase {
 public:

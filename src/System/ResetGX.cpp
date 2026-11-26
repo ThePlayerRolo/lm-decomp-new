@@ -7,6 +7,7 @@
 #include <dolphin/gx/GXTev.h>
 
 #include "System/ResetGX.hpp"
+#include "System/MathUtils.hpp"
 #include "System/DisplayUtil.hpp"
 #include "System/80008418.hpp"
 

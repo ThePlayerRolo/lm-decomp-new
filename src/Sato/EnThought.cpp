@@ -6,7 +6,7 @@
 #include "Sato/EnemyStrategy.hpp"
 #include "Sato/IncludeStrategy.hpp"
 #include "Koga/UnkUtil.hpp"
-#include "System/ResetGX.hpp"
+#include "System/MathUtils.hpp"
 #include "macros.h"
 
 dummy_float_data()
