@@ -42,17 +42,12 @@ namespace TitleScene {
 
     void init() {
         lbl_804D8138 = 60;
-        SceneManager::sDiscErrorActive = FALSE;
+        lbl_804D813C = FALSE;
 
         s32 gameHeapFree = getGameHeapFreeSize();
-        void* newMem = allocMem(0, 0x4);
-
-        if (gameHeapFree > 0) {
-            do {
-                do {
-                    // Some sort of struct creation step
-                } while (true); // Not the correct condition but definitely some sort of loop
-            } while (true); // Not the correct condition but definitely some sort of loop
+        u8* newMem = static_cast<u8*>(allocMem(gameHeapFree, 0x4));
+        for (int i = 0; i < gameHeapFree; i++) {
+            newMem[i] = 0;
         }
 
         freeMem(newMem);
@@ -64,10 +59,13 @@ namespace TitleScene {
         }
 
         setCurHeapGroupId(2);
-        if (sProgressiveScanPromptState != 1) {
-            fn_8003ADE0(0);
-        } else {
-            fn_8003ADE0(1);
+        switch (sProgressiveScanPromptState) {
+            case 1:
+                fn_8003ADE0(0);
+                break;
+            default:
+                fn_8003ADE0(1);
+                break;            
         }
 
         setCurHeapGroupId(0x1A);
