@@ -22,7 +22,7 @@ public:
     static void fn_80009490();
 
     /* 0x000 */ u8 pad[0x18C];
-    /* 0x18C */ Mtx _18C;
+    /* 0x18C */ Mtx _18C; // View / Camera possibly?
     /* 0x1BC */ u8 pad2[0x1EC - 0x1BC];
     /* 0x1EC */ u32 _1EC; // Referenced by 8000AE0C, could be a struct but unsure. X
     /* 0x1F0 */ u32 _1F0; // Y
