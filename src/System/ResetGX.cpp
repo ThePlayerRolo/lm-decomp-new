@@ -13,12 +13,12 @@
 
 
 GXColor sReset = {0, 0, 0, 0};
-GXColor sWhite = {0xFF, 0xFF, 0xFF, 0xFF};
-GXColor sBlack = {0, 0, 0, 0xFF};
+GXColor sWhite = {255, 255, 255, 255};
+GXColor sBlack = {0, 0, 0, 255};
 
 void resetGXState() {
     setViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    GXSetScissor(0, 0, 0x280, 0x1E0);
+    GXSetScissor(0, 0, 640, 480);
     GXSetCurrentMtx(0);
     GXSetCullMode(GX_CULL_BACK);
     GXLoadPosMtxImm(lbl_803A3820._18C, 0);

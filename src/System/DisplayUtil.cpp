@@ -304,7 +304,7 @@ void defaultOrthoView() {
     GXSetAlphaCompare(GX_GREATER, 0, GX_AOP_AND, GX_GREATER, 0);
     GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
     GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
-    GXSetDstAlpha(GX_FALSE, 0xFF);
+    GXSetDstAlpha(GX_FALSE, 255);
 }
 
 void setViewportJitter(f32 left, f32 top, f32 width, f32 height, f32 near, f32 far) {
