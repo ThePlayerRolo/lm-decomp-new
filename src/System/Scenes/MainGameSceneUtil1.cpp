@@ -49,7 +49,7 @@ namespace MainGameScene {
         if (recvMsg != 0) {
             if (fn_8000C8D8()) {
                 // calls fn_800AD39C(0) around here and gets the 0x55 byte
-                if (SceneManager::sTotalFrameCount <= 2) {
+                if (SceneManager::sTotalFrameCount >= 2) {
                     lbl_804D80C4 = 2;
                     lbl_804D8438 = 0;
                     setFrameRateDivisor(FRAME_INTERVAL_60FPS);

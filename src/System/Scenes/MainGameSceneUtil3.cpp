@@ -25,7 +25,7 @@ namespace MainGameScene {
             return;
         }
 
-        if (fn_8000C8D8() && sGamePad->testTrigger(JUTGamePad::Z) && SceneManager::sSceneFrameCount <= 2) {
+        if (fn_8000C8D8() && sGamePad->testTrigger(JUTGamePad::Z) && SceneManager::sSceneFrameCount >= 2) {
             switch (MainGameScene::sCurMapNo) {
                 case MAP_GALLERY:
                 case MAP_MANSION:
