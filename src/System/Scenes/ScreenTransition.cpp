@@ -102,7 +102,6 @@ void ScreenTransition::switchToNextTransition() {
     mNext = SCREEN_TRANSITION_NONE;
 }
 
-// https://decomp.me/scratch/AABHI
 BOOL ScreenTransition::update() {
     if (mDelayFrames > 0) {
         mDelayFrames--;
@@ -122,12 +121,13 @@ BOOL ScreenTransition::update() {
                     break;
                 case SCREEN_PHASE_IN:
                     mCurrentFrame -= getFrameRateDivisor();
-
                     if (mCurrentFrame <= 0) {
                         mCurrentFrame = 0;
                         mCurrent = SCREEN_TRANSITION_NONE;
                         return TRUE;
                     }
+                    break;
+                case SCREEN_PHASE_DONE:
                     break;
             }
             break;
@@ -138,16 +138,19 @@ BOOL ScreenTransition::update() {
                     if (mCurrentFrame >= mLength) {
                         mCurrentFrame = mLength;
                         mPhase = SCREEN_PHASE_DONE;
+                        return TRUE;
                     }
-                    return TRUE;
+                    break;
                 case SCREEN_PHASE_IN:
                     mCurrentFrame += getFrameRateDivisor();
-
-                    if (mCurrentFrame > mLength) {
+                    if (mCurrentFrame >= mLength) {
                         mCurrentFrame = mLength;
                         mCurrent = SCREEN_TRANSITION_NONE;
+                        return TRUE;
                     }
-                    return TRUE;
+                    break;
+                case SCREEN_PHASE_DONE:
+                    break;
             }
             break;
         case SCREEN_TRANSITION_IMAGE:
@@ -156,18 +159,19 @@ BOOL ScreenTransition::update() {
                     mCurrentFrame++;
                     if (mCurrentFrame > 1) {
                         mPhase = SCREEN_PHASE_DONE;
+                        return TRUE;
                     }
-                    return TRUE;
-                case SCREEN_PHASE_IN:
-                    mCurrentFrame -= getFrameRateDivisor() * 10;
-
-                    if (mCurrentFrame < 1) {
-                        mCurrentFrame = 0;
-                        mCurrent = SCREEN_TRANSITION_NONE;
-                    }
-                    return TRUE;
+                    break;
                 case SCREEN_PHASE_DONE:
                     mCurrentFrame = 255;
+                    break;
+                case SCREEN_PHASE_IN:
+                    mCurrentFrame -= getFrameRateDivisor() * 10;
+                    if (mCurrentFrame <= 0) {
+                        mCurrentFrame = 0;
+                        mCurrent = SCREEN_TRANSITION_NONE;
+                        return TRUE;
+                    }
                     break;
             }
             break;
@@ -175,38 +179,44 @@ BOOL ScreenTransition::update() {
             switch (mPhase) {
                 case SCREEN_PHASE_OUT:
                     mCurrentFrame += getFrameRateDivisor();
-                    if (mCurrentFrame > mLength) {
+                    if (mCurrentFrame >= mLength) {
                         mCurrentFrame = mLength;
                         mPhase = SCREEN_PHASE_DONE;
+                        return TRUE;
                     }
-                    return TRUE;
+                    break;
                 case SCREEN_PHASE_IN:
                     mCurrentFrame -= getFrameRateDivisor();
-
-                    if (mCurrentFrame < 1) {
+                    if (mCurrentFrame <= 0) {
                         mCurrentFrame = 0;
                         mCurrent = SCREEN_TRANSITION_NONE;
+                        return TRUE;
                     }
-                    return TRUE;
+                    break;
+                case SCREEN_PHASE_DONE:
+                    break;
             }
             break;
         case SCREEN_TRANSITION_BLACK:
             switch (mPhase) {
                 case SCREEN_PHASE_OUT:
                     mCurrentFrame -= getFrameRateDivisor();
-
-                    if (mCurrentFrame < 1) {
+                    if (mCurrentFrame <= 0) {
                         mCurrentFrame = 0;
-                        mCurrent = SCREEN_TRANSITION_NONE;
+                        mPhase = SCREEN_PHASE_DONE;
+                        return TRUE;
                     }
-                    return TRUE;
+                    break;
                 case SCREEN_PHASE_IN:
                     mCurrentFrame += getFrameRateDivisor();
-                    if (mCurrentFrame > mLength) {
+                    if (mCurrentFrame >= mLength) {
                         mCurrentFrame = mLength;
-                        mPhase = SCREEN_PHASE_DONE;
+                        mCurrent = SCREEN_TRANSITION_NONE;
+                        return TRUE;
                     }
-                    return TRUE;
+                    break;
+                case SCREEN_PHASE_DONE:
+                    break;
             }
         case SCREEN_TRANSITION_NONE:
         case SCREEN_TRANSITION_BLACK_FADE:
@@ -331,7 +341,7 @@ void ScreenTransition::draw(GXTexObj* pScreenTexture) {
         GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
         GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
         GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_SET);
-        GXSetChanCtrl(GX_COLOR0A0, FALSE, GX_SRC_REG, GX_SRC_REG, 1, GX_DF_CLAMP, GX_AF_NONE);
+        GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 1, GX_DF_CLAMP, GX_AF_NONE);
 
         s32 currentFrame = mCurrentFrame; // ?
 
@@ -375,8 +385,8 @@ void ScreenTransition::draw(GXTexObj* pScreenTexture) {
         GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_SET);
         GXSetChanCtrl(GX_COLOR0A0, FALSE, GX_SRC_REG, GX_SRC_REG, 1, GX_DF_CLAMP, GX_AF_NONE);
 
-        s32 width = (mCurrentFrame * 480) / mLength;
-        s32 height = (mCurrentFrame * 640) / mLength;
+        s32 width = (mCurrentFrame * 640) / mLength;
+        s32 height = (mCurrentFrame * 480) / mLength;
         GXSetChanMatColor(GX_COLOR0A0, JUtility::TColor(255, 255, 255, 255));
         drawScreenQuad(320 - (width / 2),  240 - (height / 2), width, height);
         break;
