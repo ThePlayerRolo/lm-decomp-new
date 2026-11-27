@@ -10,6 +10,7 @@ extern f32 lbl_80218230[];
 extern f32 sinTable[1024];
 extern f32 cosTable[4096];
 extern u16 atanTable[1025];
+extern BOOL sFlipCullMode;
 
 void randomReset();
 u32 randomInt();
@@ -20,5 +21,10 @@ s32 getClosestPointOnLine(Vec* f1, Vec* f2, Vec* f3, f32* f4, Vec* f5);
 inline s32 randomIntModulate(s32 val) {
     return randomInt() % val;
 }
+
+// TODO determine if this TU owns this, if ResetGX owns this, whatever the case may be.
+// TODO declared here for now though, defined in ResetGX.cpp
+extern Mtx sDefaultMtx;
+extern Vec gZeroVec;
 
 #endif

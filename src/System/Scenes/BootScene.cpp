@@ -2,6 +2,7 @@
 #include <JSystem/JKernel/JKRExpHeap.hpp>
 #include <JSystem/JKernel/JKRMemArchive.hpp>
 #include <JSystem/J2D/J2DPicture.hpp>
+#include <JSystem/JUtility/JUTColor.hpp>
 #include <JSystem/J2D/J2DOrthoGraph.hpp>
 #include <dolphin/gx.h>
 
@@ -13,11 +14,12 @@
 #include "System/BackgroundTask.hpp"
 #include "System/DiscFile.hpp"
 #include "System/Yay0.hpp"
+#include "System/DisplayUtil.hpp"
+#include "System/ResetGX.hpp"
+#include "System/80008418.hpp"
+#include "System/8000A0D0.hpp"
 
-#include "Unsorted/LMDisplayUtil.hpp"
 #include "Unsorted/staticDataAramData.h"
-#include "Unsorted/80008418.hpp"
-#include "Unsorted/80009B80.hpp"
 #include "macros.h"
 
 enum BootSceneState {
@@ -67,7 +69,7 @@ namespace BootScene {
     // needs to be here for position
     const char* ninLogoFileName = "/ninlogo.pcm";
 
-    s32 sBootReady;
+    BOOL sBootReady;
     static BootSceneState sBootSceneState;
     static u16 lbl_804D8118;
     static f32 lbl_804D811C;
@@ -130,7 +132,7 @@ namespace BootScene {
         sBootSceneState = BOOT_IDLE;
         sBootReady = 0;
         sSystemHeap->becomeCurrentHeap();
-        fn_80009490();
+        unk_lbl_803A3820::fn_80009490();
         fn_8005FD80();
         setCurHeapGroupId(8);
         fn_8003EB44();
@@ -161,7 +163,7 @@ namespace BootScene {
         switch (sBootSceneState) {
         case BOOT_IDLE:
             startBackgroundTask(loadStaticData);
-            fn_80007F28();
+            checkProgressiveScanPrompt();
             sBootSceneState = BOOT_LOADING;
             return SCENE_BOOT;
         case BOOT_LOADING:
@@ -177,14 +179,17 @@ namespace BootScene {
         }
     }
 
+    static inline void setBlack(J2DPicture* pPic, JUtility::TColor tColor) { pPic->mBlack = tColor; }
+    static inline void setWhite(J2DPicture* pPic, JUtility::TColor tColor) { pPic->mWhite = tColor; }
+
     // problems but can't create a scratch because tu is too big lol
     void draw() {
         static s32 bootSceneFrameCount = 0;
         
-        fn_80009B80();
-        fn_80008654(&lbl_803A3820);
+        resetGXState();
+        lbl_803A3820.fn_80008654();
         GXSetChanMatColor(GX_COLOR0A0, sLogoMatColor);
-        LMSetViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+        setViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
         GXSetScissor(0, 0, 640, 480);
         GXSetCurrentMtx(0);
         GXSetNumChans(1);
@@ -201,11 +206,11 @@ namespace BootScene {
         J2DOrthoGraph graph(0, 0, 640, 480);
         graph.setPort();
         GXColor color = (GXColor){ 220, 0, 0, 255};
-        nintendoLogoPicture->mBlack = sBlack;
-        nintendoLogoPicture->mWhite = color;
+        setBlack(nintendoLogoPicture, sBlack);
+        setWhite(nintendoLogoPicture, color);
         nintendoLogoPicture->draw(0, 0, 640, 480, false, false, false);
-        if (SceneManager::lbl_804D8098 >= 2) {
-            fn_80007E50(1);
+        if (SceneManager::sTotalFrameCount >= 2) {
+            setDisplayFlags(1);
         }
         if (sBootSceneState == BOOT_READY) {
             bootSceneFrameCount++;

@@ -6,8 +6,8 @@
 #include "Sato/EnemyStrategy.hpp"
 #include "Sato/IncludeStrategy.hpp"
 #include "Koga/UnkUtil.hpp"
+#include "System/MathUtils.hpp"
 #include "macros.h"
-#include  "Unsorted/globals.hpp"
 
 dummy_float_data()
 enemies_float_data()

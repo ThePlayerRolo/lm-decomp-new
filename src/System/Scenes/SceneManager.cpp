@@ -6,13 +6,16 @@
 #include <dolphin/dvd.h>
 #include <JSystem/JUtility/JUTGamePad.hpp>
 
+#include "System/Reset.hpp"
 #include "System/DiscFile.hpp"
 #include "System/BackgroundTask.hpp"
 #include "System/Memory.hpp"
-
-#include "Unsorted/MathUtils.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
-#include "Unsorted/800080DC.hpp"
+#include "System/DisplayUtil.hpp"
+#include "System/ScreenTransitionCtrl.hpp"
+#include "System/80009584.hpp"
+#include "System/MathUtils.hpp"
+#include "System/ResetGX.hpp"
+#include "System/GameRender.hpp"
 
 // Other Scene related stuff
 #include "System/Scenes/SceneManager.hpp"
@@ -28,16 +31,16 @@
 #include "System/Scenes/SceneFunctionCalls.hpp"
 
 enum SceneManagerState {
-    SM_STATE_0,
-    SM_STATE_1,
-    SM_STATE_2
+    SM_STATE_LOADING,
+    SM_STATE_WAIT_TRANSITION,
+    SM_STATE_RUNNING,
 };
 
 struct SceneManagerHelper {
     inline SceneManagerHelper();
     
     /* 0x00 */ SceneManagerState mState;
-    /* 0x04 */ SceneID _4;
+    /* 0x04 */ SceneID mSceneID;
     /* 0x08 */ OSMessageQueue mOSMsgQueue;
     /* 0x28 */ OSMessage mMsgs;
 }; // size 0x2C
@@ -54,41 +57,40 @@ static Scene* sSceneTable[SCENE_MAX] = {
 };
 
 SceneManagerHelper::SceneManagerHelper() {
-    mState = SM_STATE_0;
+    mState = SM_STATE_LOADING;
     OSInitMessageQueue(&mOSMsgQueue, &mMsgs, 1);
     OSReceiveMessage(&mOSMsgQueue, nullptr, 0);
 }
 
 namespace SceneManager {
-    static void fn_8000B370(); // Unsure of return type/args
-    static void fn_8000B4A0(); // Unsure of return type/args
-    static void fn_8000B610(); // Unsure of return type/args
+    static void drawScene();
+    static void updateScene();
+    static void sceneLoop();
     
-    s32 lbl_804D8088;
-    static s32 lbl_804D808C;
-    s64 lbl_804D8090;
-    u64 lbl_804D8098;
+    BOOL sSceneChangePending;
+    u64 sTotalFrameCount; // Never reset
+    u64 sSceneFrameCount; // Resets every scene change
     SceneID sCurrSceneId;
-    s32 lbl_804D80A4;
-    static s32 lbl_804D80A8;
-    s32 lbl_804D80AC;
+    MapNumber sNextMapNo;
+    static BOOL sSceneEnd;
+    BOOL sDiscErrorActive;
     s32 lbl_804D80B0;
-    static s32 lbl_804D80B4;
-    static s32 lbl_804D80B8;
+    static s32 sUnusedSceneInt;
+    static s32 lbl_804D80B8; // If set, would call fn_80188710
 
     static SceneManagerHelper sSceneMgr;
     static Scene* sCurrScene = &BootScene::sBootScene;
 
-    u16 fn_8000B328() {
-        return sCurrScene->_10;
+    u16 getFrameInterval() {
+        return sCurrScene->mFrameInterval;
     }
 
-    void fn_8000B334(s32 param_1) {
-        lbl_804D8088 = 1;
+    void requestSceneChange(SceneID param_1) {
+        sSceneChangePending = 1;
         OSSendMessage(&sSceneMgr.mOSMsgQueue, (OSMessage)param_1, OS_MESSAGE_NOBLOCK);
     }
 
-    void fn_8000B370() {
+    void drawScene() {
         GXLoadPosMtxImm(sDefaultMtx, 0);
         GXLoadNrmMtxImm(sDefaultMtx, 0);
 
@@ -120,16 +122,16 @@ namespace SceneManager {
         GXLoadNrmMtxImm(sDefaultMtx, 27);
 
         sCurrScene->mDrawFn();
-        LMDefaultOrthoView();
+        defaultOrthoView();
     }
 
-    void fn_8000B4A0() {
-        SceneID val = sSceneMgr._4;
+    void updateScene() {
+        SceneID val = sSceneMgr.mSceneID;
         if (SceneManager::sCurrSceneId != val) {
             SceneManager::sCurrSceneId = val;
-            lbl_804D8088 = 1;
-            lbl_804D80A8 = 1;
-            fn_80008394();
+            sSceneChangePending = 1;
+            sSceneEnd = 1;
+            ScreenTransitionCtrl::requestTransition();
         }
 
         if (fn_8018A8B4() == 2) {
@@ -147,7 +149,7 @@ namespace SceneManager {
         }
 
         OSMessage msg;
-        if (isDiscLoadPending() != true && sSceneMgr.mState == SM_STATE_2 && 
+        if (isDiscLoadPending() != true && sSceneMgr.mState == SM_STATE_RUNNING && 
                 (fn_8018A8B4() != 2 || (fn_8018A860() && !DVDGetDriveStatus())) && 
                 OSReceiveMessage(&sSceneMgr.mOSMsgQueue, &msg, OS_MESSAGE_NOBLOCK)) {
             if (lbl_804D7FF0 == 3) {
@@ -166,54 +168,54 @@ namespace SceneManager {
             }
 
             sCurrSceneId = static_cast<SceneID>(reinterpret_cast<u32>(msg));
-            fn_80008394();
-            lbl_804D80A8 = 1;
+            ScreenTransitionCtrl::requestTransition();
+            sSceneEnd = 1;
         }
     }
 
-    void fn_8000B610() {
-        sSceneMgr.mState = SM_STATE_0;
-        sSceneMgr._4 = SceneManager::sCurrSceneId;
+    void sceneLoop() {
+        sSceneMgr.mState = SM_STATE_LOADING;
+        sSceneMgr.mSceneID = SceneManager::sCurrSceneId;
 
         while (true) {
-            lbl_804D80B4 = 0;
-            fn_80007800();
+            sUnusedSceneInt = 0;
+            beginFrame();
 
-            if (sSceneMgr.mState == SM_STATE_2) {
-                fn_8000B370();
+            if (sSceneMgr.mState == SM_STATE_RUNNING) {
+                drawScene();
             }
 
-            fn_800081A8(&lbl_803A3810);
+            sScreenTransitionCtrl.draw();
             setDVDStatus();
 
             switch (sSceneMgr.mState) {
-                case SM_STATE_0:
+                case SM_STATE_LOADING:
                     if (pollBackgroundTaskComplete() == 1) {
-                        sSceneMgr.mState = SM_STATE_1;
-                        fn_80009540(sCurrScene->_10);
-                        fn_80007E60(sCurrScene->_10);
+                        sSceneMgr.mState = SM_STATE_WAIT_TRANSITION;
+                        setDirectionalRepeat(sCurrScene->mFrameInterval);
+                        setFrameRateDivisor(sCurrScene->mFrameInterval);
                     }
                     break;
-                case SM_STATE_1:
-                    if (lbl_803A3810) {
-                        fn_800083A4(2);
-                        sSceneMgr.mState = SM_STATE_2;
+                case SM_STATE_WAIT_TRANSITION:
+                    if (sScreenTransitionCtrl.getState() != 1) {
+                        ScreenTransitionCtrl::setTransitionType(SCREEN_TRANSITION_BLACK_FADE);
+                        sSceneMgr.mState = SM_STATE_RUNNING;
                         setCurHeapGroupId(0x16);
                     }
                     break;
             }
 
             fn_80185910();
-            fn_800079B0();
+            applyRenderMode();
             JUTGamePad::read();
             fn_80009580();
 
-            if (sSceneMgr.mState == 2 && lbl_804D80AC == 0 && lbl_804D80A8 == 0) {
-                fn_8000ADCC();
-                sSceneMgr._4 = sCurrScene->mUpdateFn();
+            if (sSceneMgr.mState == 2 && sDiscErrorActive == 0 && sSceneEnd == 0) {
+                swapPerFrameBuffer();
+                sSceneMgr.mSceneID = sCurrScene->mUpdateFn();
             }
 
-            fn_8000812C(&lbl_803A3810);
+            sScreenTransitionCtrl.update();
             if (BootScene::sBootReady != 0) {
                 fn_8018865C();
             }
@@ -222,38 +224,38 @@ namespace SceneManager {
                 fn_80188710();
             }
 
-            LMChangeFrameBuffer();
-            if (sSceneMgr.mState != SM_STATE_0) {
-                fn_800080DC(&lbl_803A3810);
+            endFrame();
+            if (sSceneMgr.mState != SM_STATE_LOADING) {
+                sScreenTransitionCtrl.startTransitionIn();
             }
 
-            if (lbl_804D80A8 != 0) {
-                lbl_804D80A8 = 0;
+            if (sSceneEnd != 0) {
+                sSceneEnd = 0;
                 break;
             }
 
-            fn_8000B4A0();
-            fn_80005E04();
-            lbl_804D8090++;
-            lbl_804D8098++;
+            updateScene();
+            updateReset();
+            sTotalFrameCount++;
+            sSceneFrameCount++;
         }
     }
 
-    void fn_8000B7F4() {
+    void mainLoop() {
         initBackgroundTask();
 
         do {
-            lbl_804D8098 = 0;
+            sSceneFrameCount = 0;
 
             randomReset();
             setCurHeapGroupId(0xC);
-            fn_8000AD48();
+            initPerFrameBuffer();
             setCurHeapGroupId(0x1A);
             startBackgroundTask(sCurrScene->mInitFn);
-            fn_800083B4(0x1E);
-            fn_8000B610();
+            ScreenTransitionCtrl::setTransitionLength(30);
+            sceneLoop();
             sCurrScene->mDestroyFn();
-            fn_8000ADA0();
+            freePerFrameBuffer();
             sCurrScene = sSceneTable[sCurrSceneId];
             freeHeapGroups(0x1A);
         } while (true);

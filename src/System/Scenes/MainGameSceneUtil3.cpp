@@ -1,6 +1,7 @@
 #include <dolphin/gx/GXTransform.h>
 #include <dolphin/gx/GXCull.h>
 #include <JSystem/JKernel/JKRExpHeap.hpp>
+#include <JSystem/JUtility/JUTGamePad.hpp>
 
 #include "System/Scenes/SceneManager.hpp"
 #include "System/Scenes/MainGameScene.hpp"
@@ -9,11 +10,10 @@
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "System/DataOnly.hpp"
 #include "System/Memory.hpp"
-
-#include "Unsorted/GamePad.hpp"
-#include "Unsorted/80008418.hpp"
-#include "Unsorted/80009B80.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
+#include "System/DisplayUtil.hpp"
+#include "System/ResetGX.hpp"
+#include "System/80008418.hpp"
+#include "System/80009584.hpp"
 
 namespace MainGameScene {
     s32 lbl_804D80E0;
@@ -24,19 +24,19 @@ namespace MainGameScene {
             return;
         }
 
-        if (fn_8000C8D8() && sGamePad->testTrigger(0x10) && SceneManager::lbl_804D8098 <= 2) {
+        if (fn_8000C8D8() && sGamePad->testTrigger(JUTGamePad::Z) && SceneManager::sSceneFrameCount >= 2) {
             switch (MainGameScene::sCurMapNo) {
-                case 6:
-                case 2:
+                case MAP_GALLERY:
+                case MAP_MANSION:
                     void* temp = fn_800AD39C(0); //checks against the 0x55 byte
                     lbl_804D80C4 = 3;
                     lbl_804D8438 = 0;
-                    fn_80007E60(1);
+                    setFrameRateDivisor(FRAME_INTERVAL_60FPS);
                     fn_8018A678(1);
                     fn_8018A2A0(0x3804);
                     lbl_804D80E0 = 1;
                     fn_8007220C();
-                    LMSetIntRenderModeVFilter(0x10);
+                    setIntRenderModeVFilter(0x10);
                     fn_800531B8();
                     break;
             }
@@ -54,7 +54,7 @@ namespace MainGameScene {
                 lbl_804D80E0 = 2;
             }
 
-            if (sGamePad->testTrigger(0x210)) {
+            if (sGamePad->testTrigger(JUTGamePad::B | JUTGamePad::Z)) {
                 fn_8000CB78();
                 return;
             }
@@ -81,14 +81,14 @@ namespace MainGameScene {
             case 1:
                 break;
             case 2:
-                fn_80009B80();
-                fn_80008654(&lbl_803A3820);
+                resetGXState();
+                lbl_803A3820.fn_80008654();
                 GXSetViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f, 1);
                 GXSetScissor(0, 0, 640, 480);
                 fn_80121AFC();
                 break;
             case 3:
-                fn_80008654(&lbl_803A3820);
+                lbl_803A3820.fn_80008654();
                 GXSetViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f, 1);
                 GXSetScissor(0, 0, 640, 480);
                 fn_80121AFC();
@@ -101,7 +101,7 @@ namespace MainGameScene {
     
     void fn_8000CB78() {
         if (lbl_804D80E0 != 0 && lbl_804D80C4 == 3) {
-            SceneManager::lbl_804D8088 = 0;
+            SceneManager::sSceneChangePending = FALSE;
             lbl_804D80E0 = 0;
             lbl_804D80C4 = 0;
             lbl_804D8438 = 1;
@@ -112,8 +112,8 @@ namespace MainGameScene {
             fn_801219C4();
             fn_80188760(lbl_804D8008 & 0xFF, 0);
             fn_8005DAFC();
-            fn_80007E60(2);
-            LMSetIntRenderModeVFilter(6);
+            setFrameRateDivisor(FRAME_INTERVAL_30FPS);
+            setIntRenderModeVFilter(6);
 
             if (sUnusedHeap != nullptr) {
                 sUnusedHeap->destroy();

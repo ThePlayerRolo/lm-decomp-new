@@ -3,6 +3,8 @@
 #include <dolphin/os/OSCache.h>
 
 #include "System/Memory.hpp"
+#include "JSystem/JKernel/JKRHeap.hpp"
+#include "macros.h"
 
 static JKRExpHeap* sRootHeap;
 JKRExpHeap* sSystemHeap;
@@ -19,13 +21,17 @@ void initializeGX() {
     sGXInitFifoObj = GXInit(sGXBaseBuffer,  0x80000);
 }
 
-//https://decomp.me/scratch/RvI1x
+// https://decomp.me/scratch/YCqGb
 void initHeaps() {
     sRootHeap = JKRExpHeap::createRoot(1, false);
     s32 size = sRootHeap->getFreeSize();
-    void* addr = sRootHeap->alloc(size, 4);
+    u32* addr = reinterpret_cast<u32*>(sRootHeap->alloc(size, 4));
 
-    //Some struct copying code....
+    u32* ptr = addr;
+    s32 count = size / 4;
+    for (int i = 0; i < count; i++) {
+        *ptr++ = 0;
+    }
 
     DCStoreRange(addr, size);
     JKRFree(addr);

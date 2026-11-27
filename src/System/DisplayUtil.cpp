@@ -3,23 +3,27 @@
 #include <dolphin/gx.h>
 #include <dolphin/os.h>
 #include <dolphin/vi.h>
+#include <dolphin/os/OSMessage.h>
 
-#include "Unsorted/LMDisplayUtil.hpp"
+#include "System/DisplayUtil.hpp"
 #include "System/Memory.hpp"
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
+#include "System/UnknownSystemCalls.hpp"
+#include "System/ResetGX.hpp"
+#include "System/MathUtils.hpp"
+#include "macros.h"
 
-// externs
-extern void fn_80047444(s32);
+dummy_float_data()
 
-struct LMVIMessageQueue {
-    /* 0x00 */ u32 _0;
-    /* 0x04 */ u32 _4;
-    /* 0x08 */ OSMessageQueue mMessageQueue;
-    /* 0x28 */ s32 mMsgArr[1];  // Msg
+struct FrameSync {
+    /* 0x00 */ u32 mLastRetraceCount;
+    /* 0x04 */ u32 mFrameRateDivisor; // 1 = 60fps, 2 = 30fps
+    /* 0x08 */ OSMessageQueue mMsgQueue;
+    /* 0x28 */ OSMessage mMsg;  // Msg
 };
 
 // .bss start
-LMVIMessageQueue sVIMessageQueue;
+FrameSync sFrameSync;
 GXRenderModeObj sIntRenderModeObj;
 // .bss end
 
@@ -54,31 +58,23 @@ GXRenderModeObj sProgRenderModeObj = {
     },
     { 0,0, 26,12,26, 0,0  }
 };
-
-Vec gZeroVec = {0.0f, 0.0f, 0.0f};
-
-Mtx sDefaultMtx = {
-    {1.0f, 0.0f, 0.0f, 0.0f},
-    {0.0f, 1.0f, 0.0f, 0.0f},
-    {0.0f, 0.0f, 1.0f, 0.0f}
-};
 // clang-format on
 
 // .data end
 
 // .sbss start
-s32 lbl_804D8030;
+JUTDirectPrint* sDirectPrintManager;
 u8 sRenderMode;
-LMVISettings sVISettings;
-void* lbl_804D803C;
-void* lbl_804D8040;
+DisplayState sDisplayState;
+void* sFrameBufferA;
+void* sFrameBufferB;
 void* sMainFrameBuffer;
 void* sPrevMainFrameBuffer;
-void* lbl_804D804C[2];
+void* sFrameBuffers[2];
 GXRenderModeObj* sCurRenderModeObj;
-s32 lbl_804D8058;
-s32 sProgressiveMode;
-s32 lbl_804D8060;
+ProgressiveScanState sProgressiveScanPromptState; 
+s32 sProgressiveScanChoice; // Pending choice from player, actual result is sRenderMode
+s32 sProgressiveScanMsgTimer;
 // .sbss end
 
 // .sdata start
@@ -88,10 +84,10 @@ GXRenderModeObj* sDefaultRenderModes[2] = {
 };
 // .sdata end
 
-static void LMConfigureRenderDisplay();
+static void configureRenderDisplay();
 static void postRetraceCallback(u32 retraceCount);
 
-void LMInitDisplayInternal(LMVISettings* dst) {
+static void initDisplayInternal(DisplayState* dst) {
     VISetBlack(TRUE);
     sIntRenderModeObj = GXNtsc480IntDf;
     sIntRenderModeObj.vfilter[0] = 6;
@@ -103,68 +99,61 @@ void LMInitDisplayInternal(LMVISettings* dst) {
     sIntRenderModeObj.vfilter[4] = 20;
     OSGetTime();
 
-    u32 uVar1 = 1;
+    OSInitMessageQueue(&sFrameSync.mMsgQueue, &sFrameSync.mMsg, 1);
+    sFrameSync.mLastRetraceCount = VIGetRetraceCount();
+    sFrameSync.mFrameRateDivisor = 1;
 
-    OSInitMessageQueue(&sVIMessageQueue.mMessageQueue, &sVIMessageQueue.mMsgArr, ARRAY_COUNT(sVIMessageQueue.mMsgArr));
-    sVIMessageQueue._0 = VIGetRetraceCount();
-    sVIMessageQueue._4 = 1;
-    u8 groupID = 2;
-
-    dst->_0 = 0;
-    dst->_2 = true;
-    dst->_3 = 0;
+    dst->mFlags = 0;
+    dst->mIsDoubleBuffered = true;
+    dst->mBufferIndex = 0;
     sMainFrameBuffer = nullptr;
-    sSystemHeap->changeGroupID(groupID);
+    sSystemHeap->changeGroupID(2);
 
     u32 frameBufferSize = 0x96000;
-    if (lbl_804D803C == nullptr) {
-        uVar1 = 0;
-
-        lbl_804D803C = JKRAllocFromHeap(nullptr, frameBufferSize, 0x20);
+    if (sFrameBufferA == nullptr) {
+        sFrameBufferA = JKRAllocFromHeap(nullptr, frameBufferSize, 0x20);
     }
 
-    if (lbl_804D803C != nullptr) {
-        DCInvalidateRange(lbl_804D803C, frameBufferSize);
+    if (sFrameBufferA != nullptr) {
+        DCInvalidateRange(sFrameBufferA, frameBufferSize);
     }
 
-    if (dst->_2 == true) {
-        if (lbl_804D8040 == nullptr) {
-            uVar1 = 0;
-
-            lbl_804D8040 = JKRAllocFromHeap(nullptr, frameBufferSize, 0x20);
+    if (dst->mIsDoubleBuffered == true) {
+        if (sFrameBufferB == nullptr) {
+            sFrameBufferB = JKRAllocFromHeap(nullptr, frameBufferSize, 0x20);
         }
 
-        if (lbl_804D8040 != nullptr) {
-            DCInvalidateRange(lbl_804D8040, frameBufferSize);
+        if (sFrameBufferB != nullptr) {
+            DCInvalidateRange(sFrameBufferB, frameBufferSize);
         }
-        sMainFrameBuffer = lbl_804D803C;
+        sMainFrameBuffer = sFrameBufferA;
     } else {
-        lbl_804D8040 = sMainFrameBuffer = lbl_804D803C;
+        sFrameBufferB = sMainFrameBuffer = sFrameBufferA;
     }
 
-    lbl_804D804C[0] = lbl_804D803C;
-    void* temp = sMainFrameBuffer;
-    lbl_804D804C[1] = lbl_804D8040;
+    void* firstBuffer = sMainFrameBuffer;
+    sFrameBuffers[0] = sFrameBufferA;
+    sFrameBuffers[1] = sFrameBufferB;
 
-    VISetNextFrameBuffer(temp);
+    VISetNextFrameBuffer(firstBuffer);
     sCurRenderModeObj = &sIntRenderModeObj;
-    LMConfigureRenderDisplay();
-    // Temp to match stack, its possible they used this for debugging
-    VIRetraceCallback cb = VISetPostRetraceCallback(postRetraceCallback);
+    configureRenderDisplay();
+    VISetPostRetraceCallback(postRetraceCallback);
 
     sSystemHeap->changeGroupID(26);
 }
 
 void postRetraceCallback(u32 retraceCount) {
-    if (retraceCount - sVIMessageQueue._0 >= sVIMessageQueue._4) {
-        OSSendMessage(&sVIMessageQueue.mMessageQueue, (void*)0x444F4E45, OS_MESSAGE_NOBLOCK);
+    if (retraceCount - sFrameSync.mLastRetraceCount >= sFrameSync.mFrameRateDivisor) {
+        // Reports "DONE" once the frame rate divisor retraces have passed since the frames started.
+        OSSendMessage(&sFrameSync.mMsgQueue, OSMessage(0x444F4E45), OS_MESSAGE_NOBLOCK);
     }
 }
 
-static void setNextVIFrameBuffer(LMVISettings* pSettings) {
+static void setNextVIFrameBuffer(DisplayState* pSettings) {
     // TODO: Remove this
     FORCE_DONT_INLINE;
-    if ((pSettings->_0 & 1)) {
+    if ((pSettings->mFlags & 1)) {
         VISetBlack(GX_FALSE);
     } else {
         VISetBlack(GX_TRUE);
@@ -172,15 +161,14 @@ static void setNextVIFrameBuffer(LMVISettings* pSettings) {
 
     VISetNextFrameBuffer(sMainFrameBuffer);
     VIFlush();
-    if (pSettings->_2) {
-        pSettings->_3 ^= 1;
-        sMainFrameBuffer = lbl_804D804C[pSettings->_3];
+    if (pSettings->mIsDoubleBuffered) {
+        pSettings->mBufferIndex ^= 1;
+        sMainFrameBuffer = sFrameBuffers[pSettings->mBufferIndex];
     }
 }
 
-void LMResetRenderDisplay() {
-    GXColor clearColor = {0, 0, 0, 0};
-    GXSetCopyClear(clearColor, 0xFFFFFF);
+void resetRenderDisplay() {
+    GXSetCopyClear(sReset, 0xFFFFFF);
     GXSetColorUpdate(GX_TRUE);
     GXSetAlphaUpdate(GX_TRUE);
     GXSetZMode(GX_TRUE, GX_LESS, GX_TRUE);
@@ -199,9 +187,9 @@ void LMResetRenderDisplay() {
     }
 }
 
-static void LMConfigureRenderDisplay() {
+static void configureRenderDisplay() {
     VIConfigure(sCurRenderModeObj);
-    LMResetRenderDisplay();
+    resetRenderDisplay();
     GXCopyDisp(sMainFrameBuffer, GX_TRUE);
     GXCopyDisp(sMainFrameBuffer, GX_TRUE);
     GXFlush();
@@ -211,20 +199,20 @@ static void LMConfigureRenderDisplay() {
     VIWaitForRetrace();
 }
 
-void LMInitDisplay() {
-    LMInitDisplayInternal(&sVISettings);
+void initDisplay() {
+    initDisplayInternal(&sDisplayState);
 }
 
-void fn_80007800() {
+void beginFrame() {
     GXInvalidateTexAll();
     GXInvalidateVtxCache();
     GXSetScissor(0, 0, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight);
 }
 
-void fn_8000783C() {
+void endFrameSingleBuffered() {
     GXDrawDone();
-    OSReceiveMessage(&sVIMessageQueue.mMessageQueue, nullptr, OS_MESSAGE_BLOCK);
-    sVIMessageQueue._0 = VIGetRetraceCount();
+    OSReceiveMessage(&sFrameSync.mMsgQueue, nullptr, OS_MESSAGE_BLOCK);
+    sFrameSync.mLastRetraceCount = VIGetRetraceCount();
     VIWaitForRetrace();
     GXSetColorUpdate(GX_TRUE);
     GXSetAlphaUpdate(GX_TRUE);
@@ -233,7 +221,7 @@ void fn_8000783C() {
         GXCopyDisp(sMainFrameBuffer, GX_TRUE);
     }
 
-    if ((sVISettings._0 & 1)) {
+    if ((sDisplayState.mFlags & 1)) {
         VISetBlack(GX_FALSE);
     } else {
         VISetBlack(GX_TRUE);
@@ -242,46 +230,48 @@ void fn_8000783C() {
     VISetNextFrameBuffer(sMainFrameBuffer);
     VIFlush();
 
-    if (sVISettings._2) {
-        sVISettings._3 ^= 1;
-        sMainFrameBuffer = lbl_804D804C[sVISettings._3];
+    if (sDisplayState.mIsDoubleBuffered) {
+        sDisplayState.mBufferIndex ^= 1;
+        sMainFrameBuffer = sFrameBuffers[sDisplayState.mBufferIndex];
     }
 
     GXFlush();
 }
 
-void LMChangeFrameBuffer() {
-    LMResetRenderDisplay();
-    if (sVISettings._2 == true) {
+void endFrame() {
+    resetRenderDisplay();
+    if (sDisplayState.mIsDoubleBuffered == true) {
         GXDrawDone();
         GXSetColorUpdate(GX_TRUE);
         GXSetAlphaUpdate(GX_TRUE);
         GXCopyDisp(sMainFrameBuffer, GX_TRUE);
         GXFlush();
-        setNextVIFrameBuffer(&sVISettings);
-        OSReceiveMessage(&sVIMessageQueue.mMessageQueue, NULL, OS_MESSAGE_BLOCK);
-        sVIMessageQueue._0 = VIGetRetraceCount();
+        setNextVIFrameBuffer(&sDisplayState);
+        OSReceiveMessage(&sFrameSync.mMsgQueue, NULL, OS_MESSAGE_BLOCK);
+        sFrameSync.mLastRetraceCount = VIGetRetraceCount();
     } else {
-        fn_8000783C();
+        endFrameSingleBuffered();
     }
-    void* frameBuf = sMainFrameBuffer;
 
+    void* frameBuf = sMainFrameBuffer;
     JUTDirectPrint::getManager()->changeFrameBuffer(frameBuf, 640, 480);
 }
 
-void fn_800079B0() {
+void applyRenderMode() {
     if (sCurRenderModeObj != sDefaultRenderModes[sRenderMode]) {
         sCurRenderModeObj = sDefaultRenderModes[sRenderMode];
-        LMConfigureRenderDisplay();
+        configureRenderDisplay();
     }
 }
 
-// https://decomp.me/scratch/d7YKn
-void LMDefaultOrthoView() {
+void defaultOrthoView() {
+    f32 x = 0.0f;
+    f32 y = 0.0f;
+
     GXSetScissor(0, 0, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight);
-    GXSetViewportJitter(0.0f, 0.0f, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight, 0.0f, 1.875f, 1);
-    Mtx orthoMtx;
-    MTXOrtho(orthoMtx, -0.0f, 3.96875f, -0.0f, sCurRenderModeObj->fbWidth, -1.875f, 4.4765625f);
+    GXSetViewportJitter(0.0f, 0.0f, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight, 0.0f, 1.0f, 1);
+    Mtx44 orthoMtx;
+    MTXOrtho(orthoMtx, -y, 480.0f - y, -x, sCurRenderModeObj->fbWidth - x, -1.0f, 1000.0f);
     GXSetProjection(orthoMtx, GX_ORTHOGRAPHIC);
     GXSetCullMode(GX_CULL_NONE);
     GXLoadPosMtxImm(sDefaultMtx, 0);
@@ -295,16 +285,11 @@ void LMDefaultOrthoView() {
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
     GXSetChanCtrl(GX_COLOR1A1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
-    GXColor local_70 = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetChanMatColor(GX_COLOR0A0, local_70);
-    GXColor local_74 = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetChanAmbColor(GX_COLOR0A0, local_74);
-    GXColor local_78 = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetChanMatColor(GX_COLOR1A1, local_78);
-    GXColor local_7c = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetChanAmbColor(GX_COLOR1A1, local_7c);
-    GXColor local_80 = {0xFF, 0xFF, 0xFF, 0xFF};
-    GXSetTevKColor(GX_KCOLOR0, local_80);
+    GXSetChanMatColor(GX_COLOR0A0, sWhite);
+    GXSetChanAmbColor(GX_COLOR0A0, sWhite);
+    GXSetChanMatColor(GX_COLOR1A1, sWhite);
+    GXSetChanAmbColor(GX_COLOR1A1, sWhite);
+    GXSetTevKColor(GX_KCOLOR0, sWhite);
     GXSetTevKColorSel(GX_TEVSTAGE0, GX_TEV_KCSEL_K0);
     GXSetTevKAlphaSel(GX_TEVSTAGE0, GX_TEV_KASEL_K0_A);
     GXSetNumTexGens(1);
@@ -319,71 +304,69 @@ void LMDefaultOrthoView() {
     GXSetAlphaCompare(GX_GREATER, 0, GX_AOP_AND, GX_GREATER, 0);
     GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
     GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
-    GXSetDstAlpha(GX_FALSE, 0xFF);
+    GXSetDstAlpha(GX_FALSE, 255);
 }
 
-// https://decomp.me/scratch/tMgJK
-void LMSetViewportJitter(f32 left, f32 top, f32 width, f32 height, f32 near, f32 far) {
+void setViewportJitter(f32 left, f32 top, f32 width, f32 height, f32 near, f32 far) {
     f32 widthScale = sCurRenderModeObj->fbWidth / 640.0f;
+    f32 heightScale = 1.0f;
 
     if (sCurRenderModeObj->field_rendering) {
-        GXSetViewportJitter(left * widthScale, top * -1.0f, width * widthScale, height * -1.0f, near, far, VIGetNextField());
+        GXSetViewportJitter(left * widthScale, top * heightScale, width * widthScale, height * heightScale, near, far, VIGetNextField());
     } else {
-        GXSetViewportJitter(left * widthScale, top * -1.0f, width * widthScale, height * -1.0f, near, far, 1);
+        GXSetViewportJitter(left * widthScale, top * heightScale, width * widthScale, height * heightScale, near, far, 1);
     }
 }
 
-void fn_80007E50(u16 param_1) {
-    sVISettings._0 |= param_1;
+void setDisplayFlags(u16 flags) {
+    sDisplayState.mFlags |= flags;
 }
 
-void fn_80007E60(s32 param_1) {
-    sVIMessageQueue._4 = param_1;
+void setFrameRateDivisor(s32 divisor) {
+    sFrameSync.mFrameRateDivisor = divisor;
 }
 
-// https://decomp.me/scratch/BHaSG
-void fn_80007E70(bool param_1) {
-    sVISettings._2 = param_1;
-    if (param_1 == true) {
-        sVISettings._3 ^= 1;
-        sVISettings._3 &= sVISettings._0;
-        sMainFrameBuffer = lbl_804D804C[sVISettings._3];
+void setDoubleBuffered(bool enable) {
+    sDisplayState.mIsDoubleBuffered = enable;
+    if (enable == true) {
+        sDisplayState.mBufferIndex ^= 1;
+        sDisplayState.mBufferIndex &= sDisplayState.mIsDoubleBuffered;
+        sMainFrameBuffer = sFrameBuffers[sDisplayState.mBufferIndex];
         return;
     }
 
     sPrevMainFrameBuffer = sMainFrameBuffer;
 
-    if (sPrevMainFrameBuffer == lbl_804D803C)
-        sMainFrameBuffer = lbl_804D8040;
+    if (sPrevMainFrameBuffer == sFrameBufferA)
+        sMainFrameBuffer = sFrameBufferB;
     else
-        sMainFrameBuffer = lbl_804D803C;
+        sMainFrameBuffer = sFrameBufferA;
 }
 
-void* LMGetMainFrameBuffer() {
+void* getMainFrameBuffer() {
     return sMainFrameBuffer;
 }
 
-void* LMGetPrevMainFrameBuffer() {
+void* getPrevMainFrameBuffer() {
     return sPrevMainFrameBuffer;
 }
 
-u32 LMGetVIMessageQueueUnk4() {
-    return sVIMessageQueue._4;
+u32 getFrameRateDivisor() {
+    return sFrameSync.mFrameRateDivisor;
 }
 
-// https://decomp.me/scratch/jpyvK
-void LMSetIntRenderModeVFilter(u8 vfilterVal) {
+void setIntRenderModeVFilter(s32 vfilterVal) {
     sIntRenderModeObj.vfilter[0] = vfilterVal;
     sIntRenderModeObj.vfilter[6] = vfilterVal;
     sIntRenderModeObj.vfilter[2] = 26 - vfilterVal;
     sIntRenderModeObj.vfilter[4] = 26 - vfilterVal;
 }
 
-void fn_80007F28() {
+void checkProgressiveScanPrompt() {
     if (VIGetDTVStatus() != 0) {
         if (sGamePad->testButton(JUTGamePad::B) != 0 || OSGetProgressiveMode() != 0) {
-            lbl_804D8058 = 1;
-            sProgressiveMode = 1;
+            sProgressiveScanPromptState = PSCAN_ASKING;
+            sProgressiveScanChoice = 1;
             return;
         }
 
@@ -394,53 +377,47 @@ void fn_80007F28() {
     OSSetProgressiveMode(0);
 }
 
-void fn_80007F90() {
-    if (lbl_804D8058 != 1)
+void updateProgressiveScanPrompt() {
+    if (sProgressiveScanPromptState != 1)
         return;
 
     if (sGamePad->testRepeat(JUTGamePad::PRESS_LEFT)) {
-        sProgressiveMode ^= 1;
+        sProgressiveScanChoice ^= 1;
     }
 
     if (sGamePad->testRepeat(JUTGamePad::PRESS_RIGHT)) {
-        sProgressiveMode ^= 1;
+        sProgressiveScanChoice ^= 1;
     }
 
-    fn_80047444(sProgressiveMode);
+    fn_80047444(sProgressiveScanChoice);
 }
 
-void fn_80008004() {
-    static u32 lbl_804D8064;
-    static s8 lbl_804D8068;
+void tickProgressiveMessage() {
+    static u32 lbl_804D8064 = 0;
 
-    if (!lbl_804D8068) {
-        lbl_804D8064 = false;
-        lbl_804D8068 = true;
-    }
-
-    if (lbl_804D8058 != 2)
+    if (sProgressiveScanPromptState != 2)
         return;
 
-    if (lbl_804D8060 <= 0) {
-        lbl_804D8058 = 0;
+    if (sProgressiveScanMsgTimer <= 0) {
+        sProgressiveScanPromptState = PSCAN_OFF;
         return;
     }
 
-    lbl_804D8060 = lbl_804D8060 - 1;
-    fn_80047444(sProgressiveMode + 2);
+    sProgressiveScanMsgTimer--;
+    fn_80047444(sProgressiveScanChoice + 2);
 }
 
-void LMUpdateProgressiveMode() {
-    if (lbl_804D8058 != 1)
+void applyProgressiveChoice() {
+    if (sProgressiveScanPromptState != 1)
         return;
 
-    if (sProgressiveMode == OSGetProgressiveMode()) {
-        lbl_804D8060 = 0;
-        lbl_804D8058 = 0;
+    if (sProgressiveScanChoice == OSGetProgressiveMode()) {
+        sProgressiveScanMsgTimer = 0;
+        sProgressiveScanPromptState = PSCAN_OFF;
     } else {
-        lbl_804D8060 = 90;
-        lbl_804D8058 = 2;
+        sProgressiveScanMsgTimer = 90;
+        sProgressiveScanPromptState = PSCAN_SHOW_RESULT;
     }
-    OSSetProgressiveMode(sProgressiveMode);
+    OSSetProgressiveMode(sProgressiveScanChoice);
     sRenderMode = OSGetProgressiveMode();
 }

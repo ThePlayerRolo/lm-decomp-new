@@ -5,7 +5,7 @@
 #include "Koga/ToolData.hpp"
 #include "Sato/EnThought.hpp"
 #include "Unsorted/ActorData.hpp"
-#include "Unsorted/MathUtils.hpp"
+#include "System/MathUtils.hpp"
 #include "Koga/800E82D8.hpp"
 
 // Does not match due to some ToolData inline shenanigans. Seems to match more as a u32 input though than u8

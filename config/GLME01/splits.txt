@@ -12,6 +12,18 @@ Sections:
 	.sbss       type:bss align:16
 	.sdata2     type:rodata align:32
 
+Main.cpp:
+	.text       start:0x80005760 end:0x80005C00
+	.data       start:0x80218100 end:0x80218180
+	.bss        start:0x803968E0 end:0x80396900
+	.sdata      start:0x804CFF60 end:0x804CFF68
+	.sbss       start:0x804D7FE0 end:0x804D7FF0
+
+System/Reset.cpp:
+	.text       start:0x80005C00 end:0x80005EB8
+	.bss        start:0x80396900 end:0x8039AC38
+	.sbss       start:0x804D7FF0 end:0x804D8008
+
 System/DataOnly.cpp:
 	.sbss       start:0x804D8008 end:0x804D8010
 
@@ -37,7 +49,7 @@ System/BackgroundTask.cpp:
 System/Yay0.cpp:
 	.text       start:0x800071C0 end:0x80007398
 
-Unsorted/LMDisplayUtil.cpp:
+System/DisplayUtil.cpp:
 	.text       start:0x80007398 end:0x800080DC
 	.data       start:0x802181B8 end:0x80218210
 	.bss        start:0x803A3600 end:0x803A3668
@@ -45,49 +57,56 @@ Unsorted/LMDisplayUtil.cpp:
 	.sbss       start:0x804D8030 end:0x804D8070
 	.sdata2     start:0x804D9880 end:0x804D98A0
 
-Unsorted/800080DC.cpp:
+System/ScreenTransitionCtrl.cpp:
 	.text       start:0x800080DC end:0x80008418
 	.ctors      start:0x8020BAC4 end:0x8020BAC8
 	.bss        start:0x803A3668 end:0x803A3820
 	.sbss       start:0x804D8070 end:0x804D8078
 	.sdata2     start:0x804D98A0 end:0x804D98A8
 
-Unsorted/80008418.cpp:
-	.text       start:0x80008418 end:0x80009584
+System/80008418.cpp:
+	.text       start:0x80008418 end:0x80009540
 	.ctors      start:0x8020BAC8 end:0x8020BACC
+	.bss        start:0x803A3820 end:0x803A3A80
 	.sdata2     start:0x804D98A8 end:0x804D9928
 
-Unsorted/80009584.cpp:
-	.text       start:0x80009584 end:0x8000962C
+System/80009584.cpp:
+	.text       start:0x80009540 end:0x8000962C
+	.sbss       start:0x804D8078 end:0x804D8080
 	.sdata2     start:0x804D9928 end:0x804D9940
 
-Unsorted/MathUtils.cpp:
+System/MathUtils.cpp:
 	.text       start:0x8000962C end:0x80009B80
 	.data       start:0x80218210 end:0x8021DA40
 	.sdata      start:0x804CFF78 end:0x804CFF80
+	.sbss       start:0x804D8080 end:0x804D8088
 	.sdata2     start:0x804D9940 end:0x804D9968
 
-Unsorted/80009B80.cpp:
+System/ResetGX.cpp:
 	.text       start:0x80009B80 end:0x8000A0D0
 	.data       start:0x8021DA40 end:0x8021DA80
 	.sdata      start:0x804CFF80 end:0x804CFF90
 	.sdata2     start:0x804D9968 end:0x804D9978
 
-Unsorted/8000A0D0.cpp:
+System/8000A0D0.cpp:
 	.text       start:0x8000A0D0 end:0x8000AC48
 	.sdata2     start:0x804D9978 end:0x804D9998
 
-Unsorted/8000AC48.cpp:
+System/GameRender.cpp:
 	.text       start:0x8000AC48 end:0x8000AED8
 	.bss        start:0x803A3A80 end:0x803A3A98
 	.sdata      start:0x804CFF90 end:0x804CFF98
 	.sdata2     start:0x804D9998 end:0x804D99A8
 
-Unsorted/8000AED8.cpp:
-	.text       start:0x8000AED8 end:0x8000B328
+System/ButtonCombo.cpp:
+	.text       start:0x8000AED8 end:0x8000B014
 	.ctors      start:0x8020BACC end:0x8020BAD0
-	.data       start:0x8021DA80 end:0x8021DB20
+	.data       start:0x8021DA80 end:0x8021DAE0
 	.bss        start:0x803A3A98 end:0x803A3AE0
+
+System/ClearDepth.cpp:
+	.text       start:0x8000B014 end:0x8000B328
+	.data       start:0x8021DAE0 end:0x8021DB20
 	.sdata2     start:0x804D99A8 end:0x804D99C8
 
 System/Scenes/SceneManager.cpp:
@@ -1224,7 +1243,7 @@ JSystem/JUtility/JUTException.cpp:
 	.text       start:0x801D833C end:0x801D9604
 	.data       start:0x80394308 end:0x803945C8
 	.bss        start:0x804CB130 end:0x804CB148
-	.sdata      start:0x804D7E70 end:0x804D7E98
+	.sdata      start:0x804D7E70 end:0x804D7EA0
 	.sbss       start:0x804D9570 end:0x804D9588
 	.sdata2     start:0x804DD6D8 end:0x804DD6E0
 

@@ -1,11 +1,16 @@
-#include "Unsorted/MathUtils.hpp"
-#include "math.h"
+#include <math.h>
+
+#include "System/MathUtils.hpp"
+
+
 static u32 seed = 1;
 u32 lbl_80218210[2][4] = {
     { 0, 1, 2, 3},
     { 3, 2, 1, 3},
 };
 f32 lbl_80218230[] = { 0.0f, 1.0f };
+
+BOOL sFlipCullMode;
 
 void randomReset() {
     seed = 1;

@@ -1,6 +1,7 @@
 #include "Unsorted/SimpleDraw.hpp"
-#include "System/Scenes/SceneFunctionCalls.hpp"
-#include "Unsorted/80008418.hpp"
+#include "System/80008418.hpp"
+#include "System/8000A0D0.hpp"
+
 
 void fn_8005A550();  // some function related to initing gx settings
 void fn_800952D8(Mtx mtx, Quaternion* rQuat);
