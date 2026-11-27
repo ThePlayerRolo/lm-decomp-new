@@ -22,5 +22,5 @@ namespace MainGameScene {
     };
 
     s32 lbl_804D80C4;
-    s32 sCurMapNo;
+    MapNumber sCurMapNo;
 }

@@ -1,23 +1,23 @@
 #include <dolphin/gx/GXTransform.h>
 #include <dolphin/gx/GXCull.h>
 #include <JSystem/JKernel/JKRExpHeap.hpp>
+#include <JSystem/JUtility/JUTGamePad.hpp>
 
 #include "System/Scenes/MainGameScene.hpp"
 #include "System/Scenes/MainGameSceneUtil4.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "System/DataOnly.hpp"
-
-#include "Unsorted/GamePad.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
+#include "System/DisplayUtil.hpp"
+#include "System/80009584.hpp"
 
 
 namespace MainGameScene {
     static s32 lbl_804D80E8;
-    static s32 lbl_804D80EC;
+    static BOOL lbl_804D80EC;
 
     void fn_8000CC18() {
         lbl_804D8438 = 0;
-        fn_80007E60(1);
+        setFrameRateDivisor(FRAME_INTERVAL_60FPS);
         fn_8018A2A0(0x3804);
         fn_8007220C();
         fn_80055114(lbl_804D80E8);
@@ -28,7 +28,7 @@ namespace MainGameScene {
         if (lbl_804D80C4 == 5) {
             if (lbl_804D80EC == 0) {
                 lbl_804D8438 = 0;
-                fn_80007E60(1);
+                setFrameRateDivisor(FRAME_INTERVAL_60FPS);
                 fn_8018A2A0(0x3804);
                 fn_8007220C();
                 fn_80055114(lbl_804D80E8);
@@ -55,12 +55,12 @@ namespace MainGameScene {
         lbl_804D8438 = 1;
         fn_80055338();
         fn_80188760(lbl_804D8008 & 0xFF, nullptr);
-        fn_80007E60(2);
+        setFrameRateDivisor(FRAME_INTERVAL_30FPS);
         lbl_804D80EC = 0;
     }
     
     void fn_8000CD60() {
-        static s32 lbl_804D80F0 = 0;
+        static BOOL lbl_804D80F0 = 0;
 
         if (lbl_804D80C4 != 6) {
             return;
@@ -73,7 +73,7 @@ namespace MainGameScene {
             return;
         }
 
-        if (sGamePad->testButton(0x200)) {
+        if (sGamePad->testButton(JUTGamePad::B)) {
             lbl_804D80F0 = 1;
         }
 
@@ -81,7 +81,7 @@ namespace MainGameScene {
     }
 
     void fn_8000CDE0() {
-        static s32 lbl_804D80F8 = 0;
+        static BOOL lbl_804D80F8 = 0;
 
         if (lbl_804D80C4 != 7) {
             return;

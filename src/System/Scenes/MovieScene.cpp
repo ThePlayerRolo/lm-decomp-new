@@ -24,13 +24,10 @@ namespace MovieScene {
         s32 gameHeapFree = getGameHeapFreeSize();
         u32 memDiff = gameHeapFree - 0x100000;
         void* newMem = allocMem(memDiff, 32);
-
-        if (newMem != nullptr) {
-            do {
-                do {
-                    // Some sort of struct creation step
-                } while (true); // Not the correct condition but definitely some sort of loop
-            } while (true); // Not the correct condition but definitely some sort of loop
+        
+        u8* clearMem = static_cast<u8*>(newMem);
+        for (int i = 0; i < memDiff; i++) {
+            clearMem[i] = 0;
         }
         
         DCStoreRange(newMem, memDiff);

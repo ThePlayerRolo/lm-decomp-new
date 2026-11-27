@@ -1,9 +1,9 @@
 #include "Ajioka/AEnEBone.hpp"
 #include "Unsorted/Character.hpp"
 #include "Sato/EnZako.hpp"
-#include "Unsorted/MathUtils.hpp"
+#include "System/MathUtils.hpp"
 #include "dolphin/mtx.h"
-#include "Unsorted/globals.hpp"
+#include "System/ResetGX.hpp"
 
 void fn_800F4374(EnZako*, s32, s32);
 

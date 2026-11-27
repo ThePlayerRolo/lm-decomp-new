@@ -1,12 +1,13 @@
 #include <dolphin/os/OSMessage.h>
 
 #include "System/DiscFile.hpp"
+#include "JSystem/JKernel/JKRMemArchive.hpp"
 #include "System/Yay0.hpp"
 #include "System/DiscThread.hpp"
 #include "System/Scenes/SceneManager.hpp"
 #include "System/UnknownSystemCalls.hpp"
 #include "System/Memory.hpp"
-#include "Unsorted/GamePad.hpp"
+#include "System/80009584.hpp"
 
 // Possibly Fabricated.
 struct DiscUnk {
@@ -31,7 +32,7 @@ static void decompressAndMountDiscArchive(void*, DiscFileInfo*);
 
 static DiscFileInfo sFileInfoRing[MAX_FILE_INFO_ARR];
 static DiscFileQueue sDiscFileQueue;
-s32 sFileDataError;
+BOOL sFileDataError;
 
 void* allocDiscFile(u32 size, s32 align) {
     return allocMem(size, align);
@@ -51,39 +52,39 @@ void updateDiscDriveStatus(DiscFileQueue* pQueue) {
     switch (driveStatus) {
     case DVD_STATE_FATAL_ERROR:
         sGamePad->stopMotor();
-        SceneManager::lbl_804D80AC = 1;
+        SceneManager::sDiscErrorActive = TRUE;
         break;
     case DVD_STATE_END:
-        SceneManager::lbl_804D80AC = 0;
+        SceneManager::sDiscErrorActive = FALSE;
         break;
     case DVD_STATE_BUSY:
         if (DVDCheckDisk() != 0) {
-            SceneManager::lbl_804D80AC = 0;
+            SceneManager::sDiscErrorActive = FALSE;
         } else {
             driveStatus = DVD_STATE_COVER_CLOSED;
             sGamePad->stopMotor();
-            SceneManager::lbl_804D80AC = 1;
+            SceneManager::sDiscErrorActive = TRUE;
         }
         break;
     case DVD_STATE_COVER_CLOSED:
         sGamePad->stopMotor();
-        SceneManager::lbl_804D80AC = 1;
+        SceneManager::sDiscErrorActive = TRUE;
         break;
     case DVD_STATE_NO_DISK:
         sGamePad->stopMotor();
-        SceneManager::lbl_804D80AC = 1;
+        SceneManager::sDiscErrorActive = TRUE;
         break;
     case DVD_STATE_COVER_OPEN:
         sGamePad->stopMotor();
-        SceneManager::lbl_804D80AC = 1;
+        SceneManager::sDiscErrorActive = TRUE;
         break;
     case DVD_STATE_WRONG_DISK:
         sGamePad->stopMotor();
-        SceneManager::lbl_804D80AC = 1;
+        SceneManager::sDiscErrorActive = TRUE;
         break;
     case DVD_STATE_RETRY:
         sGamePad->stopMotor();
-        SceneManager::lbl_804D80AC = 1;
+        SceneManager::sDiscErrorActive = TRUE;
         break;
     }
     fn_800473F8(driveStatus);
@@ -248,9 +249,10 @@ u8* openCompressedArchiveAsync(const char* pFileName, DiscFileCallback pCallback
     }
     sDiscFileQueue.mCurrFileInfo->mDecompBuffer = pArchiveBuffer;
     u8 oldGroupId = setCurHeapGroupId(sDiscFileQueue.mCurrFileInfo->mHeapGroupID);
-    void* ret = allocDiscFile(0x68, 4);
+    void* buffer = allocDiscFile(0x68, 4);
+    JKRMemArchive* ret = reinterpret_cast<JKRMemArchive*>(buffer);
     setCurHeapGroupId(oldGroupId);
-    sDiscFileQueue.mCurrFileInfo->mArchive = reinterpret_cast<JKRMemArchive*>(ret);
+    sDiscFileQueue.mCurrFileInfo->mArchive = ret;
     sDiscFileQueue.mCurrFileInfo->mPostLoadFunc = decompressAndMountDiscArchive;
     sDiscFileQueue.mCurrFileInfo->mCallback = pCallback;
     sDiscFileQueue.mCurrFileInfo->mCallbackArg = pCallbackArg;

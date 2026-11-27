@@ -1,5 +1,5 @@
 #include "Koga/UnkUtil.hpp"
-#include "Unsorted/MathUtils.hpp"
+#include "System/MathUtils.hpp"
 
 // This is the same implementation as ToolData::hashString yet it seems to be seperated here?
 u32 hashStringSeperate(const char* key) {

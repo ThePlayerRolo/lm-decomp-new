@@ -1,5 +1,6 @@
 #include <JSystem/ResTIMG.hpp>
 #include <dolphin/gx/GXTexture.h>
+#include <dolphin/gx/GXStruct.h>
 
 #include "System/Scenes/Scene.hpp"
 #include "System/Scenes/EndingScene.hpp"
@@ -7,10 +8,9 @@
 
 #include "System/DiscFile.hpp"
 #include "System/Memory.hpp"
+#include "System/ResetGX.hpp"
 
 #include "Unsorted/BackgroundMusic.hpp"
-#include "Unsorted/80009B80.hpp"
-#include "dolphin/gx/GXStruct.h"
 #include "macros.h"
 
 dummy_float_data()

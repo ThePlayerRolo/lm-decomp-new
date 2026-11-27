@@ -52,6 +52,6 @@ s32 getDiscFileAllocDirection();
 void setDVDStatus();
 void closeDiscFile(OSMessage, DiscFileInfo*);
 
-extern s32 sFileDataError;
+extern BOOL sFileDataError;
 
 #endif

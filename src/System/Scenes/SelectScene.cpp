@@ -2,9 +2,9 @@
 #include "System/Scenes/MainGameScene.hpp"
 #include "System/Scenes/OpeningScene.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
+#include "System/DisplayUtil.hpp"
 
 #include "Unsorted/InGameFlagsUtil.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
 
 namespace SelectScene {
     static void fn_8000B978();
@@ -23,7 +23,7 @@ namespace SelectScene {
     };
 
     void fn_8000B8D8(MainGameSceneHelper* param_1) {
-        param_1->_0 = 0;
+        param_1->mRequestPending = FALSE;
         OSInitMessageQueue(&param_1->mMsgQueue, &param_1->mMsgSend, 1);
     }
 
@@ -66,7 +66,7 @@ namespace SelectScene {
         fn_800379F4(&lbl_803CDEB0);
         OpeningScene::sNextSceneID = SCENE_MAIN_GAME;
         fn_800626B0();
-        MainGameScene::sCurMapNo = 2;
+        MainGameScene::sCurMapNo = MAP_MANSION;
         fn_8004CED4();
     }
 
@@ -80,7 +80,7 @@ namespace SelectScene {
 
     void draw() {
         fn_8004CFBC();
-        fn_80008004();
+        tickProgressiveMessage();
     }
 
     void destroy() {

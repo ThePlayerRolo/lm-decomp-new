@@ -1,22 +1,22 @@
 #include <dolphin/gx/GXTransform.h>
 #include <dolphin/gx/GXCull.h>
 #include <JSystem/JKernel/JKRExpHeap.hpp>
+#include <JSystem/JUtility/JUTGamePad.hpp>
+
+#include "System/DisplayUtil.hpp"
+#include "System/Memory.hpp"
+#include "System/DataOnly.hpp"
+#include "System/ResetGX.hpp"
+#include "System/80008418.hpp"
 
 #include "System/Scenes/MainGameSceneUtil1.hpp"
-#include "System/Memory.hpp"
 #include "System/Scenes/MainGameSceneUtil2.hpp"
 #include "System/Scenes/MainGameScene.hpp"
 #include "System/Scenes/SceneManager.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "System/Scenes/SelectScene.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
-#include "Unsorted/GamePad.hpp"
-#include "Unsorted/80009B80.hpp"
-#include "Unsorted/80008418.hpp"
-#include "System/DataOnly.hpp"
-
+#include "System/80009584.hpp"
 #include "macros.h"
-#include "types.h"
 
 MainGameSceneHelper::MainGameSceneHelper() {
     SelectScene::fn_8000B8D8(this);
@@ -31,7 +31,7 @@ namespace MainGameScene {
     void fn_8000C36C(void* param_1, s32 param_2) {
         if (MainGameScene::lbl_804D80C4 == 0) {
             lbl_804D80D4 = param_2;
-            if (lbl_803A3B10._0 == 0) {
+            if (lbl_803A3B10.mRequestPending == FALSE) {
                 OSSendMessage(&lbl_803A3B10.mMsgQueue, param_1, OS_MESSAGE_NOBLOCK);
             }
         }
@@ -48,16 +48,16 @@ namespace MainGameScene {
         if (recvMsg != 0) {
             if (fn_8000C8D8()) {
                 // calls fn_800AD39C(0) around here and gets the 0x55 byte
-                if (SceneManager::lbl_804D8098 <= 2) {
+                if (SceneManager::sTotalFrameCount >= 2) {
                     lbl_804D80C4 = 2;
                     lbl_804D8438 = 0;
-                    fn_80007E60(1);
+                    setFrameRateDivisor(FRAME_INTERVAL_60FPS);
                     fn_8018A678(1);
                     fn_8018A2A0(0x3804);
                     lbl_804D80D0 = 0;
                     fn_8015FD68(&lbl_803D990C);
                     fn_8007220C();
-                    lbl_803A3B10._0 = 1;
+                    lbl_803A3B10.mRequestPending = TRUE;
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace MainGameScene {
                 lbl_804D80D0 = 1;
             }
 
-            if (sGamePad->testTrigger(0xA00)) {
+            if (sGamePad->testTrigger(JUTGamePad::Y | JUTGamePad::B)) {
                 fn_8000C6A8();
                 return;
             }
@@ -107,14 +107,14 @@ namespace MainGameScene {
             case 0:
                 break;
             case 1:
-                fn_80009B80();
-                fn_80008654(&lbl_803A3820);
+                resetGXState();
+                lbl_803A3820.fn_80008654();
                 GXSetViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f, 1);
                 GXSetScissor(0, 0, 640, 480);
                 fn_80121AFC();
                 break;
             case 2:
-                fn_80008654(&lbl_803A3820);
+                lbl_803A3820.fn_80008654();
                 GXSetViewportJitter(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f, 1);
                 GXSetScissor(0, 0, 640, 480);
                 fn_80029FA0();
@@ -147,10 +147,10 @@ namespace MainGameScene {
             fn_801219C4();
             fn_80188760(lbl_804D8008 & 0xFF, nullptr);
             fn_8005DAFC();
-            fn_80007E60(2);
+            setFrameRateDivisor(FRAME_INTERVAL_30FPS);
 
             lbl_804D80D0 = 0;
-            lbl_803A3B10._0 = 0;
+            lbl_803A3B10.mRequestPending = FALSE;
             fn_8015FD80(lbl_803D990C, &lbl_803A3B10);
 
             if (sUnusedHeap != nullptr) {

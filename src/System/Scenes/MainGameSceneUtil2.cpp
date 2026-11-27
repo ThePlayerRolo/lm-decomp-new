@@ -1,20 +1,24 @@
+#include <JSystem/JUtility/JUTGamePad.hpp>
+
 #include "System/Scenes/MainGameScene.hpp"
 #include "System/Scenes/SceneManager.hpp"
 #include "System/Scenes/MainGameSceneUtil2.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
-#include "Unsorted/GamePad.hpp"
-#include "Unsorted/LMDisplayUtil.hpp"
+#include "System/80009584.hpp"
+#include "System/DisplayUtil.hpp"
+#include "System/ScreenTransitionCtrl.hpp"
+
 
 namespace MainGameScene {
-    s32 lbl_804D80D8;
+    static BOOL lbl_804D80D8;
 
     s32 fn_8000C784(void*, s32 param_1) {
-        if (lbl_804D80C4 == 0 && SceneManager::lbl_804D8088 == 0 && 
-            sGamePad->testTrigger(0x1000)) {
+        if (lbl_804D80C4 == 0 && SceneManager::sSceneChangePending == FALSE && 
+            sGamePad->testTrigger(JUTGamePad::START)) {
             
             lbl_804D80C4 = 1;
             lbl_804D8438 = 0;
-            fn_80007E60(1);
+            setFrameRateDivisor(FRAME_INTERVAL_60FPS);
             fn_8018A678(1);
             fn_8018A2A0(0x3804);
             fn_8007220C();
@@ -43,24 +47,24 @@ namespace MainGameScene {
     void fn_8000C860() {
         fn_8018A678(0);
         lbl_804D8438 = 1;
-        fn_80007E60(2);
+        setFrameRateDivisor(FRAME_INTERVAL_30FPS);
     }
 
     void fn_8000C894() {
-        SceneManager::lbl_804D8088 = 0;
+        SceneManager::sSceneChangePending = FALSE;
         lbl_804D80C4 = 0;
         fn_8018A678(0);
         lbl_804D8438 = 1;
-        fn_80007E60(2);
+        setFrameRateDivisor(FRAME_INTERVAL_30FPS);
         fn_800393CC();
     }
 
     bool fn_8000C8D8() {
-        if (lbl_803A3810 != 0) {
+        if (sScreenTransitionCtrl.getState() != 0) {
             return false;
         }
 
-        if (SceneManager::lbl_804D8088 != 0) {
+        if (SceneManager::sSceneChangePending != FALSE) {
             return false;
         }
 

@@ -4,6 +4,8 @@
 #include <types.h>
 
 #define MAX_SCENE_NAME_SIZE 16
+#define FRAME_INTERVAL_60FPS 1
+#define FRAME_INTERVAL_30FPS 2
 
 enum SceneID {
     SCENE_BOOT,
@@ -24,7 +26,7 @@ typedef void (*SceneDestroyFunc)();
 
 struct Scene {
     /* 0x00 */ char mName[MAX_SCENE_NAME_SIZE];
-    /* 0x10 */ u16 _10;
+    /* 0x10 */ u16 mFrameInterval;
     /* 0x14 */ SceneInitFunc mInitFn;
     /* 0x18 */ SceneUpdateFunc mUpdateFn;
     /* 0x1C */ SceneDrawFunc mDrawFn;

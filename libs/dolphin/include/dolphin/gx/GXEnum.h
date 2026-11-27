@@ -900,6 +900,7 @@ typedef enum _GXFBClamp
     GX_CLAMP_NONE = 0,
     GX_CLAMP_TOP = 1,
     GX_CLAMP_BOTTOM = 2,
+    GX_CLAMP_ALL = 3,
 } GXFBClamp;
 
 typedef enum _GXCopyMode
