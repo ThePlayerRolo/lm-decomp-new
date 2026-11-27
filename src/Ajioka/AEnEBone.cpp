@@ -34,7 +34,7 @@ static s32 flyFramesDuration = 61;
 static f32 lbl_804D4AFC = 2.0f;
 static f32 flyGravity = 0.8f;
 
-static Vec pos = { -3300, 100, -2800 };
+static Vec sStartPosition = { -3300, 100, -2800 };
 
 void AEnEBone::doBehavior() {
     EnemyStrategyState* state = findStrategyState(enemiesStates, ARRAY_COUNT(enemiesStates), mCurrentState);
@@ -56,8 +56,8 @@ bool AEnEBone::state_0_Init() {
     EnZako* zako = getZako();
     Character* enemy = zako->getCharacter();
 
-    enemy->_E3 = -1;
-    enemy->_E7 = -1;
+    enemy->mAlpha1 = -1;
+    enemy->mAlpha2 = -1;
     zako->getCharacter()->_40 &= ~0xC400;
     zako->fn_800BF384();
 
@@ -74,7 +74,7 @@ bool AEnEBone::state_1_Init() {
     EnZako* zako = getZako();
     JGeometry::TVec3f velocity;
 
-    velocity.subPS(pos, zako->getCharacter()->_44);
+    velocity.sub(CONVERT_VEC_REF(sStartPosition), zako->getCharacter()->mPosition);
 
     velocity.x /= flyFramesDuration;
 
@@ -129,7 +129,7 @@ bool AEnEBone::state_2_Init() {
 }
 
 bool AEnEBone::state_2_Behavior() {
-    getZako()->getCharacter()->setVelocity(gZeroVec);
+    getZako()->getCharacter()->setVelocity(CONVERT_VEC_REF(gZeroVec));
 
     return true;
 }

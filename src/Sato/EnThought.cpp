@@ -121,18 +121,18 @@ void EnThought::reset() {
         character->_8A = 0;
         character->_8C = 0;
         character->_8E = 0;
-        character->setVelocity(*(JGeometry::TVec3f*)&gZeroVec);
+        character->setVelocity(CONVERT_VEC_REF(gZeroVec));
         ToolDataRef ref = getToolDataRef();
         if (ref.isValid()) {
             u8 invisible = 0;
             ref.getToolData()->getValue(ref.getEntryIndex(), "invisible", &invisible);
 
             if (invisible != 0) {
-                character->_E3 = invisible;
-                character->_E7 = invisible;
+                character->mAlpha1 = invisible;
+                character->mAlpha2 = invisible;
             } else {
-                character->_E3 = 255;
-                character->_E7 = 255;
+                character->mAlpha1 = 255;
+                character->mAlpha2 = 255;
             }
         }
     }

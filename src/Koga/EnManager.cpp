@@ -261,6 +261,7 @@ namespace Koga {
         pDest->mEnd = pMgr->_4.end();
     }
 
+
     // https://decomp.me/scratch/fm1ig
     void EnManager::fn_800E5ABC(s32 idx) {
         unkEnManager1* temp = &_4[idx];

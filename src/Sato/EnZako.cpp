@@ -30,33 +30,29 @@ void EnZako::vt_10() {
     _944 = 0.0;
     _948 = 0.0;
     _94C = 0;
-    _950 = nullptr;
+    mPlayerID = 0;
 }
 
 
-void EnZako::fn_800C1F38(const Koga::ToolData::JMapData* pMapData) {
-    _95C.attach(pMapData);
+void EnZako::attachPathData(const Koga::ToolData::JMapData* pPathData) {
+    mPathData.attach(pPathData);
 }
 
 
-bool EnZako::fn_800C1F5C() {
+bool EnZako::attachPathData() {
     ToolDataRef temp = getToolDataRef();
     const char* pathName;
 
-    if (temp.getToolData() == nullptr) {
-        return true;
-    }
-    else if (!(temp.getToolData()->getValue(temp.getEntryIndex(), "path_name", &pathName))) {
+    if (!ToolDataRef::getValue(&temp, "path_name", &pathName)) {
         return false;
     }
-    else {
-        _95C.attach(reinterpret_cast<Koga::ToolData::JMapData*>(Koga::GameModeUtil::getPathResource(pathName)));
-    }
+
+    mPathData.attach(Koga::GameModeUtil::getPathResource(pathName));
 
     return true;
 }
 
 
 Koga::ToolData* EnZako::fn_800C1FF4() {
-    return &_95C;
+    return &mPathData;
 }

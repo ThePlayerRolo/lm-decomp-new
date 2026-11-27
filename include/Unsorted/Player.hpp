@@ -2,10 +2,13 @@
 #define PLAYER_HPP
 
 #include "Unsorted/character.hpp"
+#include "Unsorted/PlayerInteraction.hpp"
 
-// stub
 class Player : public Character {
+public:
     Player();
+
+    s32 receiveInteraction(PlayerInteractionType type, PlayerInteractionInfo* pInteractionInfo);
 };
 
 #endif

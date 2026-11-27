@@ -64,23 +64,24 @@ bool EnReplace::vt_14() {
 
 bool EnReplace::state_0000_Init() {
     getZako()->getCharacter()->_40 |= 0xC400;
-    getZako()->getCharacter()->setE3andE7();
+    getZako()->getCharacter()->setInvisible();
 
     return true;
 }
 
 bool EnReplace::state_0000_Behavior() {
-    getZako()->getCharacter()->setVelocity(*(JGeometry::TVec3f*)&gZeroVec);
+    getZako()->getCharacter()->setVelocity(CONVERT_VEC_REF(gZeroVec));
 
-    Character* character = getZako()->getCharacter();
+    EnZako* zako = getZako();
+
+    Character* character = zako->getCharacter();
 
     if (mTimer < unk1) {
         return true;
     }
 
-    if (fn_800E6ED0(getZako()) == 0) {
-        Koga::CharacterEvent event = Koga::CharacterEvent(message);
-        getZako()->fn_800C0F08(this, &event);
+    if (fn_800E6ED0(zako) == 0) {
+        zako->fn_800C0F08(Koga::CharacterEvent(message));
     }
 
     setNextState(1);

@@ -74,7 +74,7 @@ namespace Koga {
         u32 fn_800E55AC(s32);
         s32 fn_800E55F0(s32); // Gets _0 member from AppearSlot
         Player* getPlayer(s32);
-        Player* fn_800E5634(s32); // Helper function to get a player object from fn_80069130 (by taking in _E08[param_1]._0?)
+        MoveObj* fn_800E5634(s32); // Helper function to get a player object from fn_80069130 (by taking in _E08[param_1]._0?)
 
         s32 fn_800E5660(JGeometry::TVec3f*, JGeometry::TVec3f*, f32);
         s32 fn_800E56E4(JGeometry::TVec3f*, JGeometry::TVec3f*);
@@ -84,6 +84,7 @@ namespace Koga {
         unkEnManager1* fn_800E58D4(u32, ToolData*, s32); // Needs more decompilation
         void fn_800E59D4(s32);
         static void fn_800E5A00(unkEnManager1Wrapper*, EnManager*); // TODO Fake Match, probably not static
+        void fn_800E5A00(unkEnManager1Wrapper*);
         EnThought* fn_800E5A14(s32);
         EnThought* fn_800E5A80(s32); // Requires some lbl to be decompiled: lbl_803D7004
         void fn_800E5ABC(s32);

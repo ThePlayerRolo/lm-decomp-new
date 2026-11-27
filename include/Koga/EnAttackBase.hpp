@@ -11,7 +11,7 @@
 
 class EnAttackBaseParams {
 public:
-    EnAttackBaseParams() : 
+    EnAttackBaseParams() :
         mParams("/param/th/EnAttackBase.prm"),
         mDamage(&mParams, 0, "mDamage", TBaseParam::calcKeyCode("mDamage")),
         mAttackType(&mParams, 0, "mAttackType", TBaseParam::calcKeyCode("mAttackType"))
@@ -32,7 +32,7 @@ public:
 
     void EnAttackBase_fn_800DDD5C(void*);
     bool EnAttackBase_fn_800DDDD8(const char* filePath);
-    void EnAttackBase_fn_800DDE3C();
+    void sendAttack();
     void EnAttackBase_fn_800DDEC8();
     bool EnAttackBase_fn_800DDED4();
     s32 EnAttackBase_fn_800DDF58();

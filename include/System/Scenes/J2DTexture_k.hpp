@@ -1,4 +1,5 @@
-#pragma once
+#ifndef J2DTEXTURE_K_HPP
+#define J2DTEXTURE_K_HPP
 
 #include <JSystem/J2D/J2DPicture.hpp>
 #include <JSystem/JUtility/JUTTexture.hpp>
@@ -19,3 +20,5 @@ public:
 
     /* 0x15C */ GXTexObj mTextureObj;
 };
+
+#endif

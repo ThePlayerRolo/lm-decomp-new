@@ -2,6 +2,7 @@
 #define GAMEMODE_UTIL_H_
 
 #include "Koga/MissionMode.hpp"
+#include "Koga/ToolData.hpp"
 
 class JKRArchive;
 class MessageReceiver;
@@ -21,7 +22,7 @@ namespace Koga {
         void toggleBlackoutTables(MissionMode::Mission mission);
         void fn_800B9EBC();
         void fn_800B9ED0();
-        void* getPathResource(const char* pName);
+        ToolData::JMapData* getPathResource(const char* pName);
         void addJmpReceiver(MessageReceiver* pReceiver);
         JKRArchive* getMapArchive();
         ToolData* getJmpResource(const char* pName);

@@ -24,7 +24,7 @@ public:
 };
 
 // All of these are referenced in EnManager. No arg types or return types are guaranteed.
-void characterInit(void*, void*); // lbl_8033B1B0 = character.cpp,  lbl_8033B1C0 = Character init failed
-void* fn_80069130(void*);
+s32 characterInit(void*, void*);
+Character* fn_80069130(s32 idx);
 
 #endif

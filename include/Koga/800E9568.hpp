@@ -36,7 +36,7 @@ public:
 
     void fn_800E9B44();
     void fn_800E9B74();
-    bool fn_800E9C38(Koga::CharacterEvent*);
+    bool fn_800E9C38(const Koga::CharacterEvent&);
 
     bool fn_800E9C78();
     Character* getCharacter();

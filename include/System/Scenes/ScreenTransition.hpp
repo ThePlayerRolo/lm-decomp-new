@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SCREEN_TRANSITION_HPP
+#define SCREEN_TRANSITION_HPP
 
 #include "System/Scenes/J2DTexture_k.hpp"
 
@@ -44,3 +45,5 @@ public:
     /* 0x196 */ s16 mLength;
     /* 0x198 */ s16 _198;
 };
+
+#endif

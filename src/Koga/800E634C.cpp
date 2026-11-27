@@ -7,7 +7,7 @@
 #include "Unsorted/MoveObj.hpp"
 
 f32 fn_800E6C5C(EnThought* pThought) {
-    JGeometry::TVec3f& charPosition = pThought->getCharacter()->_44;
+    JGeometry::TVec3f& charPosition = pThought->getCharacter()->getPosition();
     ToolDataRef dataRef = pThought->getToolDataRef();
 
     if (dataRef.isValid()) {

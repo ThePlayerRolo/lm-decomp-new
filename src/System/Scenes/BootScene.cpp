@@ -74,10 +74,10 @@ namespace BootScene {
     static J2DPicture* nintendoLogoPicture;
     static JKRMemArchive* staticDataArchive;
 
-    void dvdFileOpenCallback(void* param_1, DiscFileInfo* param_2) {
-        u8* block = reinterpret_cast<u8*>(JKRAllocFromHeap(nullptr, getYay0ArcSize(param_2->mFileBuffer), 32));
-        decompressYay0(param_2->mFileBuffer, block);
-        freeMem(param_2->mFileBuffer);
+    void dvdFileOpenCallback(void* param_1, DiscFileInfo* pFileInfo) {
+        u8* block = reinterpret_cast<u8*>(JKRAllocFromHeap(nullptr, getYay0ArcSize(pFileInfo->mFileBuffer), 32));
+        decompressYay0(pFileInfo->mFileBuffer, block);
+        freeMem(pFileInfo->mFileBuffer);
         fn_80066FAC(new JKRMemArchive(block, 0, MBF_0));
     }
 

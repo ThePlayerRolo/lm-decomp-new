@@ -5,7 +5,7 @@
 #include <JSystem/JORReflexible.hpp>
 
 class EnemyStrategy;
-class EnZako; 
+class EnZako;
 
 typedef void* (EnemyStrategyInitFn)(void* buffer, u32 bufferSize);
 typedef bool (EnemyStrategy::*EnemyStrategyStateFn)();
@@ -39,8 +39,8 @@ enum STRATEGY_STATE {
     STRAT_STATE_19  = 0x19,
     STRAT_STATE_1A  = 0x1A,
     STRAT_STATE_1B  = 0x1B,
-    
-    // 0x100+ 
+
+    // 0x100+
     // Seems to be used in attacks classes
     STRAT_STATE_100 = 0x100,
     STRAT_STATE_101 = 0x101,
@@ -75,9 +75,10 @@ public:
     /* 0x20 */ virtual void doBehaviorInit();
 
     inline EnZako* getZako() const { return mpZako; }
-
+    inline void* getUserData() const { return mpUserData; }
     inline u16 getNextState() const { return mNextState; }
     inline u16 getCurrentState() const { return mCurrentState; }
+    inline u32 getTimer() const { return mTimer; }
 
     void setNextState(u16 state);
     void changeState();
@@ -88,10 +89,10 @@ public:
     void operator delete(void* ptr) {
         noOpDelete(ptr);
     }
-    
+
     /* 0x04 */ EnZako* mpZako;
     /* 0x08 */ void* mpUserData;
-    
+
 protected:
     /* 0x0C */ u16 mNextState; // 0xFFFF = end strategy
     /* 0x0E */ u16 mCurrentState;

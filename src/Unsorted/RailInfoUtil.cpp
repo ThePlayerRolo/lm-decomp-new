@@ -54,7 +54,7 @@ int getLadderPathEntryCount(int ladderIndex) {
         if (useVal == 1) {
             if (entryIndex == ladderIndex) {
                 railInfo->getValue(i, "name", &ladderName);
-                Koga::ToolData::JMapData* ladderPath = reinterpret_cast<Koga::ToolData::JMapData*>(Koga::GameModeUtil::getPathResource(ladderName));
+                Koga::ToolData::JMapData* ladderPath = Koga::GameModeUtil::getPathResource(ladderName);
                 if (ladderPath != nullptr) {
                     Koga::ToolData* ladderData = new Koga::ToolData();
                     ladderData->attach(ladderPath);
@@ -74,7 +74,7 @@ bool getLadderPositionByIndex(JGeometry::TVec3f* out, int ladderIndex, u32 entry
     const char* pathName = getLadderName(ladderIndex);
     s32 maxIndex = -1;
 
-    Koga::ToolData::JMapData* ladderPath = reinterpret_cast<Koga::ToolData::JMapData*>(Koga::GameModeUtil::getPathResource(pathName));
+    Koga::ToolData::JMapData* ladderPath = Koga::GameModeUtil::getPathResource(pathName);
     if (ladderPath != nullptr) {
         Koga::ToolData* ladderData = new Koga::ToolData();
         ladderData->attach(ladderPath);
@@ -97,7 +97,7 @@ bool getLadderPositionByIndex(JGeometry::TVec3f* out, int ladderIndex, u32 entry
             }
         }
 
-        ladderPath = reinterpret_cast<Koga::ToolData::JMapData*>(Koga::GameModeUtil::getPathResource(ladderName));
+        ladderPath = Koga::GameModeUtil::getPathResource(ladderName);
         if (ladderPath != nullptr) {
             Koga::ToolData* ladderData = new Koga::ToolData();
             ladderData->attach(ladderPath);

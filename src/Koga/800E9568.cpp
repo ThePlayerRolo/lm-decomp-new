@@ -181,14 +181,14 @@ void unkEnManager1::fn_800E9CDC() {
         if (_0 == nullptr) {
             cTemp = _0->getCharacter();
         }
-        cTemp->_E3 = 0;
-        cTemp->_E7 = 0;
+        cTemp->mAlpha1 = 0;
+        cTemp->mAlpha2 = 0;
     } else {
         if (_0 == nullptr) {
             cTemp = _0->getCharacter();
         }
-        cTemp->_E3 = -1;
-        cTemp->_E7 = -1;
+        cTemp->mAlpha1 = -1;
+        cTemp->mAlpha2 = -1;
     }
 }
 
@@ -197,6 +197,6 @@ void unkEnManager1::fn_800E9B74() {
     Character* character = getCharacter();
 }
 
-bool unkEnManager1::fn_800E9C38(Koga::CharacterEvent* pEvent) {
-    return EnThought::fn_800C0F08((EnemyStrategy*)_0, pEvent);
+bool unkEnManager1::fn_800E9C38(const Koga::CharacterEvent& rEvent) {
+    return _0->fn_800C0F08(rEvent);
 }

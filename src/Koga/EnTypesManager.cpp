@@ -25,15 +25,16 @@ inline s32 forLine(u32 val) {
 }
 
 
-// https://decomp.me/scratch/6Feh6
+// https://decomp.me/scratch/ImCHq
 EnemyParam::EnemyParam() : 
+    mParams("/param/Enemy.prm"),
     PARAM_INIT(mLife, 0),
     PARAM_INIT(mHitDamage, 0),
     PARAM_INIT(mSpeed, 0),
     PARAM_INIT(mSpeedUnseen, 0),
     PARAM_INIT(mSpeedFight, 0),
     PARAM_INIT(mEyesight, 0),
-    PARAM_INIT(mLightBindFrame, 0),
+    PARAM_INIT(mLightBindFrame, 10),
     PARAM_INIT(mMinLightBindRange, 0),
     PARAM_INIT(mMaxLightBindRange, 0),
     PARAM_INIT(mNumAtkKarakai, 0),
@@ -42,25 +43,24 @@ EnemyParam::EnemyParam() :
     PARAM_INIT(mEffectiveDeg, 0),
     PARAM_INIT(mTsuriHeight, 0),
     PARAM_INIT(mDisappearFrame, 0),
-    PARAM_INIT(mAttackPattern1, 0),
-    PARAM_INIT(mActAfterAttackSu, 0),
-    PARAM_INIT(mActAfterAttackFa, 0),
+    PARAM_INIT(mAttackPattern1, 4),
+    PARAM_INIT(mActAfterAttackSu, 1),
+    PARAM_INIT(mActAfterAttackFa, 1),
     PARAM_INIT(mTsuriType, 0),
     PARAM_INIT(mElement, 0),
     PARAM_INIT(mCheckBox, 0),
     PARAM_INIT(mNormalItemTblId, 0),
     PARAM_INIT(mTsuriItemTblId, 0),
     PARAM_INIT(mPointerRange, 0),
-    PARAM_INIT(mBrightColor, 0),
-    PARAM_INIT(mAmbColor, 0) {
-        // Maybe this isn't some default constructor based on mBrightColor / mAmbColor, since they both call fn_800D2FA0, which basically sets the defaults
-        //  of these colors to -1 / 64, or maybe TBaseParam / TParamT needs its own inline base constructor?
+    PARAM_INIT(mBrightColor, JUtility::TColor(255, 255, 255, 255)),
+    PARAM_INIT(mAmbColor, JUtility::TColor(64, 64, 64, 255)) {
+        // TODO: Get the TColor constructors to not inline properly
     }
 
 namespace Koga {
     EnTypesManager::EnTypesManager() {
         mEnParams = nullptr;
-        mEnParams = new EnemyParam[0x17d];
+        mEnParams = new EnemyParam[0x17D];
     }
 
     EnTypesManager::~EnTypesManager() {

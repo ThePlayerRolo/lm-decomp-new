@@ -65,10 +65,10 @@ namespace Koga {
             missionMode->getEnemyGenManager()->setUnk8(true);
         }
 
-        void* getPathResource(const char* pName) {
+        ToolData::JMapData* getPathResource(const char* pName) {
             MissionMode* missionMode = MissionMode::getMissionMode();
 
-            return missionMode->getMapArchiveResource(pName, 'PATH');
+            return reinterpret_cast<ToolData::JMapData*>(missionMode->getMapArchiveResource(pName, 'PATH'));
         }
 
         void addJmpReceiver(MessageReceiver* pReceiver) {

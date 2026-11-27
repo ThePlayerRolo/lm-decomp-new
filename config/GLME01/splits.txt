@@ -214,6 +214,10 @@ Unsorted/SimpleDraw.cpp:
 	.rodata     start:0x8020C420 end:0x8020C430
 	.sdata2     start:0x804DAEF0 end:0x804DAF08
 
+Unsorted/PlayerInteraction.cpp:
+	.text       start:0x800AD19C end:0x800AD5AC
+	.sdata2     start:0x804DB4F8 end:0x804DB508
+
 Koga/GameModeUtil.cpp:
 	.text       start:0x800B9D1C end:0x800B9F7C
 

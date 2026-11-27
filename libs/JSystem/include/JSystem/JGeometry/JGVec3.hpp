@@ -119,20 +119,12 @@ public:
 
 	void sub(const TVec3& translate)
 	{
-		x -= translate.x;
-		y -= translate.y;
-		z -= translate.z;
+		PSVECSubtract(this, &translate, this);
 	}
 
 	void sub(const TVec3& fst, const TVec3& snd)
 	{
-		x = fst.x - snd.x;
-		y = fst.y - snd.y;
-		z = fst.z - snd.z;
-	}
-
-	void subPS(const Vec& a, const TVec3& b) {
-		PSVECSubtract(&a, &b, this);
+		PSVECSubtract(&fst, &snd, this);
 	}
 
 	void mul(const TVec3& b)
@@ -314,5 +306,10 @@ public:
 typedef TVec3<f32> TVec3f;
 
 } // namespace JGeometry
+
+// TODO: TVec3f and Vec is weird in this game, review this
+#define CONVERT_VEC_REF(vec) *(JGeometry::TVec3f*)&vec
+#define CONVERT_VEC_PTR(vec) (JGeometry::TVec3f*)vec
+
 
 #endif

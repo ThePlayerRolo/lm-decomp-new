@@ -40,10 +40,10 @@ void fn_800E83A0(EnThought* param_1) {
     // _900 has something else we need to check against, cannot continue without more details
     if (param_1->_900 && enNormalTblId == 3) {
         ToolDataRef sheart = fn_800E8D1C("sheart");
-        temp = fn_800E8EF4(&sheart, param_1->getCharacter()->_44, nullptr);
+        temp = fn_800E8EF4(&sheart, param_1->getCharacter()->mPosition, nullptr);
     } else {
         ToolDataRef tRef = fn_800E84CC(enNormalTblId);
-        temp = fn_800E8EF4(&tRef, param_1->getCharacter()->_44, nullptr);
+        temp = fn_800E8EF4(&tRef, param_1->getCharacter()->mPosition, nullptr);
     }
 }
 

@@ -66,7 +66,8 @@ public:
 
     s32 fn_800C0E48(f32);
     void fn_800C0EBC();
-    static bool fn_800C0F08(EnemyStrategy*, Koga::CharacterEvent*);
+
+    bool fn_800C0F08(const Koga::CharacterEvent&);
 
     void fn_800C17EC();
 

@@ -31,6 +31,8 @@ public:
     virtual void vt_08() = 0;
     virtual ~SaEnZakoUtility();
 
+    void set_0C(bool value) { _0c = value; }
+
     /* probably a setter */ void fn_80143810(void* param1, void* param2);
 }; 
 

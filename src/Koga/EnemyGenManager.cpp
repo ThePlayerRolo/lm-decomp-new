@@ -93,7 +93,7 @@ Koga::ToolData* EnemyGenerator::initGenPath() {
         bool isValid = ref.getToolData() != nullptr && ref.getEntryIndex() >= 0;
 
         if (isValid && ref.getToolData()->getValue(ref.getEntryIndex(), "path_name", &pathName) && pathName != nullptr) {
-            mGenPath.attach(reinterpret_cast<Koga::ToolData::JMapData*>(Koga::GameModeUtil::getPathResource(pathName)));
+            mGenPath.attach(Koga::GameModeUtil::getPathResource(pathName));
         }
     }
 
