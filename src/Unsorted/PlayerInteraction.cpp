@@ -1,6 +1,6 @@
 #include "Unsorted/PlayerInteraction.hpp"
 #include "Unsorted/Player.hpp"
-#include "Unsorted/globals.hpp"
+#include "System/MathUtils.hpp"
 
 Player* fn_800AC164(s32 playerID);
 

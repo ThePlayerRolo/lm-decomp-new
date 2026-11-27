@@ -35,7 +35,7 @@ void EnAttackBase::sendAttack() {
     info._20 = EnAttackBase_fn_800DDF58();
     info._24 = 0;
     info._1C = true;
-    sendPlayerInteraction(getZako()->getPlayerID(), 3, &info);
+    sendPlayerInteraction(getZako()->getPlayerID(), INTERACTION_ATTACK, &info);
 }
 
 void EnAttackBase::EnAttackBase_fn_800DDEC8() {

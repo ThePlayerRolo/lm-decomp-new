@@ -5,7 +5,7 @@
 #include "Sato/EnZako.hpp"
 #include "System/Scenes/SceneFunctionCalls.hpp"
 #include "Unsorted/PlayerInteraction.hpp"
-#include "Unsorted/globals.hpp"
+#include "System/MathUtils.hpp"
 
 dummy_float_data()
 enemies_float_data()
